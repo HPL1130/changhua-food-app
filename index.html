@@ -53,6 +53,8 @@
 
   <script>
     const DATA_URL = 'https://raw.githubusercontent.com/HPL1130/changhua-food-data/main/data.json';
+    const API_URL = 'https://api.github.com/repos/HPL1130/changhua-food-data/commits?path=data.json&page=1&per_page=1';
+    
     let data = [], filteredData = [], currentCategory = 'kongroufan';
 
     // 內建 95 筆備用資料（離線用）
@@ -128,7 +130,7 @@
       {"category":"kongroufan","district":"員林市","name":"員林阿政爌肉飯","phone":"04-832-7890","address":"彰化縣員林市中山路二段150號","google":4.4,"feature":"政記燒肉","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
       {"category":"kongroufan","district":"鹿港鎮","name":"鹿港老灶爌肉飯","phone":"04-777-2345","address":"彰化縣鹿港鎮中山路一段50號","google":4.5,"feature":"老灶炭火","dish":"爌肉飯 ($55)","time":"11:00-20:00","price":"$50-90"},
       {"category":"kongroufan","district":"北斗鎮","name":"北斗老K爌肉飯","phone":"04-888-3456","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"K記老店","dish":"爌肉飯 ($45)","time":"07:00-22:00","price":"$40-70"},
-      {"category":"kongroufan","district":"和美鎮","name":"和美阿呆爌肉飯","phone":"04-755-4567","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"呆記三層","dish":"爌肉飯 ($50)","time":"11:00-20:00","price":"$40-80"},
+      {"category":"kongroufan","district":"和美鎮","name":"和美阿呆爌肉飯","phone":"04-755-4567","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"呆記三層","dish":"爌肉飯 ($50)","time":"11:00 to 20:00","price":"$40-80"},
       {"category":"kongroufan","district":"彰化市","name":"彰化魚市爌肉飯","phone":"04-732-8901","address":"彰化縣彰化市中正路二段200號","google":4.7,"feature":"魚市秒殺","dish":"爌肉飯 ($60)","time":"06:00-12:00","price":"$50-100"},
       {"category":"kongroufan","district":"員林市","name":"員林阿華爌肉飯","phone":"04-832-9012","address":"彰化縣員林市員林路150號","google":4.4,"feature":"華記切仔","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
       {"category":"kongroufan","district":"鹿港鎮","name":"鹿港黑豬爌肉飯","phone":"04-777-3456","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"黑豬炭烤","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"},
@@ -154,13 +156,13 @@
       {"category":"kongroufan","district":"鹿港鎮","name":"鹿港黑豬爌肉飯","phone":"04-777-7890","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"黑豬炭烤","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"}
     ];
 
-        async function loadData() {
-     document.getElementById('loading').style.display = 'block';
+    async function loadData() {
+      document.getElementById('loading').style.display = 'block';
       let lastModified = '未知';
 
       try {
-        // Step 1: 從 GitHub API 取得最後提交時間
-       const commitRes = await fetch(API_URL);
+        // 1. 從 GitHub API 取得最後提交時間
+        const commitRes = await fetch(API_URL);
         if (commitRes.ok) {
           const commits = await commitRes.json();
           if (commits.length > 0) {
@@ -172,7 +174,7 @@
           }
         }
 
-        // Step 2: 取得實際資料
+        // 2. 取得實際資料
         const dataRes = await fetch(DATA_URL + '?t=' + Date.now());
         if (dataRes.ok) {
           data = await dataRes.json();
@@ -181,7 +183,7 @@
         }
       } catch (err) {
         console.warn('線上資料載入失敗，使用離線備用', err);
-       data = fallbackData;
+        data = fallbackData;
         lastModified = '離線備用資料';
       }
 
@@ -246,12 +248,10 @@
     }
 
     function openMap(address) {
-      window.open(`https://www.google.com/maps/search/?api=1verde&query=${encodeURIComponent(address)}`, '_blank');
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
     }
 
     loadData();
   </script>
 </body>
 </html>
-
-
