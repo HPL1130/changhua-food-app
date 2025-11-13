@@ -1,5 +1,4 @@
 [
-  // === 素食麵 (25筆) ===
   {"category":"sushi","district":"彰化市","name":"林家素食","phone":"04-732-1234","address":"彰化縣彰化市永樂街50號","google":4.5,"feature":"百年老店，手工油麵+豆包","dish":"素食麵 ($40)","time":"07:00-14:00","price":"$40-80"},
   {"category":"sushi","district":"彰化市","name":"天公壇素食麵","phone":"04-732-5678","address":"彰化縣彰化市太平街3號","google":4.6,"feature":"自家炸菜包/豆皮脆","dish":"素食麵+菜包 ($45)","time":"06:00-13:00","price":"$40-80"},
   {"category":"sushi","district":"彰化市","name":"長安街素食","phone":"04-732-9012","address":"彰化縣彰化市長安街100號","google":4.4,"feature":"豆包最強，Google 2000+評","dish":"素黃麵乾+豆包 ($50)","time":"07:00-15:00","price":"$40-80"},
@@ -25,8 +24,6 @@
   {"category":"sushi","district":"和美鎮","name":"和美仁和素食","phone":"04-755-1234","address":"彰化縣和美鎮仁安路261號","google":4.3,"feature":"仁和清淡","dish":"素食麵 ($35)","time":"11:00-19:00","price":"$30-60"},
   {"category":"sushi","district":"彰化市","name":"蘇30年老店古早味素食水煎包","phone":"04-733-2345","address":"彰化縣彰化市蘇路50號","google":4.4,"feature":"古早味水煎包","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
   {"category":"sushi","district":"員林市","name":"輕輕的 Softly 蔬食簡餐咖啡廳","phone":"04-832-9012","address":"彰化縣員林市輕輕路100號","google":4.3,"feature":"蔬食簡餐","dish":"素食麵 ($45)","time":"09:00-18:00","price":"$40-80"},
-
-  // === 肉圓 (30筆) ===
   {"category":"rouyuan","district":"彰化市","name":"阿三肉圓","phone":"04-732-5678","address":"彰化縣彰化市三民路100號","google":4.3,"feature":"干貝內餡，脆皮Q彈","dish":"炸肉圓 ($50)","time":"10:00-18:00","price":"$40-80"},
   {"category":"rouyuan","district":"彰化市","name":"北門口肉圓","phone":"04-733-2345","address":"彰化縣彰化市民生路200號","google":4.5,"feature":"60年老店，干貝菇餡","dish":"酥皮肉圓 ($60)","time":"09:00-17:00","price":"$50-100"},
   {"category":"rouyuan","district":"彰化市","name":"阿璋肉圓","phone":"04-732-9012","address":"彰化縣彰化市長安路150號","google":4.1,"feature":"電影取景地，酥脆外皮","dish":"蒸肉圓 ($40)","time":"08:00-16:00","price":"$30-60"},
@@ -57,8 +54,6 @@
   {"category":"rouyuan","district":"員林市","name":"員林施家肉圓","phone":"04-832-4567","address":"彰化縣員林市員林路150號","google":4.3,"feature":"施家炸皮","dish":"肉圓 ($45)","time":"07:00-14:00","price":"$40-70"},
   {"category":"rouyuan","district":"鹿港鎮","name":"鹿港王肉圓","phone":"04-777-5678","address":"彰化縣鹿港鎮民權路208號","google":4.3,"feature":"王記海鮮","dish":"肉圓 ($55)","time":"06:00-13:00","price":"$50-90"},
   {"category":"rouyuan","district":"北斗鎮","name":"北斗詹肉圓","phone":"04-888-6789","address":"彰化縣北斗鎮奠安宮旁","google":4.5,"feature":"詹記米其林","dish":"肉圓 ($50)","time":"08:00-16:00","price":"$40-80"},
-
-  // === 爌肉飯 (40筆) ===
   {"category":"kongroufan","district":"彰化市","name":"阿泉爌肉飯","phone":"04-732-1234","address":"彰化縣彰化市中正路一段123號","google":4.6,"feature":"80年老店，皮Q膠質","dish":"爌肉飯 ($50)","time":"07:00-13:00","price":"$40-80"},
   {"category":"kongroufan","district":"彰化市","name":"魚市場爌肉飯","phone":"04-732-4567","address":"彰化縣彰化市中正路二段200號","google":4.7,"feature":"秒殺名店，肥瘦可選","dish":"爌肉飯+半熟蛋 ($60)","time":"06:00-12:00","price":"$50-100"},
   {"category":"kongroufan","district":"彰化市","name":"老朱爌肉飯","phone":"04-732-7890","address":"彰化縣彰化市中民路100號","google":4.5,"feature":"古早味不油膩","dish":"爌肉飯 ($55)","time":"06:00-13:30","price":"$50-100"},
