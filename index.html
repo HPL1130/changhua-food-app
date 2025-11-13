@@ -146,17 +146,30 @@
       {"category":"kongroufan","district":"員林市","name":"員林華爌肉飯","phone":"04-832-5678","address":"彰化縣員林市員林路150號","google":4.4,"feature":"華記切仔","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
       {"category":"kongroufan","district":"鹿港鎮","name":"鹿港黑豬爌肉飯","phone":"04-777-7890","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"黑豬炭烤","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"}
     ];
-
-    async function loadData() {
+async function loadData() {
       document.getElementById('loading').style.display = 'block';
+      let lastModified = '未知';
       try {
         const res = await fetch(DATA_URL + '?t=' + Date.now());
-        if (res.ok) data = await res.json();
-        else throw '';
-      } catch { data = fallbackData; }
+        if (res.ok) {
+          data = await res.json();
+          const date = res.headers.get('last-modified');
+          if (date) {
+            lastModified = new Date(date).toLocaleString('zh-TW', {
+              year: 'numeric', month: '2-digit', day: '2-digit',
+              hour: '2-digit', minute: '2-digit'
+            }).replace(/\//g, '/');
+          }
+        } else throw '';
+      } catch {
+        data = fallbackData;
+        lastModified = '離線備用資料';
+      }
+      document.getElementById('updateTime').textContent = `資料庫更新於：${lastModified}`;
       init();
       document.getElementById('loading').style.display = 'none';
     }
+    
 
     function init() {
       const districts = [...new Set(data.map(i => i.district))].sort();
@@ -221,3 +234,4 @@
   </script>
 </body>
 </html>
+
