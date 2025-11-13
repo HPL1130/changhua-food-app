@@ -1,187 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>彰化真食記 v8.0 - 自動更新版</title>
-    <meta name="description" content="95筆真實店家，自動更新，PWA App">
-    <link rel="manifest" href="data:application/manifest+json,{
-        'name': '彰化真食記', 'short_name': '彰化食記',
-        'start_url': '.', 'display': 'standalone',
-        'background_color': '#fafafa', 'theme_color': '#d4380d',
-        'icons': [{'src': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'sizes': '144x144', 'type': 'image/png'}]
-    }">
-    <style>
-        body { font-family: system-ui, sans-serif; background: #fafafa; margin: 0; padding: 10px; line-height: 1.5; }
-        .header { text-align: center; background: linear-gradient(135deg, #d4380d, #a21c00); color: white; padding: 20px; border-radius: 12px; margin-bottom: 12px; }
-        .header p { font-size: 0.9rem; opacity: 0.9; }
-        .controls { display: flex; flex-wrap: wrap; gap: 10px; padding: 12px; background: white; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .btn { padding: 12px 18px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; }
-        .btn.active { background: #d4380d; color: white; }
-        input, select { padding: 12px 16px; border: 1.5px solid #ddd; border-radius: 25px; width: 100%; font-size: 1rem; }
-        .list { list-style: none; padding: 0; max-height: 68vh; overflow-y: auto; }
-        .item { background: white; margin: 10px 0; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        .item h3 { margin: 0 0 8px; color: #d4380d; font-size: 1.15rem; }
-        .map-btn { background: #1a73e8; color: white; padding: 7px 14px; border: none; border-radius: 6px; cursor: pointer; margin-top: 8px; }
-        .export { text-align: center; margin: 20px 0; }
-        .export-btn { background: #28a745; color: white; padding: 12px 24px; border: none; border-radius: 25px; cursor: pointer; margin: 0 6px; }
-        #noData, #loading { text-align: center; padding: 50px; color: #999; font-style: italic; }
-        .update-info { font-size: 0.8rem; color: #666; text-align: center; margin: 10px 0; }
-        @media (max-width: 600px) { .controls { flex-direction: column; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>彰化真食記 v9.0 - 免費動態版</title>
+  <link rel="manifest" href="data:application/manifest+json,{
+    \"name\":\"彰化真食記\",\"short_name\":\"彰化食記\",
+    \"start\":".","display":"standalone",
+    \"background_color":"#fafafa","theme_color":"#d4380d"
+  }>)">
+  <style>
+    body{font-family:system-ui;margin:0;padding:10px;background:#fafafa}
+    .header{background:linear-gradient(135deg,#d4380d,#a21c00);...} /* 省略樣式 */
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>彰化真食記 v8.0</h1>
-        <p>95筆真實店家｜<span id="updateTime">載入中...</span>｜自動更新</p>
-    </div>
-    <div class="controls">
-        <button class="btn active" onclick="switchCategory('kongroufan')">爌肉飯</button>
-        <button class="btn" onclick="switchCategory('rouyuan')">肉圓</button>
-        <button class="btn" onclick="switchCategory('sushi')">素食麵</button>
-        <input type="text" id="search" placeholder="搜店名/地址/特色..." oninput="filterData()">
-        <select id="district" onchange="filterData()">
-            <option value="">所有行政區</option>
-        </select>
-    </div>
-    <div id="loading">資料載入中...</div>
-    <ul id="list" class="list" style="display:none;"></ul>
-    <div id="noData" style="display:none;">請選擇類別或輸入關鍵字</div>
-    <div class="export">
-        <button class="export-btn" onclick="exportExcel()">匯出 Excel</button>
-    </div>
-    <div class="update-info">資料來源：食尚玩家、愛食記、Google Maps｜每季更新</div>
+  <div class="header"><h1>彰化真食記 v9.0</h1><p>免費動態更新｜GitHub 驅動</p></div>
+  <div class="controls">
+    <button class="btn" onclick="switchCategory('rouyuan')">肉圓</button>
+    <a href="https://github.com/HPL1130/changhua-food-data" target="_blank" style="margin-left:auto;color:#d4380d;font-size:0.9rem;">
+      編輯資料
+    </a>
+  </div>
+  <ul id="list"></ul>
 
-    <script>
-        // === 自動更新 JSON 來源 ===
-        const DATA_URL = 'https://raw.githubusercontent.com/HPL1130/changhua-food-app/main/data.json';
-        let data = [];
-        let currentCategory = 'kongroufan';
-        let filteredData = [];
+  <script>
+    const DATA_URL = 'https://raw.githubusercontent.com/HPL1130/changhua-food-data/main/data.json';
+    let data = [], filteredData = [], currentCategory = 'kongroufan';
 
-        // === 載入資料（支援快取）===
-        async function loadData() {
-            const loading = document.getElementById('loading');
-            try {
-                const cached = localStorage.getItem('changhua_food_data');
-                const cacheTime = localStorage.getItem('changhua_food_time');
-                const now = Date.now();
+    // 內建備用資料（離線用）
+    const fallbackData = [ /* 你的 95 筆資料，貼在這裡 */ ];
 
-                if (cached && cacheTime && (now - cacheTime < 7 * 24 * 60 * 60 * 1000)) {
-                    data = JSON.parse(cached);
-                    document.getElementById('updateTime').textContent = '快取資料';
-                    initApp();
-                    return;
-                }
+    async function loadData() {
+      try {
+        const res = await fetch(DATA_URL + '?t=' + Date.now());
+        if (res.ok) data = await res.json();
+        else throw '';
+      } catch { data = fallbackData; }
+      init();
+    }
 
-                const res = await fetch(DATA_URL + '?t=' + now);
-                if (!res.ok) throw new Error('無法載入');
-                data = await res.json();
-                localStorage.setItem('changhua_food_data', JSON.stringify(data));
-                localStorage.setItem('changhua_food_time', now);
-                document.getElementById('updateTime').textContent = new Date().toLocaleDateString('zh-TW');
-                initApp();
-            } catch (e) {
-                loading.innerHTML = '載入失敗，顯示離線資料';
-                if (cached) {
-                    data = JSON.parse(cached);
-                    initApp();
-                }
-            }
-        }
+    function init() {
+      // 你的 render、filter 邏輯...
+      renderList();
+    }
 
-        function initApp() {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('list').style.display = 'block';
-            generateDistricts();
-            filterData();
-        }
+    function renderList() {
+      const list = document.getElementById('list');
+      list.innerHTML = '';
+      const items = data.filter(i => i.category === currentCategory);
+      items.forEach(item => {
+        list.innerHTML += `<li class="item"><h3>${item.name}</h3><p>${item.address}</p></li>`;
+      });
+    }
 
-        function switchCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('district').value = '';
-            generateDistricts();
-            filterData();
-        }
-
-        function generateDistricts() {
-            const select = document.getElementById('district');
-            select.innerHTML = '<option value="">所有行政區</option>';
-            const districts = [...new Set(data.filter(d => d.category === currentCategory).map(d => d.district))].sort();
-            districts.forEach(d => {
-                const opt = document.createElement('option');
-                opt.value = d;
-                opt.textContent = d + ' (' + data.filter(x => x.category === currentCategory && x.district === d).length + '家)';
-                select.appendChild(opt);
-            });
-        }
-
-        function filterData() {
-            const query = document.getElementById('search').value.trim().toLowerCase();
-            const selectedDistrict = document.getElementById('district').value;
-
-            filteredData = data.filter(item => 
-                item.category === currentCategory &&
-                (!selectedDistrict || item.district === selectedDistrict) &&
-                (query === '' || 
-                 item.name.toLowerCase().includes(query) ||
-                 item.address.toLowerCase().includes(query) ||
-                 item.feature.toLowerCase().includes(query) ||
-                 item.dish.toLowerCase().includes(query))
-            );
-            renderList();
-        }
-
-        function renderList() {
-            const list = document.getElementById('list');
-            list.innerHTML = '';
-            if (filteredData.length === 0) {
-                document.getElementById('noData').style.display = 'block';
-                return;
-            }
-            document.getElementById('noData').style.display = 'none';
-            filteredData.forEach(item => {
-                const li = document.createElement('li');
-                li.className = 'item';
-                li.innerHTML = `
-                    <h3>${item.name} <small style="color:#888;">(${item.district})</small></h3>
-                    <p><strong>地址：</strong>${item.address.replace('彰化縣', '')}</p>
-                    <p><strong>電話：</strong>${item.phone}</p>
-                    <p><strong>特色：</strong>${item.feature}</p>
-                    <p><strong>推薦：</strong>${item.dish}</p>
-                    <p><strong>營業：</strong>${item.time} | <strong>價位：</strong>${item.price}</p>
-                    <button class="map-btn" onclick="openMap('${item.address}')">導航</button>
-                `;
-                list.appendChild(li);
-            });
-        }
-
-        function openMap(address) {
-            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
-        }
-
-        function exportExcel() {
-            const csv = '\uFEFF類別,區域,店名,電話,地址,特色,推薦,時間,價位\n' + 
-                filteredData.map(i => `"${i.category==='sushi'?'素食麵':i.category==='rouyuan'?'肉圓':'爌肉飯'}","${i.district}","${i.name}","${i.phone}","${i.address}","${i.feature}","${i.dish}","${i.time}","${i.price}"`).join('\n');
-            const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `彰化真食記_${currentCategory}.csv`;
-            a.click();
-        }
-
-        // === 內建備用資料（防止完全無法載入）===
-        const fallbackData = [
-            {category: 'sushi', district: '彰化市', name: '林家素食', phone: '04-732-1234', address: '彰化縣彰化市永樂街50號', feature: '百年老店，手工油麵+豆包', dish: '素食麵 ($40)', time: '07:00-14:00', price: '$40-80'},
-            {category: 'kongroufan', district: '彰化市', name: '阿泉爌肉飯', phone: '04-732-1234', address: '彰化縣彰化市中正路一段123號', feature: '80年老店，皮Q膠質', dish: '爌肉飯 ($50)', time: '07:00-13:00', price: '$40-80'},
-            {category: 'rouyuan', district: '彰化市', name: '阿三肉圓', phone: '04-732-5678', address: '彰化縣彰化市三民路100號', feature: '干貝內餡，脆皮Q彈', dish: '炸肉圓 ($50)', time: '10:00-18:00', price: '$40-80'}
-        ];
-
-        // 啟動
-        loadData();
-    </script>
+    loadData(); // 啟動
+  </script>
 </body>
-
 </html>
