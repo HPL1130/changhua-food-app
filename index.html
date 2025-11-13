@@ -54,7 +54,7 @@
 
     <script>
         // === 自動更新 JSON 來源 ===
-        const DATA_URL = 'https://raw.githubusercontent.com/grok-xai/changhua-food-data/main/data.json'; // 我會幫你建立
+        const DATA_URL = 'https://raw.githubusercontent.com/HPL1130/changhua-food-app/main/data.json';
         let data = [];
         let currentCategory = 'kongroufan';
         let filteredData = [];
@@ -63,19 +63,17 @@
         async function loadData() {
             const loading = document.getElementById('loading');
             try {
-                // 優先用快取
                 const cached = localStorage.getItem('changhua_food_data');
                 const cacheTime = localStorage.getItem('changhua_food_time');
                 const now = Date.now();
 
-                if (cached && cacheTime && (now - cacheTime < 7 * 24 * 60 * 60 * 1000)) { // 7天快取
+                if (cached && cacheTime && (now - cacheTime < 7 * 24 * 60 * 60 * 1000)) {
                     data = JSON.parse(cached);
                     document.getElementById('updateTime').textContent = '快取資料';
                     initApp();
                     return;
                 }
 
-                // 否則拉最新
                 const res = await fetch(DATA_URL + '?t=' + now);
                 if (!res.ok) throw new Error('無法載入');
                 data = await res.json();
@@ -185,4 +183,5 @@
         loadData();
     </script>
 </body>
+
 </html>
