@@ -16,32 +16,32 @@
     body{
         font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin:0;
-        padding:20px 15px; /* 增加上下間距 */
-        background:#fcebe1; /* 溫暖的淺橘粉色背景 */
+        padding:20px 15px; 
+        background:#fcebe1; 
         line-height:1.7;
-        color: #4a4a4a; /* 增加文字深度 */
+        color: #4a4a4a; 
     } 
     a{color:#ff6b6b;text-decoration:none;transition:0.3s;}
     a:hover{text-decoration:underline; opacity: 0.8;}
 
-    /* 標頭區塊 - 鮮豔的漸層與大圓角 */
+    /* 標頭區塊 */
     .header{
-        background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%); /* 少女感的漸層 */
-        color:#333; /* 標頭文字改為深色，更清晰 */
+        background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%); 
+        color:#333; 
         padding:25px; 
-        border-radius:30px; /* 更大的圓角 */
+        border-radius:30px; 
         margin-bottom:20px;
         text-align:center;
-        box-shadow:0 8px 20px rgba(255, 107, 107, 0.3); /* 更柔和的陰影 */
+        box-shadow:0 8px 20px rgba(255, 107, 107, 0.3); 
     }
-    .header h1{margin:0;font-size:2.2rem;font-weight:900; color: #a52a2a;} /* 強調標題顏色 */
+    .header h1{margin:0;font-size:2.2rem;font-weight:900; color: #a52a2a;} 
     #updateTime{font-size:0.8rem;opacity:0.9;margin-top:8px;font-style:italic; color: #666;}
 
-    /* 控制區塊 - 容器圓角與柔和陰影 */
+    /* 控制區塊 - 核心修正點：使用 Flex gap 統一間距 */
     .controls{
         display:flex;
         flex-wrap:wrap;
-        gap: 8px; /* <--- 將間距從 10px 縮小為 8px */
+        gap: 6px; /* <--- 縮小整體間距到 6px */
         padding:20px;
         background:white;
         border-radius:25px; 
@@ -50,7 +50,7 @@
         align-items:center;
     }
 
-    /* 按鈕樣式 - 超圓角、淺紅主色，增加立體感 */
+    /* 按鈕樣式 */
     .btn{
         padding:12px 18px; 
         border:2px solid #ffcccc; 
@@ -75,7 +75,7 @@
         transform:translateY(-2px); 
     }
 
-    /* 輸入框與選單 - 圓角邊框與點擊效果 */
+    /* 輸入框與選單 - 移除 margin-top，完全依賴 gap */
     input,select{
         padding:12px 18px;
         border:2px solid #ffcccc; 
@@ -83,7 +83,7 @@
         width:100%;
         font-size:1rem;
         transition:0.3s;
-        margin-top: 0; /* <--- 移除預設的 margin-top */
+        margin-top: 0; /* <--- 確保沒有額外的垂直間距 */
         box-sizing: border-box; 
     }
     input:focus, select:focus {
@@ -91,13 +91,8 @@
         box-shadow: 0 0 8px rgba(240, 74, 74, 0.4); 
         outline: none;
     }
-    /* 為了讓 input/select 上方有微小間距，同時避免在 flex 佈局下過大，單獨為非第一項設置 */
-    .controls > *:not(:first-child) {
-        margin-top: 8px; /* <--- 為 .controls 內除了第一項之外的所有子元素增加微小間距 */
-    }
 
-
-    /* 列表與卡片 - 柔和的卡片設計 */
+    /* 列表與卡片 */
     .list{list-style:none;padding:0;max-height:68vh;overflow-y:auto; padding-right: 5px;}
     .item{
         background:white;
@@ -117,7 +112,7 @@
     .item p {margin: 5px 0; font-size: 0.95rem;}
     .item strong {color: #ff6b6b;} 
 
-    /* 導航按鈕 - 藍色與圓角 (維持 Google Map 風格) */
+    /* 導航按鈕 */
     .map-btn{
         background:#1a73e8; 
         color:white;
@@ -130,7 +125,7 @@
         font-weight:bold;
     }
     
-    /* 編輯資料按鈕 - 綠色與超圓角 */
+    /* 編輯資料按鈕 */
     .edit-btn{
         background:#28a745; 
         color:white;
@@ -145,11 +140,14 @@
     /* 資訊與載入狀態 */
     #noData, #loading{text-align:center;padding:50px;color:#ff6b6b;font-style:italic; font-size: 1.2rem;}
     
-    /* 響應式設計 */
+    /* 響應式設計 - 手機版更緊湊 */
     @media (max-width:600px){
-        .controls{flex-direction:column; align-items: stretch; gap: 0;} /* <--- 手機版移除 gap，用 margin-top 控制 */
+        .controls{
+            flex-direction:column; 
+            align-items: stretch;
+            gap: 5px; /* <--- 手機版將間距縮小到 5px，實現緊湊 */
+        }
         .btn{flex-grow: 1; min-width: unset;}
-        /* input, select {margin-top: 10px;}  <--- 這行現在不需要了，因為我們用通用的 `controls > *:not(:first-child)` */
     }
 </style>
 </head>
@@ -377,6 +375,7 @@
   </script>
 </body>
 </html>
+
 
 
 
