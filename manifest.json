@@ -1,0 +1,21 @@
+{
+  "name": "彰化真食記",
+  "short_name": "彰化真食記",
+  "description": "彰化三寶：爌肉飯、肉圓、素食麵的美食紀錄",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#d4380d",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
