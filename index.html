@@ -11,122 +11,142 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="#f04a4a">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  <style>
-    /* 基礎與整體佈局 - 讓背景柔和，字體親切 */
-    body{font-family:system-ui;margin:0;padding:15px;background:#fff8f0;line-height:1.6} 
-    a{color:#f04a4a;text-decoration:none;transition:0.3s;}
-    a:hover{text-decoration:underline;}
+<style>
+    /* 基礎與整體佈局 - 讓背景柔和，字體親切 */
+    body{
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin:0;
+        padding:20px 15px; /* 增加上下間距 */
+        background:#fcebe1; /* 溫暖的淺橘粉色背景 */
+        line-height:1.7;
+        color: #4a4a4a; /* 增加文字深度 */
+    } 
+    a{color:#ff6b6b;text-decoration:none;transition:0.3s;}
+    a:hover{text-decoration:underline; opacity: 0.8;}
 
-    /* 標頭區塊 - 鮮豔的漸層與大圓角 */
-    .header{
-        background:linear-gradient(135deg,#ff6b6b,#f04a4a); 
-        color:white;
+    /* 標頭區塊 - 鮮豔的漸層與大圓角 */
+    .header{
+        background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%); /* 少女感的漸層 */
+        color:#333; /* 標頭文字改為深色，更清晰 */
         padding:25px; 
-        border-radius:20px; 
-        margin-bottom:15px;
+        border-radius:30px; /* 更大的圓角 */
+        margin-bottom:20px;
         text-align:center;
-        box-shadow:0 4px 15px rgba(240, 74, 74, 0.4); 
+        box-shadow:0 8px 20px rgba(255, 107, 107, 0.3); /* 更柔和的陰影 */
     }
-    .header h1{margin:0;font-size:2rem;font-weight:900} 
-    #updateTime{font-size:0.85rem;opacity:0.9;margin-top:8px;font-style:italic}
+    .header h1{margin:0;font-size:2.2rem;font-weight:900; color: #a52a2a;} /* 強調標題顏色 */
+    #updateTime{font-size:0.8rem;opacity:0.9;margin-top:8px;font-style:italic; color: #666;}
 
-    /* 控制區塊 - 容器圓角與柔和陰影 */
-    .controls{
+    /* 控制區塊 - 容器圓角與柔和陰影 */
+    .controls{
         display:flex;
         flex-wrap:wrap;
-        gap:12px; 
-        padding:15px;
+        gap:10px; 
+        padding:20px;
         background:white;
-        border-radius:20px; 
-        margin-bottom:15px;
-        box-shadow:0 6px 15px rgba(0,0,0,0.08); 
+        border-radius:25px; /* 略微加大圓角 */
+        margin-bottom:20px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.1); /* 柔和淺陰影 */
         align-items:center;
     }
 
-    /* 按鈕樣式 - 超圓角、淺紅主色 */
-    .btn{
-        padding:10px 16px;
-        border:none;
-        border-radius:50px; 
+    /* 按鈕樣式 - 超圓角、淺紅主色，增加立體感 */
+    .btn{
+        padding:12px 18px; /* 略微加大點擊區域 */
+        border:2px solid #ffcccc; /* 邊框增加層次感 */
+        border-radius:30px; /* 保持圓潤 */
         cursor:pointer;
         font-weight:bold;
-        background:#ffebeb; 
+        background:#fff0f0; /* 更淺的背景 */
         color:#f04a4a; 
-        transition:0.3s;
+        transition:0.3s, transform 0.1s;
         flex-grow: 1; 
         min-width: 80px;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5); /* 輕微文字陰影 */
     }
-    .btn.active{background:#f04a4a;color:white;box-shadow:0 3px 10px rgba(240, 74, 74, 0.5)} 
-    .btn:hover{opacity:0.8;transform:translateY(-1px)}
+    .btn.active{
+        background:linear-gradient(180deg, #ff6b6b, #f04a4a); /* 漸層 active 狀態 */
+        color:white;
+        border-color: #d03a3a;
+        box-shadow:0 4px 8px rgba(240, 74, 74, 0.6); 
+    } 
+    .btn:hover:not(.active){
+        background:#ffcccc;
+        transform:translateY(-2px); /* 略微上浮效果 */
+    }
 
     /* 輸入框與選單 - 圓角邊框與點擊效果 */
-    input,select{
+    input,select{
         padding:12px 18px;
-        border:2px solid #ffcbcb; 
-        border-radius:50px; 
+        border:2px solid #ffcccc; /* 淺粉邊框 */
+        border-radius:30px; 
         width:100%;
         font-size:1rem;
         transition:0.3s;
         margin-top: 5px; 
+        box-sizing: border-box; /* 確保 padding 不影響寬度 */
     }
     input:focus, select:focus {
         border-color: #f04a4a; 
-        box-shadow: 0 0 5px rgba(240, 74, 74, 0.3);
+        box-shadow: 0 0 8px rgba(240, 74, 74, 0.4); /* 點擊時柔和發光 */
         outline: none;
     }
 
     /* 列表與卡片 - 柔和的卡片設計 */
-    .list{list-style:none;padding:0;max-height:68vh;overflow-y:auto}
-    .item{
+    .list{list-style:none;padding:0;max-height:68vh;overflow-y:auto; padding-right: 5px;}
+    .item{
         background:white;
         margin:15px 0;
-        padding:20px;
-        border-radius:15px; 
-        box-shadow:0 4px 12px rgba(0,0,0,0.1); 
+        padding:25px;
+        border-radius:20px; /* 圓潤卡片 */
+        box-shadow:0 6px 15px rgba(0,0,0,0.15); /* 略重的陰影增加立體感 */
+        border-left: 8px solid #ff6b6b; /* 左側紅線強調 */
         transition:0.3s;
         line-height: 1.8; 
     }
     .item:hover {
-        transform: translateY(-2px); 
-        box-shadow:0 6px 18px rgba(0,0,0,0.15);
+        transform: translateY(-3px); /* 放大上浮效果 */
+        box-shadow:0 10px 25px rgba(240, 74, 74, 0.2);
     }
-    .item h3{margin:0 0 10px;color:#f04a4a;font-size:1.25rem} 
+    .item h3{margin:0 0 10px;color:#f04a4a;font-size:1.35rem; font-weight: 700;} 
+    .item p {margin: 5px 0; font-size: 0.95rem;}
+    .item strong {color: #ff6b6b;} /* 強調標籤顏色 */
 
-    /* 導航按鈕 - 藍色與圓角 */
-    .map-btn{
+    /* 導航按鈕 - 藍色與圓角 (維持 Google Map 風格) */
+    .map-btn{
         background:#1a73e8; 
         color:white;
-        padding:8px 16px;
+        padding:10px 20px;
         border:none;
-        border-radius:10px; 
+        border-radius:25px; /* 更圓潤 */
         cursor:pointer;
-        margin-top:10px;
-        font-size:0.9rem;
+        margin-top:15px;
+        font-size:1rem;
         font-weight:bold;
     }
     
     /* 編輯資料按鈕 - 綠色與超圓角 */
-    .edit-btn{
+    .edit-btn{
         background:#28a745; 
         color:white;
-        padding:10px 16px;
+        padding:12px 18px;
         border:none;
-        border-radius:50px; 
+        border-radius:30px; 
         cursor:pointer;
         font-size:0.9rem;
         font-weight:bold;
     }
     
     /* 資訊與載入狀態 */
-    #noData, #loading{text-align:center;padding:50px;color:#ff6b6b;font-style:italic}
-    
+    #noData, #loading{text-align:center;padding:50px;color:#ff6b6b;font-style:italic; font-size: 1.2rem;}
+    
     /* 響應式設計 */
-    @media (max-width:600px){
+    @media (max-width:600px){
         .controls{flex-direction:column; align-items: stretch;}
         .btn{flex-grow: 1; min-width: unset;}
         input, select {margin-top: 10px;}
     }
-  </style>
+</style>
 </head>
 <body>
   <div class="header">
@@ -351,3 +371,4 @@
   </script>
 </body>
 </html>
+
