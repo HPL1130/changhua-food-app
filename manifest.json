@@ -2,21 +2,22 @@
   "name": "彰化真食記",
   "short_name": "彰化食記",
   "description": "彰化小吃推薦",
-  "start_url": "./", // <--- 修正：使用相對路徑根目錄
+  "start_url": "./", 
   "display": "standalone",
   "background_color": "#fcebe1",
   "theme_color": "#f04a4a",
-  "scope": "./", // <--- 修正：使用相對路徑根目錄
+  "scope": "./", 
   "icons": [
     {
-      "src": "icons/icon-192.png", // <--- 修正：移除專案名稱和前導斜線
+      "src": "icons/icon-192.png", 
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512.png", // <--- 修正：移除專案名稱和前導斜線
+      "src": "icons/icon-512.png", 
       "sizes": "512x512",
       "type": "image/png"
     }
   ]
 }
+
