@@ -1,23 +1,21 @@
-const CACHE_NAME = 'changhua-food-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/apple-touch-icon.png'
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-  );
-});
+{
+  "name": "彰化真食記",
+  "short_name": "彰化食記",
+  "description": "彰化爌肉飯、肉圓、素食麵推薦",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcebe1",
+  "theme_color": "#f04a4a",
+  "icons": [
+    {
+      "src": "/changhua-food-app/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/changhua-food-app/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
