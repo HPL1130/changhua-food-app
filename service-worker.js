@@ -1,11 +1,11 @@
 const CACHE_NAME = 'changhua-food-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/apple-touch-icon.png'
+  '/changhua-food-app/',
+  '/changhua-food-app/index.html',
+  '/changhua-food-app/manifest.json',
+  '/changhua-food-app/icons/icon-192.png',
+  '/changhua-food-app/icons/icon-512.png',
+  '/changhua-food-app/icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', event => {
@@ -21,3 +21,4 @@ self.addEventListener('fetch', event => {
       .then(response => response || fetch(event.request))
   );
 });
+
