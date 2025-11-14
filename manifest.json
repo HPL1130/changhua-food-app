@@ -2,18 +2,18 @@
   "name": "彰化真食記",
   "short_name": "彰化食記",
   "description": "彰化爌肉飯、肉圓、素食麵推薦",
-  "start_url": "/",
+  "start_url": "/changhua-food-app/",
   "display": "standalone",
   "background_color": "#fcebe1",
   "theme_color": "#f04a4a",
   "icons": [
     {
-      "src": "/changhua-food-app/icons/icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/changhua-food-app/icons/icon-512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
