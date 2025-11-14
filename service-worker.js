@@ -9,9 +9,9 @@ const urlsToCache = [
   '/manifest.json',        // PWA 配置檔
   
   // *** PWA ICON 檔案 ***
-  '/icon-192.png',         // Android / Chrome PWA Icon (192x192)
-  '/icon-512.png',         // Android / Chrome PWA Icon (512x512)
-  '/apple-touch-icon.png', // iOS/Safari PWA Icon
+  '/icons/icon-192.png',         // Android / Chrome PWA Icon (192x192)
+  '/icons/icon-512.png',         // Android / Chrome PWA Icon (512x512)
+  '/icons/apple-touch-icon.png', // iOS/Safari PWA Icon
   
   // *** 其他靜態資源 ***
   // 如果您有 data.json 在本地 (而不是遠程 GitHub)，請取消註釋以下行
@@ -89,4 +89,5 @@ self.addEventListener('fetch', (event) => {
     );
   }
 });
+
 
