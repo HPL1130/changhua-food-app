@@ -357,16 +357,15 @@
 
     // ====== PWA Service Worker 註冊 (已修正 GitHub Pages 路徑問題) ======
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        // *** 根據您的儲存庫名稱 'changhua-food-app' 修正路徑 ***
-        const scopePath = '/changhua-food-app/';
-        navigator.serviceWorker.register(scopePath + 'service-worker.js', { scope: scopePath })
-          .then(registration => {
-            console.log('Service Worker 註冊成功，範圍：', registration.scope);
-          })
-          .catch(error => {
-            console.error('Service Worker 註冊失敗:', error);
-          });
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            // 註冊成功
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            // 註冊失敗
+            console.log('ServiceWorker registration failed: ', err);
+          });
       });
     }
     // =======================================================
@@ -375,6 +374,7 @@
   </script>
 </body>
 </html>
+
 
 
 
