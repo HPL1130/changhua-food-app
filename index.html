@@ -355,23 +355,25 @@
       window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('彰化縣' + address)}`, '_blank');
     }
 
-    // ====== PWA Service Worker 註冊 (已修正 GitHub Pages 路徑問題) ======
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/changhua-food-app/service-worker.js')
-      .then(function(registration) {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function(err) {
-        console.log('ServiceWorker registration failed: ', err);
-      });
-  });
-}
+   // ====== PWA Service Worker 註冊 (修正為 GitHub Pages 子目錄路徑) ======
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        // 這是修正過的路徑！/changhua-food-app/ 是您的專案名稱
+        navigator.serviceWorker.register('/changhua-food-app/service-worker.js')
+          .then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
 // =======================================================
 
     loadData(); 
   </script>
 </body>
 </html>
+
 
 
 
