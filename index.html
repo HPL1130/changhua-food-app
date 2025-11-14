@@ -358,7 +358,7 @@
     // ====== PWA Service Worker 註冊 (已修正 GitHub Pages 路徑問題) ======
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('service-worker.js')
           .then(function(registration) {
             // 註冊成功
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -374,6 +374,7 @@
   </script>
 </body>
 </html>
+
 
 
 
