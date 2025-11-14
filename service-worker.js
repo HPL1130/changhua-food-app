@@ -1,5 +1,5 @@
 // 緩存的名稱 - 每次更新緩存內容時，請更改版本號
-const CACHE_NAME = 'changhua-food-cache-v10'; 
+const CACHE_NAME = 'changhua-food-cache-v12'; 
 
 // 需要預先快取的所有檔案列表 (清單)
 // **請確保您的 ICON 檔案路徑正確且已包含在此列表中**
@@ -89,3 +89,4 @@ self.addEventListener('fetch', (event) => {
     );
   }
 });
+
