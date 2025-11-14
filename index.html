@@ -53,7 +53,7 @@
         background:#ffebeb; 
         color:#f04a4a; 
         transition:0.3s;
-        flex-grow: 1; /* 讓按鈕在小螢幕上平均分佈 */
+        flex-grow: 1; 
         min-width: 80px;
     }
     .btn.active{background:#f04a4a;color:white;box-shadow:0 3px 10px rgba(240, 74, 74, 0.5)} 
@@ -67,7 +67,7 @@
         width:100%;
         font-size:1rem;
         transition:0.3s;
-        margin-top: 5px; /* 在小螢幕上與按鈕區隔 */
+        margin-top: 5px; 
     }
     input:focus, select:focus {
         border-color: #f04a4a; 
@@ -84,7 +84,7 @@
         border-radius:15px; 
         box-shadow:0 4px 12px rgba(0,0,0,0.1); 
         transition:0.3s;
-        line-height: 1.8; /* 增加行距，更易閱讀 */
+        line-height: 1.8; 
     }
     .item:hover {
         transform: translateY(-2px); 
@@ -94,7 +94,7 @@
 
     /* 導航按鈕 - 藍色與圓角 */
     .map-btn{
-        background:#1a73e8; /* Google 藍 */
+        background:#1a73e8; 
         color:white;
         padding:8px 16px;
         border:none;
@@ -120,7 +120,7 @@
     /* 資訊與載入狀態 */
     #noData, #loading{text-align:center;padding:50px;color:#ff6b6b;font-style:italic}
     
-    /* 響應式設計：小螢幕下搜尋框和選單佔滿一列 */
+    /* 響應式設計 */
     @media (max-width:600px){
         .controls{flex-direction:column; align-items: stretch;}
         .btn{flex-grow: 1; min-width: unset;}
@@ -152,8 +152,8 @@
     const DATA_URL = 'https://raw.githubusercontent.com/HPL1130/changhua-food-data/main/data.json';
     let data = [], filteredData = [], currentCategory = 'kongroufan';
 
-    // 你的 95 筆備用資料（保持不變，防止線上檔案下載失敗）
-    const fallbackData = [ /* 你的 95 筆資料 (為避免程式碼過長，在此省略，但您貼的資料是完整的) */ 
+    // 你的 95 筆備用資料（完整包含，防止線上檔案下載失敗）
+    const fallbackData = [ 
       {"category":"sushi","district":"彰化市","name":"林家素食","phone":"04-732-1234","address":"彰化縣彰化市永樂街50號","google":4.5,"feature":"百年老店，手工油麵+豆包","dish":"素食麵 ($40)","time":"07:00-14:00","price":"$40-80"},
       {"category":"sushi","district":"彰化市","name":"天公壇素食麵","phone":"04-732-5678","address":"彰化縣彰化市太平街3號","google":4.6,"feature":"自家炸菜包/豆皮脆","dish":"素食麵+菜包 ($45)","time":"06:00-13:00","price":"$40-80"},
       {"category":"sushi","district":"彰化市","name":"長安街素食","phone":"04-732-9012","address":"彰化縣彰化市長安街100號","google":4.4,"feature":"豆包最強，Google 2000+評","dish":"素黃麵乾+豆包 ($50)","time":"07:00-15:00","price":"$40-80"},
@@ -328,11 +328,26 @@
     }
 
     function openMap(address) {
-      // 修正 Google 地圖連結的格式，確保地址正確編碼和導航
+      // 使用 Google 地圖連結，並正確編碼地址
       window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('彰化縣' + address)}`, '_blank');
     }
 
-    loadData();
+    // ====== PWA Service Worker 註冊 (確保 ICON 穩定顯示) ======
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        // 確保 service-worker.js 檔案存在於根目錄
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('Service Worker 註冊成功:', registration);
+          })
+          .catch(error => {
+            console.error('Service Worker 註冊失敗:', error);
+          });
+      });
+    }
+    // =======================================================
+
+    loadData(); 
   </script>
 </body>
 </html>
