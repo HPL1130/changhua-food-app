@@ -356,24 +356,23 @@
     }
 
     // ====== PWA Service Worker 註冊 (已修正 GitHub Pages 路徑問題) ======
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(function(registration) {
-            // 註冊成功
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }, function(err) {
-            // 註冊失敗
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      });
-    }
-    // =======================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/changhua-food-app/service-worker.js')
+      .then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+// =======================================================
 
     loadData(); 
   </script>
 </body>
 </html>
+
 
 
 
