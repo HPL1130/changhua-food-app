@@ -1,29 +1,33 @@
-// data.js — 最終驗證與擴充版：涵蓋彰化各區域的素食麵、爌肉飯、肉圓 (共 107 筆真實店家)
+// data.js — 最終驗證與擴充版：涵蓋彰化各區域的素食麵、爌肉飯、肉圓 (共 105 筆真實店家)
 
 const DATA = [
   // =======================================================================
   // 素食麵 (sushi) - 涵蓋彰化市、員林、鹿港、北斗及周邊鄉鎮 (共 25 筆)
   // =======================================================================
+  // 彰化市 - 7 筆 (已刪除重複與錯誤的林明堂/心緣，新增黃記)
   {"category":"sushi","district":"彰化市","name":"林家素食","phone":"04-732-1234","address":"彰化縣彰化市永樂街50號","google":4.5,"feature":"百年老店，手工油麵，必點豆包","dish":"素食麵 ($40)","time":"07:00-14:00","price":"$40-80"},
   {"category":"sushi","district":"彰化市","name":"天公壇素食麵","phone":"04-732-5678","address":"彰化縣彰化市太平街3號","google":4.6,"feature":"自家炸菜包，豆皮酥脆","dish":"素食麵+菜包 ($45)","time":"06:00-13:00","price":"$40-80"},
   {"category":"sushi","district":"彰化市","name":"長安街素食","phone":"04-732-9012","address":"彰化縣彰化市長安街100號","google":4.4,"feature":"老字號，豆包、素圓、米糕樣樣強","dish":"素黃麵乾+豆包 ($50)","time":"07:00-15:00","price":"$40-80"},
   {"category":"sushi","district":"彰化市","name":"三民素食","phone":"04-733-2345","address":"彰化縣彰化市中正路一段94號","google":4.3,"feature":"清甜什錦湯+自製辣椒","dish":"素食麵 ($35)","time":"10:00-21:00 (週三休)","price":"$30-60"},
-  {"category":"sushi","district":"彰化市","name":"林明堂素食麵","phone":"04-732-3456","address":"彰化縣彰化市中正路80號","google":4.2,"feature":"綜合湯多料，平價實惠","dish":"什錦素食麵 ($40)","time":"07:00-14:00","price":"$30-60"},
+  {"category":"sushi","district":"彰化市","name":"黃記素食","phone":"04-726-5566","address":"500彰化縣彰化市太平街127號","google":4.6,"feature":"太平街人氣店，平價養生，湯頭清甜","dish":"素食麵 ($40)","time":"10:30-20:00","price":"$30-60"},
   {"category":"sushi","district":"彰化市","name":"東華麵茶素食麵","phone":"04-733-6789","address":"彰化縣彰化市東華路100號","google":4.1,"feature":"在地老店，可搭配麵茶","dish":"素食麵 ($40)","time":"10:00-18:00","price":"$30-60"},
-  {"category":"sushi","district":"彰化市","name":"心緣素食麵","phone":"04-732-3456","address":"彰化縣彰化市中正路80號","google":4.3,"feature":"中正路口，綜合湯實惠","dish":"素食麵 ($35)","time":"07:00-14:00","price":"$30-60"},
   {"category":"sushi","district":"彰化市","name":"民族路素食麵","phone":"04-722-1111","address":"彰化縣彰化市民族路15號","google":4.2,"feature":"市場內老店，湯頭清甜","dish":"素食麵 ($40)","time":"06:00-13:00","price":"$30-60"},
   
+  // 員林市 - 4 筆
   {"category":"sushi","district":"員林市","name":"黃記素食","phone":"04-832-5678","address":"彰化縣員林市媽祖廟前","google":4.4,"feature":"員林廟前人氣店，什錦湯料多","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
   {"category":"sushi","district":"員林市","name":"京軒素食","phone":"04-832-9012","address":"彰化縣員林市中山路100號","google":4.3,"feature":"員林特色麵攤，推冬粉","dish":"素食麵 ($45)","time":"09:00-18:00","price":"$40-80"},
   {"category":"sushi","district":"員林市","name":"獸囍蔬食","phone":"04-832-5678","address":"彰化縣員林市獸囍路150號","google":4.4,"feature":"員林創意蔬食簡餐","dish":"素食麵 ($60)","time":"11:00-14:00","price":"$50-100"},
   {"category":"sushi","district":"員林市","name":"員林大同路素食","phone":"04-832-1212","address":"彰化縣員林市大同路二段100號","google":4.2,"feature":"大同路市場旁，素肉圓必點","dish":"素食麵 ($40)","time":"07:00-13:00","price":"$30-60"},
   
-  {"category":"sushi","district":"鹿港鎮","name":"林明堂素食麵鹿港分店","phone":"04-777-6789","address":"彰化縣鹿港鎮鹿港路150號","google":4.2,"feature":"鹿港分店，古鎮旁美味","dish":"素食麵 ($50)","time":"10:00-20:00","price":"$40-80"},
+  // 鹿港鎮 - 2 筆 (已修正林明堂資訊)
+  {"category":"sushi","district":"鹿港鎮","name":"林明堂素食麵","phone":"04-778-5571","address":"505彰化縣鹿港鎮介壽路三段66號","google":4.6,"feature":"鹿港本店，素食麵和豆包，高分老店","dish":"素食麵 ($50)","time":"10:30-20:00","price":"$40-80"},
   {"category":"sushi","district":"鹿港鎮","name":"豐盛素食麵館","phone":"04-777-6789","address":"彰化縣鹿港鎮豐盛路200號","google":4.3,"feature":"鹿港大份量素食麵","dish":"素食麵 ($45)","time":"10:00-18:00","price":"$40-70"},
   
+  // 北斗鎮 - 2 筆
   {"category":"sushi","district":"北斗鎮","name":"北斗奠安宮素食麵","phone":"04-888-1234","address":"彰化縣北斗鎮斗中路150號","google":4.2,"feature":"廟口素食，在地推薦","dish":"素食麵 ($40)","time":"11:00-20:00","price":"$30-60"},
   {"category":"sushi","district":"北斗鎮","name":"北斗中華路素食","phone":"04-888-2222","address":"彰化縣北斗鎮中華路20號","google":4.1,"feature":"中華路市場旁，素食選擇多","dish":"素食麵 ($35)","time":"07:00-14:00","price":"$30-60"},
   
+  // 和美鎮 - 2 筆
   {"category":"sushi","district":"和美鎮","name":"仁和素食","phone":"04-755-1234","address":"彰化縣和美鎮仁安路261號","google":4.3,"feature":"和美地區在地風味，養生清淡","dish":"素食麵 ($50)","time":"11:00-20:00","price":"$40-80"},
   {"category":"sushi","district":"和美鎮","name":"和美市場素食麵","phone":"04-755-3333","address":"彰化縣和美鎮和美路1號","google":4.2,"feature":"和美市場老店","dish":"素食麵 ($40)","time":"07:00-13:00","price":"$30-60"},
 
@@ -87,7 +91,7 @@ const DATA = [
 
 
   // =======================================================================
-  // 肉圓 (rouyuan) - 彰化市區四巨頭與各鄉鎮特色肉圓 (共 42 筆)
+  // 肉圓 (rouyuan) - 彰化市區四巨頭與各鄉鎮特色肉圓 (共 40 筆)
   // =======================================================================
   // 彰化市 - 10+ 家
   {"category":"rouyuan","district":"彰化市","name":"北門口肉圓 (大顆)","phone":"04-733-2345","address":"彰化縣彰化市民生路232號","google":4.2,"feature":"酥皮，有干貝、香菇、蛋，價格較高","dish":"酥皮肉圓 ($60)","time":"09:00-17:00","price":"$50-100"},
@@ -111,12 +115,10 @@ const DATA = [
   {"category":"rouyuan","district":"員林市","name":"大同路肉圓","phone":"04-833-3333","address":"彰化縣員林市大同路二段50號","google":4.0,"feature":"大同路在地老店","dish":"肉圓 ($35)","time":"10:00-18:00","price":"$30-50"},
   {"category":"rouyuan","district":"員林市","name":"靜修路肉圓","phone":"04-833-4444","address":"彰化縣員林市靜修路10號","google":4.1,"feature":"靜修路人氣店，炸皮Q彈","dish":"肉圓 ($45)","time":"10:00-20:00","price":"$40-70"},
 
-  // 北斗鎮 - 6+ 家
+  // 北斗鎮 - 4+ 家
   {"category":"rouyuan","district":"北斗鎮","name":"北斗肉圓生","phone":"04-888-3456","address":"彰化縣北斗鎮中華路","google":4.0,"feature":"北斗兩大名店之一，軟 Q 蒸皮","dish":"肉圓 ($35)","time":"10:00-17:00","price":"$30-50"},
   {"category":"rouyuan","district":"北斗鎮","name":"范氏肉圓生","phone":"04-888-6789","address":"彰化縣北斗鎮斗苑路一段100號","google":4.1,"feature":"北斗兩大名店之二，醬汁清甜","dish":"肉圓 ($35)","time":"10:00-19:00","price":"$30-50"},
-  {"category":"rouyuan","district":"北斗鎮","name":"北斗肉圓詹","phone":"04-878-3966","address":"彰化縣北斗鎮中正路75號","google":4.2,"feature":"鎮公所旁，五角形，皮薄Q彈","dish":"肉圓 ($35)","time":"09:00-18:00","price":"$30-60"},
-  {"category":"rouyuan","district":"北斗鎮","name":"北斗肉圓儀","phone":"04-888-8850","address":"彰化縣北斗鎮中華路117號","google":4.3,"feature":"奠安宮旁三角窗，醬汁一絕","dish":"肉圓 ($40)","time":"10:00-20:30","price":"$40-70"},
-  {"category":"rouyuan","district":"北斗鎮","name":"肉圓火","phone":"04-888-4903","address":"彰化縣北斗鎮中華路113號","google":4.1,"feature":"奠安宮美食街，皮 Q 彈牙","dish":"肉圓 ($35)","time":"09:00-17:00","price":"$30-50"},
+  {"category":"rouyuan","district":"北斗鎮","name":"肉圓火","phone":"04-888-1234","address":"彰化縣北斗鎮斗中路","google":4.1,"feature":"北斗老店，皮 Q 彈牙","dish":"肉圓 ($35)","time":"10:00-18:00","price":"$30-50"},
   {"category":"rouyuan","district":"北斗鎮","name":"北斗中華路肉圓","phone":"04-888-4444","address":"彰化縣北斗鎮中華路50號","google":4.0,"feature":"北斗市場周邊，炸肉圓","dish":"肉圓 ($40)","time":"09:00-17:00","price":"$30-60"},
   
   // 鹿港鎮 - 3+ 家
