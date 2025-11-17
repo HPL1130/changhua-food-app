@@ -5,7 +5,6 @@
     <title>彰化美食三寶指南</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/icon-96.png">
 
@@ -25,10 +24,13 @@
             font-weight:700;
         }
 
+        .category-buttons, .district-select-box {
+            margin:20px 15px;
+        }
+
         .category-buttons {
             display:flex;
             justify-content:space-around;
-            margin:20px 10px;
         }
 
         .category-buttons button {
@@ -46,6 +48,14 @@
         .category-buttons button.active {
             background:#17a26b;
             color:white;
+        }
+
+        select {
+            width:100%;
+            padding:12px;
+            font-size:17px;
+            border-radius:10px;
+            border:1px solid #ccc;
         }
 
         #list {
@@ -76,10 +86,27 @@
 <body>
 <header>彰化美食三寶指南</header>
 
+<!-- 三大主分類 -->
 <div class="category-buttons">
     <button id="btn-sushi" onclick="selectCategory('sushi')">素食麵</button>
     <button id="btn-rouyuan" onclick="selectCategory('rouyuan')">肉圓</button>
     <button id="btn-kongroufan" onclick="selectCategory('kongroufan')">爌肉飯</button>
+</div>
+
+<!-- 地區篩選 -->
+<div class="district-select-box">
+    <select id="districtSelect" onchange="render()">
+        <option value="全部">全部地區</option>
+        <option value="彰化市">彰化市</option>
+        <option value="員林市">員林市</option>
+        <option value="鹿港鎮">鹿港鎮</option>
+        <option value="溪湖鎮">溪湖鎮</option>
+        <option value="和美鎮">和美鎮</option>
+        <option value="花壇鄉">花壇鄉</option>
+        <option value="大村鄉">大村鄉</option>
+        <option value="芬園鄉">芬園鄉</option>
+        <option value="永靖鄉">永靖鄉</option>
+    </select>
 </div>
 
 <div id="list"></div>
@@ -91,15 +118,24 @@ let currentCategory = "sushi";
 
 function selectCategory(cat){
     currentCategory = cat;
-    document.querySelectorAll(".category-buttons button").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".category-buttons button")
+        .forEach(btn => btn.classList.remove("active"));
     document.getElementById("btn-"+cat).classList.add("active");
     render();
 }
 
 function render(){
+    const region = document.getElementById("districtSelect").value;
     const root = document.getElementById("list");
     root.innerHTML = "";
-    const filtered = DATA.filter(i => i.category === currentCategory);
+
+    let filtered = DATA.filter(i => i.category === currentCategory);
+
+    if(region !== "全部"){
+        filtered = filtered.filter(i => i.district === region);
+    }
+
+    filtered.sort((a,b) => b.google - a.google);
 
     filtered.forEach(item=>{
         const div = document.createElement("div");
