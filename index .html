@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>彰化美食 TOP20</title>
+<style>
+body { font-family: sans-serif; background:#f5f5f5; padding:20px; }
+header h1 { text-align:center; color:#00664F; }
+.container { max-width:900px; margin:auto; }
+.category-buttons { display:flex; gap:10px; justify-content:center; margin:15px 0; }
+.category-buttons button {
+  flex:1; padding:10px; background:#00664F; color:white; border:none; border-radius:10px; font-size:1.1rem;
+}
+table { width:100%; border-collapse:collapse; background:white; margin-top:15px; }
+th, td { padding:10px; border-bottom:1px solid #ddd; text-align:center; }
+</style>
+</head>
+<body>
+<header><h1>彰化美食 TOP20</h1></header>
+
+<div class="container">
+
+  <div class="category-buttons">
+    <button data-cat="kongroufan">爌肉飯</button>
+    <button data-cat="rouyuan">肉圓</button>
+    <button data-cat="sushi">素食麵</button>
+  </div>
+
+  <div style="text-align:center;">
+    <select id="districtFilter">
+      <option value="">全部地區</option>
+    </select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>排名</th><th>店名</th><th>地區</th><th>Google</th><th>招牌</th><th>地址</th>
+      </tr>
+    </thead>
+    <tbody id="tb"></tbody>
+  </table>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+const districtSet = new Set(data.map(x => x.district));
+const districtFilter = document.getElementById("districtFilter");
+districtSet.forEach(d => {
+  const opt = document.createElement("option");
+  opt.value = d;
+  opt.textContent = d;
+  districtFilter.appendChild(opt);
+});
+
+let currentCategory = "";
+render();
+
+document.querySelectorAll(".category-buttons button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentCategory = btn.dataset.cat;
+    render();
+  });
+});
+
+districtFilter.addEventListener("change", render);
+
+function render() {
+  const district = districtFilter.value;
+  let list = data.slice();
+
+  if (currentCategory) list = list.filter(x => x.category === currentCategory);
+  if (district) list = list.filter(x => x.district === district);
+
+  list.sort((a,b) => b.google - a.google);
+  list = list.slice(0,20);
+
+  const tb = document.getElementById("tb");
+  tb.innerHTML = "";
+  list.forEach((x,i)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td>${x.name}</td>
+      <td>${x.district}</td>
+      <td>${x.google}</td>
+      <td>${x.dish||""}</td>
+      <td>${x.address}</td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+</script>
+</body>
+</html>
