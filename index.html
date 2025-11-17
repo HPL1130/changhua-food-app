@@ -67,10 +67,8 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
     <select id="categoryFilter">
       <option value="">全部</option>
       <option value="kongroufan">爌肉飯</option>
-      <option value="rouyuan_bawan">肉圓 (合併 rouyuan/bawan)</option>
+      <option value="rouyuan">肉圓</option>
       <option value="sushi">素食麵</option>
-      <option value="chicken">雞肉飯/雞排</option>
-      <option value="drink">飲料</option>
     </select>
 
     <button onclick="render()">查詢</button>
@@ -86,7 +84,6 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
 // 初始化地區
 function initFilters() {
   const set = new Set();
-  // 檢查 data.js
   DATA.forEach(i => set.add(i.district));
   const sel = document.getElementById("districtFilter");
 
@@ -103,7 +100,7 @@ function fuzzyMatch(text, keyword) {
   return text.toLowerCase().includes(keyword.toLowerCase());
 }
 
-// 主渲染 (修正了類別篩選邏輯和導航連結)
+// 主渲染 (精簡類別篩選邏輯)
 function render() {
   const district = document.getElementById("districtFilter").value;
   const category = document.getElementById("categoryFilter").value;
@@ -114,14 +111,9 @@ function render() {
   // 依地區
   if (district) list = list.filter(i => i.district === district);
 
-  // 依類別 (修正點：處理 rouyuan_bawan 合併類別，確保所有肉圓都能被篩選出來)
+  // 依類別 (因 data.js 已清理，直接篩選 category 即可)
   if (category) {
-    if (category === 'rouyuan_bawan') {
-      // 讓選擇 '肉圓' 同時匹配 'rouyuan' 和 'bawan' 類別的資料
-      list = list.filter(i => i.category === 'rouyuan' || i.category === 'bawan');
-    } else {
-      list = list.filter(i => i.category === category);
-    }
+    list = list.filter(i => i.category === category);
   }
 
   // 模糊搜尋 (多欄位)
@@ -142,7 +134,7 @@ function render() {
   box.innerHTML = "";
 
   list.forEach((i, idx) => {
-    // 修正點：修正 Google Maps 導航連結的 URL 格式錯誤 (使用正確的 query 參數)
+    // 修正 Google Maps 導航連結的 URL 格式
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
@@ -167,7 +159,6 @@ function render() {
 // 啟動 service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    // 修正點：將檔名從 './sw.js' 改為您實際的檔名 'service-worker.js'
     navigator.serviceWorker.register('./service-worker.js') 
       .then(function(registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
