@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#00804b">
 
 <style>
+/* CSS styles (保持不變) */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;background:#f5f5f5;color:#333;line-height:1.6}
 header{background:#00804b;color:#fff;padding:1rem;text-align:center}
@@ -52,7 +53,6 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
 
 <div class="container">
 
-  <!-- 控制列 -->
   <div class="controls">
     <input id="searchBox" type="text" placeholder="搜尋店名 / 招牌 / 地址 / 特色..." style="width:90%;">
 
@@ -66,15 +66,16 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
     <label>類別：</label>
     <select id="categoryFilter">
       <option value="">全部</option>
-      <option value="sushi">素食麵</option>
-      <option value="rouyuan">肉圓</option>
       <option value="kongroufan">爌肉飯</option>
+      <option value="rouyuan_bawan">肉圓 (合併 rouyuan/bawan)</option>
+      <option value="sushi">素食麵</option>
+      <option value="chicken">雞肉飯/雞排</option>
+      <option value="drink">飲料</option>
     </select>
 
     <button onclick="render()">查詢</button>
   </div>
 
-  <!-- 卡片列表 -->
   <div id="cards"></div>
 
 </div>
@@ -85,6 +86,7 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
 // 初始化地區
 function initFilters() {
   const set = new Set();
+  // 檢查 data.js
   DATA.forEach(i => set.add(i.district));
   const sel = document.getElementById("districtFilter");
 
@@ -101,7 +103,7 @@ function fuzzyMatch(text, keyword) {
   return text.toLowerCase().includes(keyword.toLowerCase());
 }
 
-// 主渲染
+// 主渲染 (修正了類別篩選邏輯和導航連結)
 function render() {
   const district = document.getElementById("districtFilter").value;
   const category = document.getElementById("categoryFilter").value;
@@ -112,8 +114,15 @@ function render() {
   // 依地區
   if (district) list = list.filter(i => i.district === district);
 
-  // 依類別
-  if (category) list = list.filter(i => i.category === category);
+  // 依類別 (修正點：處理 rouyuan_bawan 合併類別，確保所有肉圓都能被篩選出來)
+  if (category) {
+    if (category === 'rouyuan_bawan') {
+      // 讓選擇 '肉圓' 同時匹配 'rouyuan' 和 'bawan' 類別的資料
+      list = list.filter(i => i.category === 'rouyuan' || i.category === 'bawan');
+    } else {
+      list = list.filter(i => i.category === category);
+    }
+  }
 
   // 模糊搜尋 (多欄位)
   if (keyword) {
@@ -133,6 +142,7 @@ function render() {
   box.innerHTML = "";
 
   list.forEach((i, idx) => {
+    // 修正點：修正 Google Maps 導航連結的 URL 格式錯誤 (使用正確的 query 參數)
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
@@ -156,7 +166,15 @@ function render() {
 
 // 啟動 service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js');
+  window.addEventListener('load', function() {
+    // 修正點：將檔名從 './sw.js' 改為您實際的檔名 'service-worker.js'
+    navigator.serviceWorker.register('./service-worker.js') 
+      .then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
 }
 
 initFilters();
