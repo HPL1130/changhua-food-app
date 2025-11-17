@@ -1,223 +1,124 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>彰化真食記 v9.0 - 免費動態版</title>
-  <link rel="manifest" href="data:application/manifest+json,{
-    \"name\":\"彰化真食記\",\"short_name\":\"彰化食記\",
-    \"start_url\":\".\",\"display\":\"standalone\",
-    \"background_color\":\"#fafafa\",\"theme_color\":\"#d4380d\"
-  }">
-  <style>
-    body{font-family:system-ui;margin:0;padding:10px;background:#fafafa;line-height:1.6}
-    .header{background:linear-gradient(135deg,#d4380d,#a21c00);color:white;padding:20px;border-radius:12px;margin-bottom:12px;text-align:center}
-    .controls{display:flex;flex-wrap:wrap;gap:10px;padding:12px;background:white;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);align-items:center}
-    .btn{padding:12px 18px;border:none;border-radius:25px;cursor:pointer;font-weight:bold;background:#eee}
-    .btn.active{background:#d4380d;color:white}
-    input,select{padding:12px 16px;border:1.5px solid #ddd;border-radius:25px;width:100%;font-size:1rem}
-    .list{list-style:none;padding:0;max-height:68vh;overflow-y:auto}
-    .item{background:white;margin:10px 0;padding:16px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
-    .item h3{margin:0 0 8px;color:#d4380d;font-size:1.15rem}
-    .map-btn{background:#1a73e8;color:white;padding:7px 14px;border:none;border-radius:6px;cursor:pointer;margin-top:8px}
-    .edit-btn{background:#28a745;color:white;padding:10px 16px;border:none;border-radius:25px;cursor:pointer;font-size:0.9rem}
-    #noData, #loading{text-align:center;padding:50px;color:#999;font-style:italic}
-    @media (max-width:600px){.controls{flex-direction:column}}
-  </style>
+    <meta charset="UTF-8">
+    <title>彰化美食三寶指南</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-96.png">
+
+    <style>
+        body {
+            margin:0;
+            font-family:"Noto Sans TC", sans-serif;
+            background:#f7f7f7;
+        }
+
+        header {
+            background:#17a26b;
+            padding:20px;
+            text-align:center;
+            color:white;
+            font-size:24px;
+            font-weight:700;
+        }
+
+        .category-buttons {
+            display:flex;
+            justify-content:space-around;
+            margin:20px 10px;
+        }
+
+        .category-buttons button {
+            flex:1;
+            margin:0 5px;
+            padding:15px 0;
+            font-size:18px;
+            border:none;
+            border-radius:10px;
+            background:white;
+            font-weight:600;
+            box-shadow:0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .category-buttons button.active {
+            background:#17a26b;
+            color:white;
+        }
+
+        #list {
+            padding:15px;
+        }
+
+        .card {
+            background:white;
+            padding:15px;
+            border-radius:12px;
+            margin-bottom:15px;
+            box-shadow:0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .name {
+            font-size:20px;
+            font-weight:700;
+            margin-bottom:6px;
+        }
+
+        .row {
+            font-size:14px;
+            margin:2px 0;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="header">
-    <h1>彰化真食記 v9.0</h1>
-    <p>免費動態更新｜<a href="https://github.com/HPL1130/changhua-food-data" target="_blank" style="color:#fff;text-decoration:underline">編輯資料</a></p>
-  </div>
-  <div class="controls">
-    <button class="btn active" onclick="switchCategory('kongroufan')">爌肉飯</button>
-    <button class="btn" onclick="switchCategory('rouyuan')">肉圓</button>
-    <button class="btn" onclick="switchCategory('sushi')">素食麵</button>
-    <input type="text" id="search" placeholder="搜店名/地址/特色..." oninput="filterData()">
-    <select id="district" onchange="filterData()">
-      <option value="">所有行政區</option>
-    </select>
-    <a href="https://github.com/HPL1130/changhua-food-data/edit/main/data.json" target="_blank" class="edit-btn">編輯資料</a>
-  </div>
-  <div id="loading">載入中...</div>
-  <ul id="list" class="list"></ul>
-  <div id="noData">請選擇分類或輸入關鍵字</div>
+<header>彰化美食三寶指南</header>
 
-  <script>
-    const DATA_URL = 'https://raw.githubusercontent.com/HPL1130/changhua-food-data/main/data.json';
-    let data = [], filteredData = [], currentCategory = 'kongroufan';
+<div class="category-buttons">
+    <button id="btn-sushi" onclick="selectCategory('sushi')">素食麵</button>
+    <button id="btn-rouyuan" onclick="selectCategory('rouyuan')">肉圓</button>
+    <button id="btn-kongroufan" onclick="selectCategory('kongroufan')">爌肉飯</button>
+</div>
 
-    // 內建 95 筆備用資料（離線用）
-    const fallbackData = [
-      {"category":"sushi","district":"彰化市","name":"林家素食","phone":"04-732-1234","address":"彰化縣彰化市永樂街50號","google":4.5,"feature":"百年老店，手工油麵+豆包","dish":"素食麵 ($40)","time":"07:00-14:00","price":"$40-80"},
-      {"category":"sushi","district":"彰化市","name":"天公壇素食麵","phone":"04-732-5678","address":"彰化縣彰化市太平街3號","google":4.6,"feature":"自家炸菜包/豆皮脆","dish":"素食麵+菜包 ($45)","time":"06:00-13:00","price":"$40-80"},
-      {"category":"sushi","district":"彰化市","name":"長安街素食","phone":"04-732-9012","address":"彰化縣彰化市長安街100號","google":4.4,"feature":"豆包最強，Google 2000+評","dish":"素黃麵乾+豆包 ($50)","time":"07:00-15:00","price":"$40-80"},
-      {"category":"sushi","district":"彰化市","name":"三民素食","phone":"04-733-2345","address":"彰化縣彰化市中正路一段94號","google":4.3,"feature":"清甜什錦湯+自製辣椒","dish":"素食麵 ($35)","time":"10:00-21:00 (週三休)","price":"$30-60"},
-      {"category":"sushi","district":"彰化市","name":"林明堂素食麵","phone":"04-732-3456","address":"彰化縣彰化市中正路80號","google":4.5,"feature":"綜合湯多料，平價實惠","dish":"什錦素食麵 ($40)","time":"07:00-14:00","price":"$30-60"},
-      {"category":"sushi","district":"彰化市","name":"東華素食麵茶","phone":"04-733-6789","address":"彰化縣彰化市東華路100號","google":4.5,"feature":"東華茶配，湯頭清甜","dish":"素食麵 ($40)","time":"10:00-18:00","price":"$30-60"},
-      {"category":"sushi","district":"員林市","name":"黃記素食","phone":"04-832-5678","address":"彰化縣員林市媽祖廟前","google":4.4,"feature":"什錦湯+菜包實在","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
-      {"category":"sushi","district":"員林市","name":"京軒素食","phone":"04-832-9012","address":"彰化縣員林市中山路100號","google":4.3,"feature":"平價多菜，冬粉推","dish":"素食麵 ($45)","time":"09:00-18:00","price":"$40-80"},
-      {"category":"sushi","district":"鹿港鎮","name":"林明堂素食麵鹿港分店","phone":"04-777-6789","address":"彰化縣鹿港鎮鹿港路150號","google":4.4,"feature":"古鎮旁，綜合湯鮮","dish":"素食麵 ($50)","time":"10:00-20:00","price":"$40-80"},
-      {"category":"sushi","district":"北斗鎮","name":"北斗素食麵","phone":"04-888-1234","address":"彰化縣北斗鎮中華路84號","google":4.2,"feature":"北斗清淡","dish":"素食麵 ($40)","time":"10:00-18:00","price":"$30-60"},
-      {"category":"sushi","district":"和美鎮","name":"和美素食麵","phone":"04-755-123","address":"彰化縣和美鎮仁安路261號","google":4.3,"feature":"鄉村風味","dish":"素食麵 ($35)","time":"11:00-19:00","price":"$30-60"},
-      {"category":"sushi","district":"彰化市","name":"社頭-彰化素食","phone":"04-732-5678","address":"彰化縣彰化市忠孝三路16號","google":4.4,"feature":"社頭素食，什錦湯多樣","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
-      {"category":"sushi","district":"彰化市","name":"心緣素食麵","phone":"04-732-3456","address":"彰化縣彰化市中正路80號","google":4.3,"feature":"綜合湯實惠","dish":"素食麵 ($35)","time":"07:00-14:00","price":"$30-60"},
-      {"category":"sushi","district":"彰化市","name":"沐素料理 蔬食餐廳","phone":"04-733-2345","address":"彰化縣彰化市沐素路50號","google":4.4,"feature":"沐素創意","dish":"素食麵 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"sushi","district":"員林市","name":"員林媽祖廟前素食麵","phone":"04-832-9012","address":"彰化縣員林市媽祖廟前100號","google":4.2,"feature":"廟前人氣","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
-      {"category":"sushi","district":"鹿港鎮","name":"宏慈素食館","phone":"04-777-6789","address":"彰化縣鹿港鎮宏慈路200號","google":4.3,"feature":"宏慈老店","dish":"素食麵 ($40)","time":"11:00-19:00","price":"$30-60"},
-      {"category":"sushi","district":"北斗鎮","name":"北斗奠安宮素食麵","phone":"04-888-1234","address":"彰化縣北斗鎮斗中路150號","google":4.2,"feature":"廟口素食","dish":"素食麵 ($40)","time":"11:00-20:00","price":"$30-60"},
-      {"category":"sushi","district":"和美鎮","name":"仁和素食","phone":"04-755-1234","address":"彰化縣和美鎮仁安路261號","google":4.3,"feature":"仁和養生","dish":"素食麵 ($50)","time":"11:00-20:00","price":"$40-80"},
-      {"category":"sushi","district":"彰化市","name":"清心緣蔬食坊","phone":"04-733-6789","address":"彰化縣彰化市清心路100號","google":4.3,"feature":"清心多菜","dish":"素食麵 ($45)","time":"10:00-18:00","price":"$40-70"},
-      {"category":"sushi","district":"員林市","name":"獸囍蔬食","phone":"04-832-5678","address":"彰化縣員林市獸囍路150號","google":4.4,"feature":"蔬食百匯","dish":"素食麵 ($60)","time":"11:00-14:00","price":"$50-100"},
-      {"category":"sushi","district":"鹿港鎮","name":"豐盛素食麵館","phone":"04-777-6789","address":"彰化縣鹿港鎮豐盛路200號","google":4.3,"feature":"豐盛多樣","dish":"素食麵 ($45)","time":"10:00-18:00","price":"$40-70"},
-      {"category":"sushi","district":"北斗鎮","name":"北斗素食","phone":"04-888-1234","address":"彰化縣北斗鎮中華路84號","google":4.2,"feature":"北斗養生","dish":"素食麵 ($40)","time":"10:00-18:00","price":"$30-60"},
-      {"category":"sushi","district":"和美鎮","name":"和美仁和素食","phone":"04-755-1234","address":"彰化縣和美鎮仁安路261號","google":4.3,"feature":"仁和清淡","dish":"素食麵 ($35)","time":"11:00-19:00","price":"$30-60"},
-      {"category":"sushi","district":"彰化市","name":"蘇30年老店古早味素食水煎包","phone":"04-733-2345","address":"彰化縣彰化市蘇路50號","google":4.4,"feature":"古早味水煎包","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
-      {"category":"sushi","district":"員林市","name":"輕輕的 Softly 蔬食簡餐咖啡廳","phone":"04-832-9012","address":"彰化縣員林市輕輕路100號","google":4.3,"feature":"蔬食簡餐","dish":"素食麵 ($45)","time":"09:00-18:00","price":"$40-80"},
-      {"category":"rouyuan","district":"彰化市","name":"阿三肉圓","phone":"04-732-5678","address":"彰化縣彰化市三民路100號","google":4.3,"feature":"干貝內餡，脆皮Q彈","dish":"炸肉圓 ($50)","time":"10:00-18:00","price":"$40-80"},
-      {"category":"rouyuan","district":"彰化市","name":"北門口肉圓","phone":"04-733-2345","address":"彰化縣彰化市民生路200號","google":4.5,"feature":"60年老店，干貝菇餡","dish":"酥皮肉圓 ($60)","time":"09:00-17:00","price":"$50-100"},
-      {"category":"rouyuan","district":"彰化市","name":"阿璋肉圓","phone":"04-732-9012","address":"彰化縣彰化市長安路150號","google":4.1,"feature":"電影取景地，酥脆外皮","dish":"蒸肉圓 ($40)","time":"08:00-16:00","price":"$30-60"},
-      {"category":"rouyuan","district":"彰化市","name":"過溝仔肉圓王","phone":"04-733-4567","address":"彰化縣彰化市中正路","google":4.4,"feature":"辣味重口","dish":"肉圓 ($50)","time":"07:00-14:00","price":"$40-80"},
-      {"category":"rouyuan","district":"員林市","name":"施肉圓","phone":"04-832-7890","address":"彰化縣員林市員林路150號","google":4.3,"feature":"在地老店，炸皮嚼勁","dish":"肉圓 ($40)","time":"07:00-14:00","price":"$30-60"},
-      {"category":"rouyuan","district":"員林市","name":"魯肉濱肉圓","phone":"04-833-0123","address":"彰化縣員林市電影城旁","google":4.4,"feature":"50年老店，Q彈內餡","dish":"蒸肉圓 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"rouyuan","district":"鹿港鎮","name":"鹿港正宗魷魚王肉圓","phone":"04-777-3456","address":"彰化縣鹿港鎮民權路208號","google":4.3,"feature":"海鮮風味+Q彈","dish":"炸肉圓 ($50)","time":"06:00-13:00","price":"$40-80"},
-      {"category":"rouyuan","district":"北斗鎮","name":"北斗肉圓詹","phone":"04-888-4567","address":"彰化縣北斗鎮奠安宮旁","google":4.5,"feature":"三角形Q皮，米其林3碗","dish":"肉圓 ($50)","time":"08:00-16:00","price":"$40-80"},
-      {"category":"rouyuan","district":"北斗鎮","name":"北斗正宗寶肉圓","phone":"04-888-7890","address":"彰化縣北斗鎮北斗路100號","google":4.4,"feature":"迷你飽滿無需沾醬","dish":"手工肉圓 ($40)","time":"09:00-17:00","price":"$30-60"},
-      {"category":"rouyuan","district":"和美鎮","name":"和美肉圓","phone":"04-755-1234","address":"彰化縣和美鎮和美路100號","google":4.2,"feature":"大顆飽滿，筍絲多","dish":"肉圓 ($45)","time":"09:00-18:00","price":"$40-70"},
-      {"category":"rouyuan","district":"彰化市","name":"六記彰化肉圓","phone":"04-732-3456","address":"彰化縣彰化市三民路50號","google":4.3,"feature":"酥皮經典，內餡實在","dish":"炸肉圓 ($50)","time":"10:00-17:00","price":"$40-80"},
-      {"category":"rouyuan","district":"彰化市","name":"阿財肉圓","phone":"04-733-5678","address":"彰化縣彰化市中正路一段200號","google":4.4,"feature":"古早味蒸肉圓","dish":"蒸肉圓 ($45)","time":"08:00-15:00","price":"$40-70"},
-      {"category":"rouyuan","district":"員林市","name":"員林肉圓城","phone":"04-832-1234","address":"彰化縣員林市員林大道100號","google":4.3,"feature":"大份量肉圓","dish":"肉圓 ($55)","time":"11:00-20:00","price":"$50-90"},
-      {"category":"rouyuan","district":"鹿港鎮","name":"鹿港老街肉圓","phone":"04-777-8901","address":"彰化縣鹿港鎮中山路150號","google":4.5,"feature":"老街必吃","dish":"肉圓 ($50)","time":"09:00-18:00","price":"$40-80"},
-      {"category":"rouyuan","district":"北斗鎮","name":"北斗阿財肉圓","phone":"04-888-2345","address":"彰化縣北斗鎮中華路50號","google":4.2,"feature":"北斗經典","dish":"肉圓 ($40)","time":"10:00-17:00","price":"$30-60"},
-      {"category":"rouyuan","district":"和美鎮","name":"和美阿伯肉圓","phone":"04-755-5678","address":"彰化縣和美鎮和美路200號","google":4.3,"feature":"阿伯手工","dish":"肉圓 ($45)","time":"09:00-16:00","price":"$40-70"},
-      {"category":"rouyuan","district":"彰化市","name":"阿義肉圓","phone":"04-732-6789","address":"彰化縣彰化市長安街50號","google":4.4,"feature":"義式風味肉圓","dish":"肉圓 ($50)","time":"11:00-19:00","price":"$40-80"},
-      {"category":"rouyuan","district":"員林市","name":"員林老施肉圓","phone":"04-832-3456","address":"彰化縣員林市員林路50號","google":4.3,"feature":"老施傳承","dish":"肉圓 ($45)","time":"07:00-13:00","price":"$40-70"},
-      {"category":"rouyuan","district":"鹿港鎮","name":"鹿港阿公肉圓","phone":"04-777-1234","address":"彰化縣鹿港鎮民權路100號","google":4.4,"feature":"阿公手藝","dish":"肉圓 ($50)","time":"08:00-16:00","price":"$40-80"},
-      {"category":"rouyuan","district":"北斗鎮","name":"北斗詹記肉圓","phone":"04-888-5678","address":"彰化縣北斗鎮奠安宮前","google":4.5,"feature":"詹記三角","dish":"肉圓 ($50)","time":"09:00-17:00","price":"$40-80"},
-      {"category":"rouyuan","district":"和美鎮","name":"和美正宗肉圓","phone":"04-755-8901","address":"彰化縣和美鎮仁安路100號","google":4.2,"feature":"正宗手工","dish":"肉圓 ($45)","time":"10:00-18:00","price":"$40-70"},
-      {"category":"rouyuan","district":"彰化市","name":"彰化阿財肉圓","phone":"04-733-9012","address":"彰化縣彰化市中正路二段50號","google":4.3,"feature":"阿財經典","dish":"肉圓 ($50)","time":"10:00-18:00","price":"$40-80"},
-      {"category":"rouyuan","district":"員林市","name":"員林阿濱肉圓","phone":"04-832-6789","address":"彰化縣員林市電影城前","google":4.4,"feature":"阿濱Q彈","dish":"肉圓 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"rouyuan","district":"鹿港鎮","name":"鹿港魷魚肉圓","phone":"04-777-2345","address":"彰化縣鹿港鎮民權路208號","google":4.3,"feature":"魷魚內餡","dish":"肉圓 ($55)","time":"06:00-13:00","price":"$50-90"},
-      {"category":"rouyuan","district":"北斗鎮","name":"北斗寶肉圓","phone":"04-888-8901","address":"彰化縣北斗鎮北斗路100號","google":4.4,"feature":"寶記迷你","dish":"肉圓 ($40)","time":"09:00-17:00","price":"$30-60"},
-      {"category":"rouyuan","district":"和美鎮","name":"和美大肉圓","phone":"04-755-2345","address":"彰化縣和美鎮和美路100號","google":4.2,"feature":"大顆飽滿","dish":"肉圓 ($50)","time":"09:00-18:00","price":"$40-80"},
-      {"category":"rouyuan","district":"彰化市","name":"彰化北門肉圓","phone":"04-733-3456","address":"彰化縣彰化市民生路200號","google":4.5,"feature":"北門60年","dish":"肉圓 ($60)","time":"09:00-17:00","price":"$50-100"},
-      {"category":"rouyuan","district":"員林市","name":"員林施家肉圓","phone":"04-832-4567","address":"彰化縣員林市員林路150號","google":4.3,"feature":"施家炸皮","dish":"肉圓 ($45)","time":"07:00-14:00","price":"$40-70"},
-      {"category":"rouyuan","district":"鹿港鎮","name":"鹿港王肉圓","phone":"04-777-5678","address":"彰化縣鹿港鎮民權路208號","google":4.3,"feature":"王記海鮮","dish":"肉圓 ($55)","time":"06:00-13:00","price":"$50-90"},
-      {"category":"rouyuan","district":"北斗鎮","name":"北斗詹肉圓","phone":"04-888-6789","address":"彰化縣北斗鎮奠安宮旁","google":4.5,"feature":"詹記米其林","dish":"肉圓 ($50)","time":"08:00-16:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"阿泉爌肉飯","phone":"04-732-1234","address":"彰化縣彰化市中正路一段123號","google":4.6,"feature":"80年老店，皮Q膠質","dish":"爌肉飯 ($50)","time":"07:00-13:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"魚市場爌肉飯","phone":"04-732-4567","address":"彰化縣彰化市中正路二段200號","google":4.7,"feature":"秒殺名店，肥瘦可選","dish":"爌肉飯+半熟蛋 ($60)","time":"06:00-12:00","price":"$50-100"},
-      {"category":"kongroufan","district":"彰化市","name":"老朱爌肉飯","phone":"04-732-7890","address":"彰化縣彰化市中民路100號","google":4.5,"feature":"古早味不油膩","dish":"爌肉飯 ($55)","time":"06:00-13:30","price":"$50-100"},
-      {"category":"kongroufan","district":"彰化市","name":"阿章爌肉飯筒仔米糕","phone":"04-733-0123","address":"彰化縣彰化市南郭路一段50號","google":4.4,"feature":"筒仔米糕配","dish":"爌肉飯 ($50)","time":"16:30-22:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"星爌肉飯","phone":"04-732-9012","address":"彰化縣彰化市長安路150號","google":4.4,"feature":"星爌肉","dish":"爌肉飯 ($55)","time":"08:00-16:00","price":"$50-100"},
-      {"category":"kongroufan","district":"彰化市","name":"阿惠爌肉飯","phone":"04-733-2345","address":"彰化縣彰化市民生路200號","google":4.3,"feature":"惠味老店","dish":"爌肉飯 ($50)","time":"09:00-17:00","price":"$40-80"},
-      {"category":"kongroufan","district":"員林市","name":"阿政爌肉燒肉飯","phone":"04-832-1234","address":"彰化縣員林市中山路二段200號","google":4.5,"feature":"燒肉配","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"kongroufan","district":"員林市","name":"阿華爌肉飯切仔麵","phone":"04-832-4567","address":"彰化縣員林市員林路150號","google":4.4,"feature":"切仔麵配","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"黑豬灶爌肉飯","phone":"04-777-1234","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"炭烤風味","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"kongroufan","district":"北斗鎮","name":"老K爌肉飯","phone":"04-888-1234","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"40年老店","dish":"爌肉飯 ($40)","time":"07:00-23:00","price":"$30-60"},
-      {"category":"kongroufan","district":"和美鎮","name":"阿呆爌肉飯","phone":"04-755-1234","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"大塊三層肉","dish":"爌肉飯 ($50)","time":"11:00-20:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"阿謀爌肉飯","phone":"04-732-5678","address":"彰化縣彰化市中正路150號","google":4.4,"feature":"60年老字號","dish":"爌肉飯 ($50)","time":"07:00-13:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"阿財爌肉飯","phone":"04-733-6789","address":"彰化縣彰化市中正路二段100號","google":4.5,"feature":"阿財經典","dish":"爌肉飯 ($55)","time":"06:30-13:00","price":"$50-90"},
-      {"category":"kongroufan","district":"員林市","name":"員林阿政爌肉飯","phone":"04-832-7890","address":"彰化縣員林市中山路二段150號","google":4.4,"feature":"政記燒肉","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"鹿港老灶爌肉飯","phone":"04-777-2345","address":"彰化縣鹿港鎮中山路一段50號","google":4.5,"feature":"老灶炭火","dish":"爌肉飯 ($55)","time":"11:00-20:00","price":"$50-90"},
-      {"category":"kongroufan","district":"北斗鎮","name":"北斗老K爌肉飯","phone":"04-888-3456","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"K記老店","dish":"爌肉飯 ($45)","time":"07:00-22:00","price":"$40-70"},
-      {"category":"kongroufan","district":"和美鎮","name":"和美阿呆爌肉飯","phone":"04-755-4567","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"呆記三層","dish":"爌肉飯 ($50)","time":"11:00-20:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"彰化魚市� to 爌肉飯","phone":"04-732-8901","address":"彰化縣彰化市中正路二段200號","google":4.7,"feature":"魚市秒殺","dish":"爌肉飯 ($60)","time":"06:00-12:00","price":"$50-100"},
-      {"category":"kongroufan","district":"員林市","name":"員林阿華爌肉飯","phone":"04-832-9012","address":"彰化縣員林市員林路150號","google":4.4,"feature":"華記切仔","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"鹿港黑豬爌肉飯","phone":"04-777-3456","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"黑豬炭烤","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"},
-      {"category":"kongroufan","district":"北斗鎮","name":"北斗阿K爌肉飯","phone":"04-888-4567","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"阿K老字號","dish":"爌肉飯 ($40)","time":"07:00-23:00","price":"$30-60"},
-      {"category":"kongroufan","district":"和美鎮","name":"和美阿呆三層肉","phone":"04-755-5678","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"三層大塊","dish":"爌肉飯 ($55)","time":"11:00-20:00","price":"$50-90"},
-      {"category":"kongroufan","district":"彰化市","name":"彰化老朱爌肉飯","phone":"04-732-0123","address":"彰化縣彰化市中民路100號","google":4.5,"feature":"朱記古早","dish":"爌肉飯 ($55)","time":"06:00-13:30","price":"$50-100"},
-      {"category":"kongroufan","district":"員林市","name":"員林政記爌肉飯","phone":"04-832-2345","address":"彰化縣員林市中山路二段200號","google":4.5,"feature":"政記雙拼","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"鹿港灶記爌肉飯","phone":"04-777-4567","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"灶記炭香","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"kongroufan","district":"北斗鎮","name":"北斗K記爌肉飯","phone":"04-888-5678","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"K記平價","dish":"爌肉飯 ($40)","time":"07:00-23:00","price":"$30-60"},
-      {"category":"kongroufan","district":"和美鎮","name":"和美呆記爌肉飯","phone":"04-755-6789","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"呆記厚切","dish":"爌肉飯 ($55)","time":"11:00-20:00","price":"$50-90"},
-      {"category":"kongroufan","district":"彰化市","name":"彰化阿章筒仔米糕","phone":"04-733-1234","address":"彰化縣彰化市南郭路一段50號","google":4.4,"feature":"章記米糕","dish":"爌肉飯 ($50)","time":"16:30-22:00","price":"$40-80"},
-      {"category":"kongroufan","district":"員林市","name":"員林華記爌肉飯","phone":"04-832-3456","address":"彰化縣員林市員林路150號","google":4.4,"feature":"華記切仔","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"鹿港黑豬灶爌肉飯","phone":"04-777-5678","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"黑豬炭烤","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"},
-      {"category":"kongroufan","district":"北斗鎮","name":"北斗老K爌肉飯","phone":"04-888-6789","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"老K40年","dish":"爌肉飯 ($45)","time":"07:00-23:00","price":"$40-70"},
-      {"category":"kongroufan","district":"和美鎮","name":"和美阿呆爌肉飯","phone":"04-755-7890","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"阿呆三層","dish":"爌肉飯 ($50)","time":"11:00-20:00","price":"$40-80"},
-      {"category":"kongroufan","district":"彰化市","name":"彰化星爌肉飯","phone":"04-732-2345","address":"彰化縣彰化市長安路150號","google":4.4,"feature":"星記爌肉","dish":"爌肉飯 ($55)","time":"08:00-16:00","price":"$50-100"},
-      {"category":"kongroufan","district":"員林市","name":"員林政記燒肉飯","phone":"04-832-4567","address":"彰化縣員林市中山路二段200號","google":4.5,"feature":"政記雙拼","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"鹿港灶爌肉飯","phone":"04-777-6789","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"灶記炭香","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
-      {"category":"kongroufan","district":"北斗鎮","name":"北斗K爌肉飯","phone":"04-888-7890","address":"彰化縣北斗鎮中華路84號","google":4.3,"feature":"K記平價","dish":"爌肉飯 ($40)","time":"07:00-23:00","price":"$30-60"},
-      {"category":"kongroufan","district":"和美鎮","name":"和美呆爌肉飯","phone":"04-755-8901","address":"彰化縣和美鎮仁安路261號","google":4.5,"feature":"呆記厚切","dish":"爌肉飯 ($55)","time":"11:00-20:00","price":"$50-90"},
-      {"category":"kongroufan","district":"彰化市","name":"彰化阿惠爌肉飯","phone":"04-733-3456","address":"彰化縣彰化市民生路200號","google":4.3,"feature":"惠記老店","dish":"爌肉飯 ($50)","time":"09:00-17:00","price":"$40-80"},
-      {"category":"kongroufan","district":"員林市","name":"員林華爌肉飯","phone":"04-832-5678","address":"彰化縣員林市員林路150號","google":4.4,"feature":"華記切仔","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
-      {"category":"kongroufan","district":"鹿港鎮","name":"鹿港黑豬爌肉飯","phone":"04-777-7890","address":"彰化縣鹿港鎮中山路一段100號","google":4.6,"feature":"黑豬炭烤","dish":"爌肉飯 ($55)","time":"11:00-21:00","price":"$50-90"}
-    ];
+<div id="list"></div>
 
-    async function loadData() {
-      document.getElementById('loading').style.display = 'block';
-      try {
-        const res = await fetch(DATA_URL + '?t=' + Date.now());
-        if (res.ok) data = await res.json();
-        else throw '';
-      } catch { data = fallbackData; }
-      init();
-      document.getElementById('loading').style.display = 'none';
-    }
+<script src="data.js"></script>
 
-    function init() {
-      const districts = [...new Set(data.map(i => i.district))].sort();
-      const select = document.getElementById('district');
-      districts.forEach(d => {
-        const opt = document.createElement('option');
-        opt.value = d; opt.textContent = d;
-        select.appendChild(opt);
-      });
-      filterData();
-    }
+<script>
+let currentCategory = "sushi";
 
-    function switchCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
-      filterData();
-    }
+function selectCategory(cat){
+    currentCategory = cat;
+    document.querySelectorAll(".category-buttons button").forEach(btn => btn.classList.remove("active"));
+    document.getElementById("btn-"+cat).classList.add("active");
+    render();
+}
 
-    function filterData() {
-      const query = document.getElementById('search').value.trim().toLowerCase();
-      const district = document.getElementById('district').value;
-      filteredData = data.filter(item =>
-        item.category === currentCategory &&
-        (!district || item.district === district) &&
-        (!query || JSON.stringify(item).toLowerCase().includes(query))
-      );
-      renderList();
-    }
+function render(){
+    const root = document.getElementById("list");
+    root.innerHTML = "";
+    const filtered = DATA.filter(i => i.category === currentCategory);
 
-    function renderList() {
-      const list = document.getElementById('list');
-      list.innerHTML = '';
-      if (filteredData.length === 0) {
-        document.getElementById('noData').style.display = 'block';
-        return;
-      }
-      document.getElementById('noData').style.display = 'none';
-      filteredData.forEach(item => {
-        const li = document.createElement('li');
-        li.className = 'item';
-        li.innerHTML = `
-          <h3>${item.name} <small style="color:#888">(${item.district})</small></h3>
-          <p><strong>地址：</strong>${item.address.replace('彰化縣', '')}</p>
-          <p><strong>電話：</strong>${item.phone}</p>
-          <p><strong>特色：</strong>${item.feature}</p>
-          <p><strong>推薦：</strong>${item.dish}</p>
-          <p><strong>營業：</strong>${item.time}</p>
-          <p><strong>價位：</strong>${item.price}</p>
-          <p><strong>Google：</strong>${'★'.repeat(Math.round(item.google))} ${item.google}</p>
-          <button class="map-btn" onclick="openMap('${item.address}')">導航</button>
+    filtered.forEach(item=>{
+        const div = document.createElement("div");
+        div.className="card";
+        div.innerHTML = `
+            <div class="name">${item.name}</div>
+            <div class="row">📍 ${item.address}</div>
+            <div class="row">⭐ Google：${item.google}</div>
+            <div class="row">🍜 特色：${item.feature}</div>
+            <div class="row">🥣 招牌：${item.dish}</div>
+            <div class="row">⏰ 時間：${item.time}</div>
+            <div class="row">💲 價格：${item.price}</div>
         `;
-        list.appendChild(li);
-      });
-    }
+        root.appendChild(div);
+    });
+}
 
-    function openMap(address) {
-      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
-    }
+selectCategory("sushi");
+</script>
 
-    loadData();
-  </script>
 </body>
 </html>
