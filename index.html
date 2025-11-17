@@ -27,9 +27,21 @@ nav a:hover{background:rgba(255,255,255,0.2);}
 label{font-weight:bold;margin:0 .4rem}
 select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem;max-width:200px;vertical-align:middle;}
 
-/* 按鈕樣式 */
-.category-buttons{display:flex;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap;}
+/* 按鈕樣式 【修正區】 */
+.category-buttons{
+  display:flex;
+  justify-content:flex-start; /* 保持靠左對齊 */
+  gap:10px;
+  margin-top:10px;
+  /* 移除 flex-wrap: wrap; */
+  overflow-x: auto; /* 允許水平滑動 */
+  padding: 5px 0; /* 讓滑動條有空間 */
+  white-space: nowrap; /* 強制不換行 */
+  -webkit-overflow-scrolling: touch; /* iOS 順暢滑動 */
+}
+
 .category-buttons button{
+  flex-shrink: 0; /* 【關鍵】防止按鈕被壓縮 */
   padding:0.7rem 1.2rem;border-radius:10px;font-size:1rem;cursor:pointer;
   border:none;background:#ccc;color:#333;transition:background 0.3s, transform 0.1s;
 }
@@ -46,20 +58,19 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
 .card .item{margin-bottom:0.5rem;font-size:1rem;}
 .card b{font-weight:600;color:#333;display:inline-block;min-width:70px;}
 
-/* 簡介樣式 【新增】 */
+/* 簡介樣式 */
 .card .description {
     font-size: 0.95rem;
     color: #555;
     margin-bottom: 10px;
     padding: 5px 0 10px 0;
     border-bottom: 1px dashed #eee;
-    font-style: italic; /* 簡介使用斜體 */
+    font-style: italic; 
 }
 .card .description b {
     font-weight: bold;
     color: #000;
 }
-
 
 /* 評分和連結樣式 */
 .score{font-weight:bold;padding:2px 8px;border-radius:4px;color:#fff;display:inline-block;min-width:50px;text-align:center;}
@@ -141,6 +152,7 @@ const districtFilter = document.getElementById("districtFilter");
 const keywordInput = document.getElementById("keywordInput");
 let currentCategory = "";
 
+// 使用 data 變數，與 data.js 保持一致
 // 填充地區篩選器選項
 const districtSet = new Set(data.map(x => x.district));
 districtSet.forEach(d => {
@@ -150,7 +162,7 @@ districtSet.forEach(d => {
   districtFilter.appendChild(opt);
 });
 
-// 模糊搜尋工具函式 (包含之前的所有邏輯)
+// 模糊搜尋工具函式
 function fuzzyMatch(text, keyword) {
     if (!text || !keyword) return false;
     text = text.toLowerCase();
@@ -190,7 +202,6 @@ function render() {
       fuzzyMatch(i.dish, keyword) ||
       fuzzyMatch(i.address, keyword) ||
       fuzzyMatch(i.feature, keyword) ||
-      // 【新增簡介搜尋】
       fuzzyMatch(i.description, keyword)
     );
   }
@@ -207,7 +218,7 @@ function render() {
   }
 
   list.forEach((i, idx) => {
-    // 【地圖連結修正】確保使用正確的 Google Maps 搜尋格式
+    // 地圖連結修正
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
@@ -221,7 +232,7 @@ function render() {
       <div class="item"><b>地區：</b>${i.district}</div>
       <div class="item"><b>Google 評分：</b><span class="score ${i.google >= 4.5 ? 'high' : i.google >= 4.0 ? 'mid' : 'low'}">${i.google}</span></div>
       <div class="item"><b>招牌：</b>${i.dish}</div>
-      <div class="item"><b>特色：</b>${i.feature}</div>
+      <div class="item"><b>特色：：</b>${i.feature}</div>
       <div class="item"><b>時段：</b>${i.time}</div>
       <div class="item"><b>價格：</b>${i.price}</div>
       <div class="item phone-link"><b>電話：</b><a href="tel:${i.phone}">${i.phone}</a></div>
