@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#00804b">
 
 <style>
-/* 新增導航欄的樣式 */
+/* 新增導航欄的樣式 (保留) */
 nav {
   background: #333; /* 深灰色背景 */
   padding: 0.7rem 1rem;
@@ -27,7 +27,33 @@ nav a {
 nav a:hover {
   color: #ffcc00; /* 亮黃色 hover 效果 */
 }
-/* 結束導航欄樣式 */
+/* 新增「關於」區塊的樣式 */
+.info-box {
+  background: #fff;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #00804b; /* 主題色裝飾 */
+}
+.info-box h2 {
+  color: #00804b;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+.info-box ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+.info-box .copyright {
+    text-align: right;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 15px;
+}
+/* 結束新增樣式 */
+
 
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;background:#f5f5f5;color:#333;line-height:1.6}
@@ -83,7 +109,20 @@ button:hover{background:#00663d}
     </select>
   </div>
   <div id="cards"></div> 
-</div>
+
+  <div id="about" class="info-box">
+    <h2>ℹ️ 關於這個彰化美食地圖</h2>
+    <p>這個 PWA 是為了展示彰化縣的特色美食：**爌肉飯、肉圓和素食麵**，並幫助您快速找到各地區高評價的店家。</p>
+    <p>所有資料皆為作者參考 Google 評論和在地人推薦，手工彙整的店家清單。每個品項/地區最多顯示 **TOP 20** 評分最高的店家。</p>
+    <h3>資料來源與免責聲明：</h3>
+    <ul>
+      <li>**資料真實性**：店家名稱、電話與地址皆經過網路查證。</li>
+      <li>**評分依據**：Google 評分 (Google 欄位)。</li>
+      <li>**版權聲明**：本程式碼與資料集僅供個人學習與 PWA 實作參考。</li>
+    </ul>
+    <p class="copyright">製作日期：2025.11</p>
+  </div>
+  </div>
 
 <script src="data.js"></script>
 <script>
