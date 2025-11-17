@@ -140,6 +140,15 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script>
+// *** 優化 1: 新增 Debounce 函式 (限制事件觸發頻率) ***
+function debounce(func, delay) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
 // 模糊搜尋函式
 function fuzzyMatch(text, keyword) {
     if (!text) return false;
@@ -173,9 +182,11 @@ document.querySelectorAll(".category-buttons button").forEach(btn => {
   });
 });
 
-// 篩選/搜尋事件監聽
-document.getElementById("keyword").addEventListener("input", render);
-districtFilter.addEventListener("change", render);
+// *** 優化 2: 使用 Debounce 來處理搜尋輸入事件 ***
+const debouncedRender = debounce(render, 300); // 延遲 300 毫秒
+
+document.getElementById("keyword").addEventListener("input", debouncedRender); // 使用 Debounce 版本
+districtFilter.addEventListener("change", render); // 地區篩選仍直接渲染
 
 function render() {
   const district = districtFilter.value;
@@ -213,7 +224,7 @@ function render() {
   }
 
   list.forEach((i, idx) => {
-    // 修正 Google Maps 連結，使用真實的 Google Maps URL
+    // *** 優化 3: 修正 Google Maps 連結結構 (使用標準 API 格式) ***
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
