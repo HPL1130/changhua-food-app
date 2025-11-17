@@ -15,18 +15,31 @@ header{background:#00804b;color:#fff;padding:1rem;text-align:center}
 h1{font-size:1.5rem}
 
 .container{max-width:1000px;margin:0 auto;padding:1rem}
+
+/* 控制區 */
 .controls{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-bottom:1rem;text-align:center}
 label{font-weight:bold;margin:0 .4rem}
-select{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem}
+select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem}
 button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;border:none;cursor:pointer;font-size:1rem;font-weight:bold;margin-top:.5rem}
 
-/* 卡片列表 */
+/* 卡片模式 */
 #cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1rem}
 .card{background:#fff;border-radius:16px;padding:1rem;box-shadow:0 6px 16px rgba(0,0,0,.1);transition:.2s}
 .card:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.15)}
 .card h2{font-size:1.2rem;margin-bottom:.3rem;color:#00804b}
 .item{margin:.2rem 0}
 .item b{color:#000}
+
+.nav-btn{
+  display:inline-block;
+  margin-top:.5rem;
+  padding:.4rem .8rem;
+  background:#ff6b00;
+  color:#fff;
+  border-radius:8px;
+  font-size:.9rem;
+  text-decoration:none;
+}
 
 @media(max-width:500px){
   #cards{grid-template-columns:1fr}
@@ -39,7 +52,12 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
 
 <div class="container">
 
+  <!-- 控制列 -->
   <div class="controls">
+    <input id="searchBox" type="text" placeholder="搜尋店名 / 招牌 / 地址 / 特色..." style="width:90%;">
+
+    <br>
+
     <label>地區：</label>
     <select id="districtFilter">
       <option value="">全部地區</option>
@@ -56,62 +74,94 @@ button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;bor
     <button onclick="render()">查詢</button>
   </div>
 
+  <!-- 卡片列表 -->
   <div id="cards"></div>
 
 </div>
 
 <script src="data.js"></script>
 <script>
+
 // 初始化地區
 function initFilters() {
   const set = new Set();
   DATA.forEach(i => set.add(i.district));
   const sel = document.getElementById("districtFilter");
+
   set.forEach(d => {
-    const opt=document.createElement("option");
-    opt.value=d; opt.textContent=d;
+    const opt = document.createElement("option");
+    opt.value = d;
+    opt.textContent = d;
     sel.appendChild(opt);
   });
 }
 
-// 渲染卡片
+// 模糊搜尋 function
+function fuzzyMatch(text, keyword) {
+  return text.toLowerCase().includes(keyword.toLowerCase());
+}
+
+// 主渲染
 function render() {
-  const district=document.getElementById("districtFilter").value;
-  const category=document.getElementById("categoryFilter").value;
+  const district = document.getElementById("districtFilter").value;
+  const category = document.getElementById("categoryFilter").value;
+  const keyword = document.getElementById("searchBox").value.trim();
 
-  let list=DATA;
+  let list = DATA;
 
-  if(district) list=list.filter(i=>i.district===district);
-  if(category) list=list.filter(i=>i.category===category);
+  // 依地區
+  if (district) list = list.filter(i => i.district === district);
 
-  list=list.sort((a,b)=>b.google-a.google).slice(0,20);
+  // 依類別
+  if (category) list = list.filter(i => i.category === category);
 
-  const box=document.getElementById("cards");
-  box.innerHTML="";
+  // 模糊搜尋 (多欄位)
+  if (keyword) {
+    list = list.filter(i =>
+      fuzzyMatch(i.name, keyword) ||
+      fuzzyMatch(i.dish, keyword) ||
+      fuzzyMatch(i.address, keyword) ||
+      fuzzyMatch(i.feature, keyword) ||
+      fuzzyMatch(i.phone, keyword)
+    );
+  }
 
-  list.forEach((i,idx)=>{
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <h2>${idx+1}. ${i.name}</h2>
+  // 排序 TOP20
+  list = list.sort((a, b) => b.google - a.google).slice(0, 20);
+
+  const box = document.getElementById("cards");
+  box.innerHTML = "";
+
+  list.forEach((i, idx) => {
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h2>${idx + 1}. ${i.name}</h2>
       <div class="item"><b>地區：</b>${i.district}</div>
       <div class="item"><b>招牌：</b>${i.dish}</div>
       <div class="item"><b>Google：</b>${i.google}</div>
       <div class="item"><b>時間：</b>${i.time}</div>
       <div class="item"><b>電話：</b>${i.phone}</div>
       <div class="item"><b>地址：</b>${i.address}</div>
+
+      <a class="nav-btn" href="${mapUrl}" target="_blank">導航</a>
     `;
+
     box.appendChild(card);
   });
+}
+
+// 啟動 service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
 }
 
 initFilters();
 render();
 
-// 啟動 SW
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js');
-}
 </script>
 
 </body>
