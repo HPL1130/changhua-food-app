@@ -125,6 +125,20 @@ button:hover{background:#00663d}
   </div>
 
 <script src="data.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('SW registered: ', registration);
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+</script>
 <script>
 // 模糊搜尋函式
 function fuzzyMatch(text, keyword) {
