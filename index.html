@@ -3,51 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>彰化美食 TOP20</title>
+<title>彰化美食地圖 TOP20</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00804b">
+
 <style>
-body { font-family: sans-serif; background:#f5f5f5; padding:20px; }
-header h1 { text-align:center; color:#00664F; }
-.container { max-width:900px; margin:auto; }
-.category-buttons { display:flex; gap:10px; justify-content:center; margin:15px 0; }
-.category-buttons button {
-  flex:1; padding:10px; background:#00664F; color:white; border:none; border-radius:10px; font-size:1.1rem;
+/* 新增導航欄的樣式 */
+nav {
+  background: #333; /* 深灰色背景 */
+  padding: 0.7rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-table { width:100%; border-collapse:collapse; background:white; margin-top:15px; }
-th, td { padding:10px; border-bottom:1px solid #ddd; text-align:center; }
+nav a {
+  color: #fff; /* 白色文字 */
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+  transition: color 0.3s;
+  font-size: 1.1rem;
+}
+nav a:hover {
+  color: #ffcc00; /* 亮黃色 hover 效果 */
+}
+/* 結束導航欄樣式 */
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;background:#f5f5f5;color:#333;line-height:1.6}
+header{background:#00804b;color:#fff;padding:1rem;text-align:center}
+h1{font-size:1.5rem}
+
+.container{max-width:1000px;margin:0 auto;padding:1rem}
+
+/* 控制區 */
+.controls{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-bottom:1rem;text-align:center}
+label{font-weight:bold;margin:0 .4rem}
+select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem}
+button{padding:.7rem 1.5rem;border-radius:10px;border:none;cursor:pointer;font-size:1rem;transition:background .3s}
+button:hover{background:#00663d}
+.category-buttons{display:flex;justify-content:center;gap:10px;margin-top:.8rem}
+.category-buttons button{background:#00804b;color:#fff;flex:1}
+
+/* 內容區 */
+#cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding-top:1rem}
+.card{background:#fff;padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card h2{font-size:1.2rem;margin-bottom:10px;color:#00804b}
+.card .item{margin-bottom:5px;font-size:.95rem}
+.card a{color:#00804b;text-decoration:none;font-weight:bold}
+.card a:hover{text-decoration:underline}
+.google-rating{font-size:1.2rem;font-weight:bold;color:#e74c3c;margin-top:5px}
 </style>
 </head>
 <body>
-<header><h1>彰化美食 TOP20</h1></header>
+<header><h1>彰化美食地圖 TOP20</h1></header>
 
+<nav>
+  <a href="#home">🌟 首頁</a>
+  <a href="#controls">🔍 篩選</a>
+  <a href="#about">ℹ️ 關於</a>
+</nav>
 <div class="container">
-
-  <div class="category-buttons">
-    <button data-cat="kongroufan">爌肉飯</button>
-    <button data-cat="rouyuan">肉圓</button>
-    <button data-cat="sushi">素食麵</button>
-  </div>
-
-  <div style="text-align:center;">
-    <select id="districtFilter">
+  <div class="controls" id="controls">
+    <label for="keyword">搜尋店家/特色：</label>
+    <input type="text" id="keyword" placeholder="請輸入關鍵字" oninput="render()">
+    
+    <label>類別：</label>
+    <div class="category-buttons">
+      <button data-cat="kongroufan">爌肉飯</button>
+      <button data-cat="rouyuan">肉圓</button>
+      <button data-cat="sushi">素食麵</button>
+      <button data-cat="">全部</button>
+    </div>
+    
+    <label for="districtFilter">地區：</label>
+    <select id="districtFilter" onchange="render()">
       <option value="">全部地區</option>
     </select>
   </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>排名</th><th>店名</th><th>地區</th><th>Google</th><th>招牌</th><th>地址</th>
-      </tr>
-    </thead>
-    <tbody id="tb"></tbody>
-  </table>
-
+  <div id="cards"></div> 
 </div>
 
 <script src="data.js"></script>
 <script>
-const districtSet = new Set(data.map(x => x.district));
+// 模糊搜尋函式
+function fuzzyMatch(text, keyword) {
+    if (!text) return false;
+    return text.toLowerCase().includes(keyword.toLowerCase());
+}
+
+// 變數名已修正為 data (小寫) 以匹配 data.js
+const districtSet = new Set(data.map(x => x.district)); 
 const districtFilter = document.getElementById("districtFilter");
+
+// 填充地區選項
 districtSet.forEach(d => {
   const opt = document.createElement("option");
   opt.value = d;
@@ -56,40 +106,78 @@ districtSet.forEach(d => {
 });
 
 let currentCategory = "";
-render();
+render(); // 初始渲染
 
+// 類別按鈕事件
 document.querySelectorAll(".category-buttons button").forEach(btn => {
   btn.addEventListener("click", () => {
     currentCategory = btn.dataset.cat;
+    // 重設搜尋關鍵字
+    document.getElementById("keyword").value = "";
+    // 將選單跳回全部地區
+    districtFilter.value = "";
     render();
   });
 });
 
+// 篩選/搜尋事件監聽
+document.getElementById("keyword").addEventListener("input", render);
 districtFilter.addEventListener("change", render);
 
 function render() {
   const district = districtFilter.value;
+  const category = currentCategory;
+  const keyword = document.getElementById("keyword").value.trim();
+
   let list = data.slice();
 
-  if (currentCategory) list = list.filter(x => x.category === currentCategory);
-  if (district) list = list.filter(x => x.district === district);
+  // 依地區
+  if (district) list = list.filter(i => i.district === district);
 
-  list.sort((a,b) => b.google - a.google);
-  list = list.slice(0,20);
+  // 依類別
+  if (category) list = list.filter(i => i.category === category);
 
-  const tb = document.getElementById("tb");
-  tb.innerHTML = "";
-  list.forEach((x,i)=>{
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td>${x.name}</td>
-      <td>${x.district}</td>
-      <td>${x.google}</td>
-      <td>${x.dish||""}</td>
-      <td>${x.address}</td>
+  // 模糊搜尋 (多欄位)
+  if (keyword) {
+    list = list.filter(i =>
+      fuzzyMatch(i.name, keyword) ||
+      fuzzyMatch(i.dish, keyword) ||
+      fuzzyMatch(i.address, keyword) ||
+      fuzzyMatch(i.feature, keyword) ||
+      fuzzyMatch(i.phone, keyword)
+    );
+  }
+
+  // 排序 TOP20
+  list = list.sort((a, b) => b.google - a.google).slice(0, 20);
+
+  const box = document.getElementById("cards");
+  box.innerHTML = "";
+
+  if (list.length === 0) {
+      box.innerHTML = `<h3 style="text-align:center; padding:20px; color:#e74c3c;">⚠️ 抱歉，此條件下沒有找到店家。請嘗試更換篩選條件。</h3>`;
+      return;
+  }
+
+  list.forEach((i, idx) => {
+    // 修正 Google Maps 連結，使用真實的 Google Maps URL
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h2>${idx + 1}. ${i.name}</h2>
+      <div class="item"><b>地區：</b>${i.district}</div>
+      <div class="item"><b>招牌：</b>${i.dish}</div>
+      <div class="item"><b>特色：</b>${i.feature}</div>
+      <div class="item"><b>營業時間：</b>${i.time}</div>
+      <div class="item"><b>價位：</b>${i.price}</div>
+      <div class="item google-rating">Google 評分：${i.google} ⭐</div>
+      <div class="item"><a href="tel:${i.phone}">📞 聯絡店家 (${i.phone})</a></div>
+      <div class="item"><a href="${mapUrl}" target="_blank">📍 查看地圖 (${i.address})</a></div>
     `;
-    tb.appendChild(tr);
+    box.appendChild(card);
   });
 }
 </script>
