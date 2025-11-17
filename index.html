@@ -1,159 +1,117 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <title>彰化美食三寶指南</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>彰化美食地圖 TOP20</title>
 
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icons/icon-96.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00804b">
 
-    <style>
-        body {
-            margin:0;
-            font-family:"Noto Sans TC", sans-serif;
-            background:#f7f7f7;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;background:#f5f5f5;color:#333;line-height:1.6}
+header{background:#00804b;color:#fff;padding:1rem;text-align:center}
+h1{font-size:1.5rem}
 
-        header {
-            background:#17a26b;
-            padding:20px;
-            text-align:center;
-            color:white;
-            font-size:24px;
-            font-weight:700;
-        }
+.container{max-width:1000px;margin:0 auto;padding:1rem}
+.controls{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-bottom:1rem;text-align:center}
+label{font-weight:bold;margin:0 .4rem}
+select{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem}
+button{padding:.7rem 1.5rem;border-radius:10px;background:#00804b;color:#fff;border:none;cursor:pointer;font-size:1rem;font-weight:bold;margin-top:.5rem}
 
-        .category-buttons, .district-select-box {
-            margin:20px 15px;
-        }
+/* 卡片列表 */
+#cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1rem}
+.card{background:#fff;border-radius:16px;padding:1rem;box-shadow:0 6px 16px rgba(0,0,0,.1);transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.15)}
+.card h2{font-size:1.2rem;margin-bottom:.3rem;color:#00804b}
+.item{margin:.2rem 0}
+.item b{color:#000}
 
-        .category-buttons {
-            display:flex;
-            justify-content:space-around;
-        }
-
-        .category-buttons button {
-            flex:1;
-            margin:0 5px;
-            padding:15px 0;
-            font-size:18px;
-            border:none;
-            border-radius:10px;
-            background:white;
-            font-weight:600;
-            box-shadow:0 3px 6px rgba(0,0,0,0.15);
-        }
-
-        .category-buttons button.active {
-            background:#17a26b;
-            color:white;
-        }
-
-        select {
-            width:100%;
-            padding:12px;
-            font-size:17px;
-            border-radius:10px;
-            border:1px solid #ccc;
-        }
-
-        #list {
-            padding:15px;
-        }
-
-        .card {
-            background:white;
-            padding:15px;
-            border-radius:12px;
-            margin-bottom:15px;
-            box-shadow:0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .name {
-            font-size:20px;
-            font-weight:700;
-            margin-bottom:6px;
-        }
-
-        .row {
-            font-size:14px;
-            margin:2px 0;
-        }
-    </style>
+@media(max-width:500px){
+  #cards{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
-<header>彰化美食三寶指南</header>
+<header><h1>彰化美食地圖 TOP20</h1></header>
 
-<!-- 三大主分類 -->
-<div class="category-buttons">
-    <button id="btn-sushi" onclick="selectCategory('sushi')">素食麵</button>
-    <button id="btn-rouyuan" onclick="selectCategory('rouyuan')">肉圓</button>
-    <button id="btn-kongroufan" onclick="selectCategory('kongroufan')">爌肉飯</button>
-</div>
+<div class="container">
 
-<!-- 地區篩選 -->
-<div class="district-select-box">
-    <select id="districtSelect" onchange="render()">
-        <option value="全部">全部地區</option>
-        <option value="彰化市">彰化市</option>
-        <option value="員林市">員林市</option>
-        <option value="鹿港鎮">鹿港鎮</option>
-        <option value="溪湖鎮">溪湖鎮</option>
-        <option value="和美鎮">和美鎮</option>
-        <option value="花壇鄉">花壇鄉</option>
-        <option value="大村鄉">大村鄉</option>
-        <option value="芬園鄉">芬園鄉</option>
-        <option value="永靖鄉">永靖鄉</option>
+  <div class="controls">
+    <label>地區：</label>
+    <select id="districtFilter">
+      <option value="">全部地區</option>
     </select>
-</div>
 
-<div id="list"></div>
+    <label>類別：</label>
+    <select id="categoryFilter">
+      <option value="">全部</option>
+      <option value="sushi">素食麵</option>
+      <option value="rouyuan">肉圓</option>
+      <option value="kongroufan">爌肉飯</option>
+    </select>
+
+    <button onclick="render()">查詢</button>
+  </div>
+
+  <div id="cards"></div>
+
+</div>
 
 <script src="data.js"></script>
-
 <script>
-let currentCategory = "sushi";
-
-function selectCategory(cat){
-    currentCategory = cat;
-    document.querySelectorAll(".category-buttons button")
-        .forEach(btn => btn.classList.remove("active"));
-    document.getElementById("btn-"+cat).classList.add("active");
-    render();
+// 初始化地區
+function initFilters() {
+  const set = new Set();
+  DATA.forEach(i => set.add(i.district));
+  const sel = document.getElementById("districtFilter");
+  set.forEach(d => {
+    const opt=document.createElement("option");
+    opt.value=d; opt.textContent=d;
+    sel.appendChild(opt);
+  });
 }
 
-function render(){
-    const region = document.getElementById("districtSelect").value;
-    const root = document.getElementById("list");
-    root.innerHTML = "";
+// 渲染卡片
+function render() {
+  const district=document.getElementById("districtFilter").value;
+  const category=document.getElementById("categoryFilter").value;
 
-    let filtered = DATA.filter(i => i.category === currentCategory);
+  let list=DATA;
 
-    if(region !== "全部"){
-        filtered = filtered.filter(i => i.district === region);
-    }
+  if(district) list=list.filter(i=>i.district===district);
+  if(category) list=list.filter(i=>i.category===category);
 
-    filtered.sort((a,b) => b.google - a.google);
+  list=list.sort((a,b)=>b.google-a.google).slice(0,20);
 
-    filtered.forEach(item=>{
-        const div = document.createElement("div");
-        div.className="card";
-        div.innerHTML = `
-            <div class="name">${item.name}</div>
-            <div class="row">📍 ${item.address}</div>
-            <div class="row">⭐ Google：${item.google}</div>
-            <div class="row">🍜 特色：${item.feature}</div>
-            <div class="row">🥣 招牌：${item.dish}</div>
-            <div class="row">⏰ 時間：${item.time}</div>
-            <div class="row">💲 價格：${item.price}</div>
-        `;
-        root.appendChild(div);
-    });
+  const box=document.getElementById("cards");
+  box.innerHTML="";
+
+  list.forEach((i,idx)=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <h2>${idx+1}. ${i.name}</h2>
+      <div class="item"><b>地區：</b>${i.district}</div>
+      <div class="item"><b>招牌：</b>${i.dish}</div>
+      <div class="item"><b>Google：</b>${i.google}</div>
+      <div class="item"><b>時間：</b>${i.time}</div>
+      <div class="item"><b>電話：</b>${i.phone}</div>
+      <div class="item"><b>地址：</b>${i.address}</div>
+    `;
+    box.appendChild(card);
+  });
 }
 
-selectCategory("sushi");
+initFilters();
+render();
+
+// 啟動 SW
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js');
+}
 </script>
 
 </body>
