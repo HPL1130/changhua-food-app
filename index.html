@@ -87,13 +87,13 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
 /* 無結果提示 */
 #no-results{text-align:center;font-size:1.2rem;color:#999;padding:40px 0;grid-column:1 / -1;}
 
-/* 分頁樣式 */
+/* 【優化】分頁樣式 - 確保置中 */
 #pagination {
     text-align: center; 
     padding: 20px 0;
     margin-top: 20px;
-    display: flex; /* 確保分頁按鈕能並排 */
-    justify-content: center; /* 讓分頁控制項置中 */
+    display: flex; 
+    justify-content: center; /* 確保分頁控制項置中 */
     align-items: center;
 }
 #pagination button {
@@ -152,6 +152,8 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
       <button data-cat="sushi">素食麵</button>
     </div>
   </section>
+  
+  <h2 id="resultCount" style="text-align: center; margin: 10px 0; color: #00804b;"></h2>
 
   <div id="cards">
     </div>
@@ -191,15 +193,42 @@ let currentCategory = "";
 let currentPage = 1;
 const itemsPerPage = 20; // 每頁顯示 20 筆
 
-// 使用 data 變數，與 data.js 保持一致
+// 【優化】定義有順序的地區列表
+const DISTRICT_ORDER = [
+  "彰化市", "員林市", "鹿港鎮", "北斗鎮", "秀水鄉", "花壇鄉", 
+  "和美鎮", "埔心鄉", "溪湖鎮", "二水鄉", "芬園鄉", "永靖鄉", 
+  "田中鎮", "大村鄉", "埤頭鄉"
+];
+
 // 填充地區篩選器選項
-const districtSet = new Set(data.map(x => x.district));
-districtSet.forEach(d => {
-  const opt = document.createElement("option");
-  opt.value = d;
-  opt.textContent = d;
-  districtFilter.appendChild(opt);
-});
+function populateDistrictFilter() {
+    // 取得資料中的所有地區
+    const dataDistricts = new Set(data.map(x => x.district));
+    
+    // 清空現有選項 (除了 "全部地區")
+    while (districtFilter.options.length > 1) {
+        districtFilter.remove(1);
+    }
+    
+    // 依定義好的順序加入選項
+    DISTRICT_ORDER.forEach(d => {
+        if (dataDistricts.has(d)) {
+            const opt = document.createElement("option");
+            opt.value = d;
+            opt.textContent = d;
+            districtFilter.appendChild(opt);
+            dataDistricts.delete(d); // 從集合中移除已處理的地區
+        }
+    });
+
+    // 加入 DISTRICT_ORDER 以外的地區 (以防資料有新的鄉鎮)
+    dataDistricts.forEach(d => {
+        const opt = document.createElement("option");
+        opt.value = d;
+        opt.textContent = d;
+        districtFilter.appendChild(opt);
+    });
+}
 
 // 模糊搜尋工具函式
 function fuzzyMatch(text, keyword) {
@@ -229,6 +258,7 @@ function render() {
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const pageInfo = document.getElementById("pageInfo");
+  const resultCount = document.getElementById("resultCount"); // 【優化】結果計數元素
 
   // 1. 篩選
   let list = data.slice(); 
@@ -242,6 +272,7 @@ function render() {
       fuzzyMatch(i.dish, keyword) ||
       fuzzyMatch(i.address, keyword) ||
       fuzzyMatch(i.feature, keyword) ||
+      // 【優化】簡介內容也納入模糊搜尋
       fuzzyMatch(i.description, keyword)
     );
   }
@@ -269,6 +300,7 @@ function render() {
 
   // 4. 渲染卡片
   cardsBox.innerHTML = "";
+  resultCount.textContent = `找到 ${totalItems} 筆結果`; // 【優化】更新結果總數
 
   if (totalItems === 0) {
     cardsBox.innerHTML = `<div id="no-results">找不到符合條件的店家！</div>`;
@@ -276,14 +308,13 @@ function render() {
     return;
   }
   
-  // 使用 flex 確保分頁按鈕並排且置中
-  paginationBox.style.display = 'flex'; 
+  paginationBox.style.display = 'flex'; // 顯示分頁控制
 
   pagedList.forEach((i, idx) => {
     // 全局編號 (例如: 第 2 頁的第 5 筆，編號為 20+5=25)
     const globalIdx = start + idx + 1; 
 
-    // Google Maps 連結格式
+    // 【優化】修正 Google Maps 連結格式
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
@@ -297,10 +328,7 @@ function render() {
       <div class="item"><b>地區：</b>${i.district}</div>
       <div class="item"><b>Google 評分：</b><span class="score ${i.google >= 4.5 ? 'high' : i.google >= 4.0 ? 'mid' : 'low'}">${i.google}</span></div>
       <div class="item"><b>招牌：</b>${i.dish}</div>
-      <div class="item"><b>特色：</b>${i.feature}</div>
-      <div class="item"><b>時段：</b>${i.time}</div>
-      <div class="item"><b>價格：</b>${i.price}</div>
-      <div class="item phone-link"><b>電話：</b><a href="tel:${i.phone}">${i.phone}</a></div>
+      <div class="item"><b>特色：</b>${i.feature}</div> <div class="item"><b>時段：</b>${i.time}</div> <div class="item"><b>價格：</b>${i.price}</div> <div class="item phone-link"><b>電話：</b><a href="tel:${i.phone}">${i.phone}</a></div>
       <div class="item map-link">
         <a href="${mapUrl}" target="_blank">📍 查看地圖與導航</a>
       </div>
@@ -340,6 +368,8 @@ keywordInput.addEventListener("input", debounce(() => {
 
 // 上一頁/下一頁按鈕事件
 document.addEventListener("DOMContentLoaded", () => {
+    populateDistrictFilter(); // 【優化】網頁加載時，使用定義的順序填充地區篩選器
+    
     document.getElementById("prevBtn").addEventListener("click", () => {
         if (currentPage > 1) {
             currentPage--;
@@ -350,7 +380,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("nextBtn").addEventListener("click", () => {
-        // 由於 render 函數會自動檢查邊界，這裡只需安全地增加頁碼
         currentPage++;
         render();
         // 捲動到頂部 (導航列下方)
