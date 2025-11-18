@@ -87,11 +87,14 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
 /* 無結果提示 */
 #no-results{text-align:center;font-size:1.2rem;color:#999;padding:40px 0;grid-column:1 / -1;}
 
-/* 【新增】分頁樣式 */
+/* 分頁樣式 */
 #pagination {
     text-align: center; 
     padding: 20px 0;
     margin-top: 20px;
+    display: flex; /* 確保分頁按鈕能並排 */
+    justify-content: center; /* 讓分頁控制項置中 */
+    align-items: center;
 }
 #pagination button {
     padding: 10px 20px; 
@@ -184,7 +187,7 @@ const districtFilter = document.getElementById("districtFilter");
 const keywordInput = document.getElementById("keywordInput");
 let currentCategory = "";
 
-// 【新增】分頁變數
+// 分頁變數
 let currentPage = 1;
 const itemsPerPage = 20; // 每頁顯示 20 筆
 
@@ -279,7 +282,7 @@ function render() {
     // 全局編號 (例如: 第 2 頁的第 5 筆，編號為 20+5=25)
     const globalIdx = start + idx + 1; 
 
-    // 【修正】Google Maps 連結格式
+    // Google Maps 連結格式
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
@@ -311,7 +314,7 @@ function render() {
   pageInfo.textContent = `第 ${currentPage} 頁 / 共 ${totalPages} 頁 (共 ${totalItems} 筆)`;
 }
 
-// 【修正與新增】事件監聽器：切換篩選條件時，重設頁碼為 1
+// 事件監聽器：切換篩選條件時，重設頁碼為 1
 document.querySelectorAll(".category-buttons button").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".category-buttons button").forEach(b => b.classList.remove('active'));
@@ -334,7 +337,7 @@ keywordInput.addEventListener("input", debounce(() => {
 }, 300));
 
 
-// 【新增】上一頁/下一頁按鈕事件
+// 上一頁/下一頁按鈕事件
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("prevBtn").addEventListener("click", () => {
         if (currentPage > 1) {
@@ -356,8 +359,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // 初始化渲染
     render();
 });
-
-// 移除原有的最後一行 render() 呼叫
 </script>
 
 </body>
