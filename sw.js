@@ -1,7 +1,7 @@
 // sw.js
 
 // 每次更新程式碼後，請**手動修改**此版本號，才能強制更新所有快取的檔案
-const CACHE_NAME = 'changhua-food-v20251118_9'; 
+const CACHE_NAME = 'changhua-food-v20251118_10'; 
 
 // 列出所有需要被快取/離線儲存的檔案
 const urlsToCache = [
