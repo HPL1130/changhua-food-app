@@ -109,11 +109,11 @@ nav a:hover{background:rgba(255,255,255,0.2);}
 </div>
 
 <footer class="container" style="text-align:center; padding-top:0;">
-    <p>&copy; 2025 彰化美食地圖. 資料來源：在地精選。圖示版權：Google Maps & Font Awesome。</p>
+    <p>© 2025 彰化美食地圖. 資料來源：在地精選。圖示版權：Google Maps & Font Awesome。</p>
 </footer>
 
 
-<script src="data-05(最終核對版).js"></script> <script>
+<script src="data-08(新增蚵ㄚ仁與更新彰化爌肉飯).js"></script> <script>
 // =======================================================================
 // 全域變數設定
 // =======================================================================
@@ -210,7 +210,7 @@ function render() {
         foodList.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; padding: 2rem; color: #666;">找不到符合條件的店家 T_T</p>';
     } else {
         pageItems.forEach(item => {
-            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.address)}`;
+            const mapUrl = `http://google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.address)}`;
             
             const card = document.createElement('div');
             card.className = 'food-item';
