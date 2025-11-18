@@ -22,299 +22,234 @@ nav a{color:#fff;text-decoration:none;padding:0.5rem 1rem;border-radius:6px;tran
 nav a:hover{background:rgba(255,255,255,0.2);}
 
 /* 控制區樣式 */
-.controls{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-bottom:1rem;text-align:center}
-.control-group{margin-bottom:0.8rem;}
-label{font-weight:bold;margin:0 .4rem}
-select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem;max-width:200px;vertical-align:middle;}
+.controls{background:#fff;padding:1rem;margin:1rem 0;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,0.1)}
+.controls-top{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;align-items:center;}
 
-/* 按鈕樣式 */
-.category-buttons{
-  display:flex;
-  justify-content:flex-start; /* 保持靠左對齊 */
-  gap:10px;
-  margin-top:10px;
-  overflow-x: auto; /* 允許水平滑動 */
-  padding: 5px 0; /* 讓滑動條有空間 */
-  white-space: nowrap; /* 強制不換行 */
-  -webkit-overflow-scrolling: touch; /* iOS 順暢滑動 */
-}
-
-.category-buttons button{
-  flex-shrink: 0; /* 防止按鈕被壓縮 */
-  padding:0.7rem 1.2rem;border-radius:10px;font-size:1rem;cursor:pointer;
-  border:none;background:#ccc;color:#333;transition:background 0.3s, transform 0.1s;
-}
-.category-buttons button.active{
-  background:#00804b;color:#fff;box-shadow:0 4px 10px rgba(0,128,75,0.4);
-}
+/* 篩選按鈕樣式 */
+.category-buttons{display:flex;flex-wrap:wrap;gap:8px;}
+.category-buttons button{padding:0.6rem 1.2rem;border:none;border-radius:20px;background:#ddd;color:#333;font-size:1rem;cursor:pointer;transition:background 0.3s, transform 0.1s;}
+.category-buttons button:hover{background:#ccc;}
+.category-buttons button.active{background:#00804b;color:#fff;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
 .category-buttons button:active{transform:scale(0.98);}
 
-/* 卡片列表樣式 */
-#cards{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:20px;padding-top:10px;}
-.card{background:#fff;padding:1.5rem;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,0.05);transition:transform 0.2s;}
-.card:hover{transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,0.1);}
-.card h2{font-size:1.3rem;margin-bottom:1rem;color:#00804b;border-bottom:2px solid #eee;padding-bottom:10px;}
-.card .item{margin-bottom:0.5rem;font-size:1rem;}
-.card b{font-weight:600;color:#333;display:inline-block;min-width:70px;}
+/* 搜尋與篩選 */
+.search-input{padding:0.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;flex-grow:1;min-width:150px;}
+.district-filter{padding:0.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;background:#fff;}
 
-/* 簡介樣式 */
-.card .description {
-    font-size: 0.95rem;
-    color: #555;
-    margin-bottom: 10px;
-    padding: 5px 0 10px 0;
-    border-bottom: 1px dashed #eee;
-    font-style: italic; 
-}
-.card .description b {
-    font-weight: bold;
-    color: #000;
-}
+/* 美食卡片列表 */
+.food-list{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:1rem;}
+.food-item{background:#fff;padding:1.2rem;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,0.1);display:flex;flex-direction:column;transition:transform 0.2s;position:relative;}
+.food-item:hover{transform:translateY(-3px);box-shadow:0 4px 10px rgba(0,0,0,0.15);}
+.item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;}
+.item-header h2{font-size:1.3rem;color:#00804b;margin:0;}
+.google-rating{background:#ff9800;color:#fff;padding:0.3rem 0.6rem;border-radius:4px;font-weight:bold;font-size:0.9rem;}
+.item-body p{margin:0.4rem 0;}
+.item-body strong{color:#00804b;margin-right:0.3rem;}
+.item-feature{font-style:italic;color:#666;font-size:0.9rem;margin-top:0.4rem;padding-top:0.4rem;border-top:1px dashed #eee;}
 
-/* 評分和連結樣式 */
-.score{font-weight:bold;padding:2px 8px;border-radius:4px;color:#fff;display:inline-block;min-width:50px;text-align:center;}
-.score.high{background:#4CAF50;} /* >= 4.5 綠色 */
-.score.mid{background:#FFC107;color:#333;} /* >= 4.0 黃色 */
-.score.low{background:#F44336;} /* < 4.0 紅色 */
-.phone-link a{color:#007bff;text-decoration:none;font-weight:bold;}
-.map-link a{display:inline-block;background:#00804b;color:#fff;padding:8px 15px;border-radius:8px;text-decoration:none;margin-top:5px;transition:background 0.3s;}
-.map-link a:hover{background:#00663d;}
+/* 地圖按鈕 */
+.map-link{display:inline-block;margin-top:0.8rem;padding:0.6rem 1.5rem;background:#00804b;color:#fff;text-decoration:none;border-radius:4px;text-align:center;font-weight:bold;transition:background 0.3s;}
+.map-link:hover{background:#005c35;}
 
-/* 關於區塊 */
-#about{background:#e0f7e0;padding:2rem;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,0.05);margin-top:20px;}
-#about h2{color:#00804b;margin-bottom:1rem;}
+/* 分頁控制區 */
+.pagination{display:flex;justify-content:center;align-items:center;gap:15px;margin:1.5rem 0;}
+.pagination button{padding:0.8rem 1.5rem;border:none;border-radius:6px;background:#00804b;color:#fff;font-size:1rem;cursor:pointer;transition:background 0.3s;}
+.pagination button:disabled{background:#ccc;cursor:not-allowed;}
+.pagination button:hover:not(:disabled){background:#005c35;}
+.page-info{font-size:1rem;color:#666;}
 
-/* 無結果提示 */
-#no-results{text-align:center;font-size:1.2rem;color:#999;padding:40px 0;grid-column:1 / -1;}
-
-/* 【新增】分頁樣式 */
-#pagination {
-    display:flex; /* 確保按鈕與資訊在同一行 */
-    justify-content: center; 
-    align-items: center;
-    padding: 20px 0;
-    margin-top: 20px;
-}
-#pagination button {
-    padding: 10px 20px; 
-    border-radius: 8px; 
-    border: none;
-    background: #00804b;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-    min-width: 100px;
-}
-#pagination button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-}
-#pageInfo {
-    font-size: 1.1rem; 
-    font-weight: bold; 
-    color: #333;
-    margin: 0 15px;
+/* 響應式調整 */
+@media (max-width: 768px){
+    .container{padding:0.5rem;}
+    nav .container{flex-direction:column;text-align:center;}
+    nav h1{margin-bottom:0.5rem;}
+    .controls-top{flex-direction:column;align-items:stretch;}
+    .category-buttons{justify-content:center;}
+    .search-input, .district-filter{width:100%;}
+    .food-item{padding:1rem;}
 }
 </style>
 </head>
 <body>
 
 <nav id="top-nav">
-  <div class="container">
-    <h1>彰化美食地圖</h1>
-    <div>
-      <a href="#controls">篩選</a>
-      <a href="#about">關於</a>
+    <div class="container">
+        <h1>彰化美食地圖 TOP</h1>
+        <a href="https://github.com/YourUsername/YourRepo" target="_blank">GitHub 專案</a>
     </div>
-  </div>
 </nav>
 
 <div class="container">
-
-  <section id="controls" class="controls">
-    <h2>🎯 美食篩選與搜尋</h2>
-    <div class="control-group">
-      <label for="districtFilter">地區：</label>
-      <select id="districtFilter">
-        <option value="">全部地區</option>
-      </select>
-    </div>
-    <div class="control-group">
-      <label for="keywordInput">搜尋：</label>
-      <input type="text" id="keywordInput" placeholder="輸入店名、特色或地址">
-    </div>
-    <div class="category-buttons">
-      <button data-cat="" class="active">全部美食</button>
-      <button data-cat="kongroufan">爌肉飯</button>
-      <button data-cat="rouyuan">肉圓</button>
-      <button data-cat="sushi">素食麵</button>
-    </div>
-  </section>
-
-  <div id="cards">
+    <div class="controls">
+        <div class="controls-top">
+            <div class="category-buttons">
+                <button data-cat="all" class="active">全部</button>
+                <button data-cat="kongroufan">爌肉飯</button>
+                <button data-cat="rouyuan">肉圓</button>
+                <button data-cat="sushi">素食麵</button>
+            </div>
+        </div>
+        
+        <div class="controls-bottom" style="display:flex; gap:10px;">
+             <input type="text" id="keywordInput" class="search-input" placeholder="搜尋店家名稱、地址、特色...">
+             <select id="districtFilter" class="district-filter">
+                <option value="all">所有區域</option>
+                </select>
+        </div>
     </div>
 
-  <div id="pagination">
-      <button id="prevBtn" disabled>上一頁</button>
-      <span id="pageInfo">第 1 頁 / 共 ? 頁</span>
-      <button id="nextBtn">下一頁</button>
-  </div>
-  <section id="about">
-    <h2>關於此專案</h2>
-    <p>本美食地圖專案為 PWA (Progressive Web App) 範例，資料採用彰化地區三種在地特色小吃：爌肉飯、肉圓、素食麵。所有資料皆為人工整理，旨在提供一個快速、可離線存取、且功能完整的行動端美食導覽體驗。</p>
-    <p>資料範圍：總計約 94 筆在地店家 (素食麵 25、爌肉飯 43、肉圓 26)，涵蓋彰化市、員林市、鹿港鎮、北斗鎮等重要鄉鎮。資料來源為 Google Maps 評論平均分數，並以分數高低排序後，分頁顯示。</p>
-  </section>
+    <div id="foodList" class="food-list">
+        </div>
 
+    <div class="pagination">
+        <button id="prevBtn" disabled>上一頁</button>
+        <span id="pageInfo" class="page-info"></span>
+        <button id="nextBtn" disabled>下一頁</button>
+    </div>
 </div>
 
-<script>
-  // PWA Service Worker 註冊 (此處不包含 sw.js 內容)
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').then(registration => {
-        console.log('Service Worker registered: ', registration);
-      }).catch(err => {
-        console.log('Service Worker registration failed: ', err);
-      });
-    });
-  }
-</script>
+<footer class="container" style="text-align:center; padding-top:0;">
+    <p>&copy; 2025 彰化美食地圖. 資料來源：在地精選。圖示版權：Google Maps & Font Awesome。</p>
+</footer>
 
-<script src="data.js"></script>
-<script>
-const districtFilter = document.getElementById("districtFilter");
-const keywordInput = document.getElementById("keywordInput");
-let currentCategory = "";
 
-// 【新增】分頁變數
+<script src="data-05(最終核對版).js"></script> <script>
+// =======================================================================
+// 全域變數設定
+// =======================================================================
+const itemsPerPage = 12; // 每頁顯示 12 筆
 let currentPage = 1;
-const itemsPerPage = 20; // 每頁顯示 20 筆
+let currentCategory = 'all';
+let currentData = [];
 
-// 使用 data 變數，與 data.js 保持一致
-// 填充地區篩選器選項
-const districtSet = new Set(data.map(x => x.district));
-districtSet.forEach(d => {
-  const opt = document.createElement("option");
-  opt.value = d;
-  opt.textContent = d;
-  districtFilter.appendChild(opt);
-});
+// 元素選取
+const foodList = document.getElementById('foodList');
+const keywordInput = document.getElementById('keywordInput');
+const districtFilter = document.getElementById('districtFilter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const pageInfo = document.getElementById('pageInfo');
 
-// 模糊搜尋工具函式
-function fuzzyMatch(text, keyword) {
-    if (!text || !keyword) return false;
-    text = text.toLowerCase();
-    keyword = keyword.toLowerCase();
-    return text.includes(keyword);
-}
 
-// 函式防抖 (Debounce)
+// =======================================================================
+// 工具函數
+// =======================================================================
+
+// Debounce 函數，用於優化搜尋輸入
 function debounce(func, delay) {
-    let timeoutId;
+    let timeout;
     return function(...args) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            func.apply(this, args);
-        }, delay);
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
     };
 }
 
+// =======================================================================
+// 數據載入與初始化
+// =======================================================================
+
+// 載入區域篩選器選項
+function loadDistrictFilter() {
+    const districts = new Set();
+    data.forEach(item => districts.add(item.district));
+    
+    // 將 Set 轉換為 Array，並排序
+    const sortedDistricts = Array.from(districts).sort((a, b) => a.localeCompare(b, 'zh-TW'));
+
+    sortedDistricts.forEach(district => {
+        const option = document.createElement('option');
+        option.value = district;
+        option.textContent = district;
+        districtFilter.appendChild(option);
+    });
+}
+
+// =======================================================================
+// 主要渲染函數
+// =======================================================================
+
 function render() {
-  const district = districtFilter.value;
-  const category = currentCategory;
-  const keyword = keywordInput.value;
-  const cardsBox = document.getElementById("cards");
-  const paginationBox = document.getElementById("pagination");
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const pageInfo = document.getElementById("pageInfo");
+    // 1. 過濾數據
+    const selectedCategory = currentCategory;
+    const selectedDistrict = districtFilter.value;
+    const keyword = keywordInput.value.toLowerCase();
 
-  // 1. 篩選
-  let list = data.slice(); 
+    currentData = data.filter(item => {
+        const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
+        const districtMatch = selectedDistrict === 'all' || item.district === selectedDistrict;
+        
+        // 關鍵字搜尋 (名稱、地址、特色、簡介)
+        const keywordMatch = keyword === '' || 
+                             item.name.toLowerCase().includes(keyword) || 
+                             item.address.toLowerCase().includes(keyword) || 
+                             item.feature.toLowerCase().includes(keyword) ||
+                             (item.description && item.description.toLowerCase().includes(keyword));
 
-  if (district) list = list.filter(i => i.district === district);
-  if (category) list = list.filter(i => i.category === category);
+        return categoryMatch && districtMatch && keywordMatch;
+    });
 
-  if (keyword) {
-    list = list.filter(i =>
-      fuzzyMatch(i.name, keyword) ||
-      fuzzyMatch(i.dish, keyword) ||
-      fuzzyMatch(i.address, keyword) ||
-      fuzzyMatch(i.feature, keyword) ||
-      fuzzyMatch(i.description, keyword)
-    );
-  }
+    // 2. 計算分頁資訊
+    const totalItems = currentData.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    
+    // 確保當前的頁碼不會超過總頁數 (如果過濾後頁數減少)
+    if (currentPage > totalPages && totalPages > 0) {
+        currentPage = totalPages;
+    } else if (totalPages === 0) {
+        currentPage = 1;
+    }
 
-  // 2. 排序 (依 Google 評分高到低)
-  list = list.sort((a, b) => b.google - a.google);
-  
-  // 3. 【分頁邏輯】計算總頁數與修正當前頁碼
-  const totalItems = list.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+    // 3. 取得當前頁面的數據
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageItems = currentData.slice(start, end);
 
-  // 確保當前頁碼在有效範圍內
-  if (currentPage > totalPages && totalPages > 0) {
-      currentPage = totalPages;
-  } else if (totalPages === 0) {
-      currentPage = 1;
-  } else if (currentPage < 1) {
-      currentPage = 1;
-  }
-  
-  // 取得當前頁面的資料
-  const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const pagedList = list.slice(start, end);
+    // 4. 渲染列表
+    foodList.innerHTML = '';
+    if (pageItems.length === 0) {
+        foodList.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; padding: 2rem; color: #666;">找不到符合條件的店家 T_T</p>';
+    } else {
+        pageItems.forEach(item => {
+            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.address)}`;
+            
+            const card = document.createElement('div');
+            card.className = 'food-item';
+            card.innerHTML = `
+                <div class="item-header">
+                    <h2>${item.name}</h2>
+                    <span class="google-rating">★ ${item.google}</span>
+                </div>
+                <div class="item-body">
+                    <p><strong>區域:</strong> ${item.district}</p>
+                    <p><strong>地址:</strong> ${item.address}</p>
+                    <p><strong>營業時間:</strong> ${item.time}</p>
+                    <p><strong>均價:</strong> ${item.price}</p>
+                    <p><strong>招牌菜:</strong> ${item.dish}</p>
+                    <p class="item-feature">${item.feature} / ${item.description || '無詳細簡介'}</p>
+                </div>
+                <a href="${mapUrl}" target="_blank" class="map-link">Google 地圖導航</a>
+            `;
+            foodList.appendChild(card);
+        });
+    }
 
-  // 4. 渲染卡片
-  cardsBox.innerHTML = "";
+    // 5. 更新分頁控制項
+    updatePaginationControls(totalPages, totalItems);
+}
 
-  if (totalItems === 0) {
-    cardsBox.innerHTML = `<div id="no-results">找不到符合條件的店家！</div>`;
-    paginationBox.style.display = 'none'; // 無結果時隱藏分頁控制
-    return;
-  }
-  
-  paginationBox.style.display = 'flex'; // 顯示分頁控制
-
-  pagedList.forEach((i, idx) => {
-    // 全局編號 (例如: 第 2 頁的第 5 筆，編號為 20+5=25)
-    const globalIdx = start + idx + 1; 
-
-    // 【已修正】Google Maps 連結格式，使用正確的 Google Maps 搜尋 URL
-    const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(i.name + " " + i.address)}`;
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h2>${globalIdx}. ${i.name}</h2>
-      
-      <div class="item description"><b>簡介：</b>${i.description || '暫無詳細簡介'}</div> 
-      
-      <div class="item"><b>地區：</b>${i.district}</div>
-      <div class="item"><b>Google 評分：</b><span class="score ${i.google >= 4.5 ? 'high' : i.google >= 4.0 ? 'mid' : 'low'}">${i.google}</span></div>
-      <div class="item"><b>招牌：</b>${i.dish}</div>
-      <div class="item"><b>特色：：</b>${i.feature}</div>
-      <div class="item"><b>時段：</b>${i.time}</div>
-      <div class="item"><b>價格：</b>${i.price}</div>
-      <div class="item phone-link"><b>電話：</b><a href="tel:${i.phone}">${i.phone}</a></div>
-      <div class="item map-link">
-        <a href="${mapUrl}" target="_blank">📍 查看地圖與導航</a>
-      </div>
-    `;
-
-    cardsBox.appendChild(card);
-  });
-  
-  // 5. 【分頁控制更新】
+// 更新分頁按鈕狀態與頁碼資訊
+function updatePaginationControls(totalPages, totalItems) {
   prevBtn.disabled = currentPage === 1;
   nextBtn.disabled = currentPage === totalPages || totalPages === 0;
   pageInfo.textContent = `第 ${currentPage} 頁 / 共 ${totalPages} 頁 (共 ${totalItems} 筆)`;
 }
 
-// 【修正與新增】事件監聽器：切換篩選條件時，重設頁碼為 1
+
+// =======================================================================
+// 事件監聽器與初始化
+// =======================================================================
+
+// 事件監聽器：切換篩選條件時，重設頁碼為 1
 document.querySelectorAll(".category-buttons button").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".category-buttons button").forEach(b => b.classList.remove('active'));
@@ -337,8 +272,15 @@ keywordInput.addEventListener("input", debounce(() => {
 }, 300));
 
 
-// 【新增】上一頁/下一頁按鈕事件
+// 上一頁/下一頁按鈕事件
 document.addEventListener("DOMContentLoaded", () => {
+    // 初始化區域篩選器
+    loadDistrictFilter();
+    
+    // 初始化渲染
+    render();
+
+    // 綁定分頁按鈕事件
     document.getElementById("prevBtn").addEventListener("click", () => {
         if (currentPage > 1) {
             currentPage--;
@@ -349,17 +291,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("nextBtn").addEventListener("click", () => {
-        // 由於 render 函數會自動檢查邊界，這裡只需安全地增加頁碼
+        // 由於 render 函數會自動檢查邊界，這裡只需遞增
         currentPage++;
         render();
         // 捲動到頂部 (導航列下方)
         document.getElementById('top-nav').scrollIntoView({ behavior: 'smooth' });
     });
-    
-    // 初始化渲染
-    render();
 });
 </script>
-
 </body>
 </html>
