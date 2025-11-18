@@ -19,7 +19,8 @@ const data = [
 
   // 員林市 - 8 筆
   {"category":"sushi","district":"員林市","name":"得來素 (惠來店)","phone":"04-726-0086","address":"彰化縣員林市惠來街103號","google":4.5,"feature":"連鎖素食早午餐，提供黃麵","dish":"素黃麵 ($50)","time":"06:00–13:00","price":"$50-100"},
-  {"category":"sushi","district":"員林市","name":"世恩素食","phone":"04-832-3429","address":"彰化縣員林市民生路132號","google":4.5,"feature":"招牌胡蘿蔔麵，素食自助餐","dish":"胡蘿蔔麵 ($60)","time":"11:00-14:00, 16:00-19:00 (週日休)","price":"$50-100"},
+  // 修正後的世恩素食資料
+  {"category":"sushi","district":"員林市","name":"世恩素食","phone":"04-832-3429","address":"彰化縣員林市民生路132號","google":4.5,"feature":"招牌胡蘿蔔麵，素食自助餐 (已歇業)","dish":"胡蘿蔔麵 ($60)","time":"已歇業","price":"$50-100", "status": "closed"},
   {"category":"sushi","district":"員林市","name":"蓮鋐中西式素食簡餐店","phone":"04-832-7777","address":"彰化縣員林市員東路300號","google":4.4,"feature":"簡餐多樣，麵食清爽","dish":"什錦素食麵 ($80)","time":"11:00-21:00","price":"$80-150"},
   {"category":"sushi","district":"員林市","name":"善德素食麵館","phone":"04-839-6000","address":"彰化縣員林市莒光路150號","google":4.4,"feature":"招牌川辣烏龍麵，平價實惠","dish":"川辣烏龍麵 ($45)","time":"10:30-19:30 (週四休)","price":"$30-70"},
   {"category":"sushi","district":"員林市","name":"大慈利素食麵","phone":"04-839-5888","address":"彰化縣員林市新生路2號","google":4.3,"feature":"火車站旁早場名店，必點招牌菜包","dish":"素食麵+菜包 ($50)","time":"06:00-13:00","price":"$40-80"},
@@ -143,3 +144,4 @@ console.log('素食麵總數:', data.filter(d => d.category === 'sushi').length)
 console.log('爌肉飯總數:', data.filter(d => d.category === 'kongroufan').length); // 42
 console.log('肉圓總數:', data.filter(d => d.category === 'rouyuan').length); // 26
 console.log('總店家數:', data.length); // 87
+
