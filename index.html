@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>彰化美食地圖 TOP20 - 爌肉飯、肉圓、素食麵</title>
+<title>彰化美食地圖 TOP - 爌肉飯、肉圓、素食麵</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00804b">
@@ -27,13 +27,12 @@ nav a:hover{background:rgba(255,255,255,0.2);}
 label{font-weight:bold;margin:0 .4rem}
 select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-size:1rem;margin:.3rem;max-width:200px;vertical-align:middle;}
 
-/* 按鈕樣式 【修正區】 */
+/* 按鈕樣式 */
 .category-buttons{
   display:flex;
   justify-content:flex-start; /* 保持靠左對齊 */
   gap:10px;
   margin-top:10px;
-  /* 移除 flex-wrap: wrap; */
   overflow-x: auto; /* 允許水平滑動 */
   padding: 5px 0; /* 讓滑動條有空間 */
   white-space: nowrap; /* 強制不換行 */
@@ -41,7 +40,7 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
 }
 
 .category-buttons button{
-  flex-shrink: 0; /* 【關鍵】防止按鈕被壓縮 */
+  flex-shrink: 0; /* 防止按鈕被壓縮 */
   padding:0.7rem 1.2rem;border-radius:10px;font-size:1rem;cursor:pointer;
   border:none;background:#ccc;color:#333;transition:background 0.3s, transform 0.1s;
 }
@@ -87,6 +86,34 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
 
 /* 無結果提示 */
 #no-results{text-align:center;font-size:1.2rem;color:#999;padding:40px 0;grid-column:1 / -1;}
+
+/* 【新增】分頁樣式 */
+#pagination {
+    text-align: center; 
+    padding: 20px 0;
+    margin-top: 20px;
+}
+#pagination button {
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    border: none;
+    background: #00804b;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    min-width: 100px;
+}
+#pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+#pageInfo {
+    font-size: 1.1rem; 
+    font-weight: bold; 
+    color: #333;
+    margin: 0 15px;
+}
 </style>
 </head>
 <body>
@@ -126,10 +153,15 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
   <div id="cards">
     </div>
 
+  <div id="pagination">
+      <button id="prevBtn" disabled>上一頁</button>
+      <span id="pageInfo">第 1 頁 / 共 ? 頁</span>
+      <button id="nextBtn">下一頁</button>
+  </div>
   <section id="about">
     <h2>關於此專案</h2>
     <p>本美食地圖專案為 PWA (Progressive Web App) 範例，資料採用彰化地區三種在地特色小吃：爌肉飯、肉圓、素食麵。所有資料皆為人工整理，旨在提供一個快速、可離線存取、且功能完整的行動端美食導覽體驗。</p>
-    <p>資料範圍：共 105 筆在地店家，涵蓋彰化市、員林市、鹿港鎮、北斗鎮等重要鄉鎮。資料來源為 Google Maps 評論平均分數，並取分數最高的 TOP20 進行顯示。</p>
+    <p>資料範圍：總計約 91 筆在地店家 (素食麵 23、爌肉飯 42、肉圓 26)，涵蓋彰化市、員林市、鹿港鎮、北斗鎮等重要鄉鎮。資料來源為 Google Maps 評論平均分數，並以分數高低排序後，分頁顯示。</p>
   </section>
 
 </div>
@@ -151,6 +183,10 @@ select,input{padding:.6rem 1rem;border:1px solid #bbb;border-radius:10px;font-si
 const districtFilter = document.getElementById("districtFilter");
 const keywordInput = document.getElementById("keywordInput");
 let currentCategory = "";
+
+// 【新增】分頁變數
+let currentPage = 1;
+const itemsPerPage = 20; // 每頁顯示 20 筆
 
 // 使用 data 變數，與 data.js 保持一致
 // 填充地區篩選器選項
@@ -185,17 +221,18 @@ function render() {
   const district = districtFilter.value;
   const category = currentCategory;
   const keyword = keywordInput.value;
+  const cardsBox = document.getElementById("cards");
+  const paginationBox = document.getElementById("pagination");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const pageInfo = document.getElementById("pageInfo");
 
-  // 使用修正後的 data 變數
+  // 1. 篩選
   let list = data.slice(); 
 
-  // 1. 依地區篩選
   if (district) list = list.filter(i => i.district === district);
-
-  // 2. 依類別篩選
   if (category) list = list.filter(i => i.category === category);
 
-  // 3. 模糊搜尋 (多欄位)
   if (keyword) {
     list = list.filter(i =>
       fuzzyMatch(i.name, keyword) ||
@@ -206,26 +243,50 @@ function render() {
     );
   }
 
-  // 4. 排序 TOP20
-  list = list.sort((a, b) => b.google - a.google).slice(0, 20);
+  // 2. 排序 (依 Google 評分高到低)
+  list = list.sort((a, b) => b.google - a.google);
+  
+  // 3. 【分頁邏輯】計算總頁數與修正當前頁碼
+  const totalItems = list.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const box = document.getElementById("cards");
-  box.innerHTML = "";
+  // 確保當前頁碼在有效範圍內
+  if (currentPage > totalPages && totalPages > 0) {
+      currentPage = totalPages;
+  } else if (totalPages === 0) {
+      currentPage = 1;
+  } else if (currentPage < 1) {
+      currentPage = 1;
+  }
+  
+  // 取得當前頁面的資料
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pagedList = list.slice(start, end);
 
-  if (list.length === 0) {
-    box.innerHTML = `<div id="no-results">找不到符合條件的店家！</div>`;
+  // 4. 渲染卡片
+  cardsBox.innerHTML = "";
+
+  if (totalItems === 0) {
+    cardsBox.innerHTML = `<div id="no-results">找不到符合條件的店家！</div>`;
+    paginationBox.style.display = 'none'; // 無結果時隱藏分頁控制
     return;
   }
+  
+  paginationBox.style.display = 'flex'; // 顯示分頁控制
 
-  list.forEach((i, idx) => {
-    // 地圖連結修正
+  pagedList.forEach((i, idx) => {
+    // 全局編號 (例如: 第 2 頁的第 5 筆，編號為 20+5=25)
+    const globalIdx = start + idx + 1; 
+
+    // 【修正】Google Maps 連結格式
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(i.name + " " + i.address)}`;
 
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <h2>${idx + 1}. ${i.name}</h2>
+      <h2>${globalIdx}. ${i.name}</h2>
       
       <div class="item description"><b>簡介：</b>${i.description || '暫無詳細簡介'}</div> 
       
@@ -241,28 +302,62 @@ function render() {
       </div>
     `;
 
-    box.appendChild(card);
+    cardsBox.appendChild(card);
   });
+  
+  // 5. 【分頁控制更新】
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+  pageInfo.textContent = `第 ${currentPage} 頁 / 共 ${totalPages} 頁 (共 ${totalItems} 筆)`;
 }
 
-// 事件監聽器
+// 【修正與新增】事件監聽器：切換篩選條件時，重設頁碼為 1
 document.querySelectorAll(".category-buttons button").forEach(btn => {
   btn.addEventListener("click", () => {
-    // 移除所有按鈕的 active 狀態
     document.querySelectorAll(".category-buttons button").forEach(b => b.classList.remove('active'));
-    // 為點擊的按鈕新增 active 狀態
     btn.classList.add('active');
     currentCategory = btn.dataset.cat;
+    currentPage = 1; // 重設頁碼
     render();
   });
 });
 
-districtFilter.addEventListener("change", render);
-// 應用 Debounce 到搜尋框輸入事件
-keywordInput.addEventListener("input", debounce(render, 300));
+districtFilter.addEventListener("change", () => {
+    currentPage = 1; // 重設頁碼
+    render();
+});
 
-// 初始化渲染
-render();
+// 應用 Debounce 到搜尋框輸入事件，並重設頁碼
+keywordInput.addEventListener("input", debounce(() => {
+    currentPage = 1; // 重設頁碼
+    render();
+}, 300));
+
+
+// 【新增】上一頁/下一頁按鈕事件
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            render();
+            // 捲動到頂部 (導航列下方)
+            document.getElementById('top-nav').scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        // 由於 render 函數會自動檢查邊界，這裡只需安全地增加頁碼
+        currentPage++;
+        render();
+        // 捲動到頂部 (導航列下方)
+        document.getElementById('top-nav').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // 初始化渲染
+    render();
+});
+
+// 移除原有的最後一行 render() 呼叫
 </script>
 
 </body>
