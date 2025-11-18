@@ -82,15 +82,16 @@ const data = [
   {"category":"kongroufan","district":"彰化市","name":"延平路爌肉飯","phone":"04-722-1414","address":"彰化縣彰化市延平路10號","google":4.1,"feature":"延平路宵夜場","dish":"爌肉飯 ($55)","time":"20:00-02:00","price":"$50-90"},
   {"category":"kongroufan","district":"彰化市","name":"復興路爌肉飯","phone":"04-722-1515","address":"彰化縣彰化市復興路20號","google":4.0,"feature":"復興路老店，三層肉軟Q","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
   
- // 員林市 - 8 筆 (新增魯肉張豬腳飯爌肉飯)
-  {"category":"kongroufan","district":"員林市","name":"謝米糕 (爌肉飯)","phone":"04-832-5678","address":"彰化縣員林市和平街10號","google":4.1,"feature":"員林最強，搭配米糕湯品","dish":"爌肉飯 ($75)","time":"10:00-18:00","price":"$60-120"},
-  {"category":"kongroufan","district":"員林市","name":"阿政爌肉燒肉飯","phone":"04-832-1234","address":"彰化縣員林市中山路二段200號","google":4.2,"feature":"可以選擇爌肉或燒肉雙拼","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
-  {"category":"kongroufan","district":"員林市","name":"阿華爌肉飯切仔麵","phone":"04-832-4567","address":"彰化縣員林市員林路150號","google":4.0,"feature":"搭配切仔麵的傳統組合","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
-  {"category":"kongroufan","district":"員林市","name":"肉滿堂控肉飯","phone":"","address":"彰化縣員林市新生路250號","google":4.0,"feature":"員林在地新店，傳承古早味，搭配傳統燉湯","dish":"控肉飯+燉湯 ($60)","time":"10:30-20:00","price":"$50-90"},
-  {"category":"kongroufan","district":"員林市","name":"魯肉張豬腳飯爌肉飯","phone":"04-8344257","address":"彰化縣員林市中山南路70號","google":4.0,"feature":"在地老店，早上五點開賣，免費蘿蔔湯無限續，口味偏鹹，主打爌肉與豬腳","dish":"爌肉飯 ($55)","time":"05:00-17:00","price":"$50-90"},
-  {"category":"kongroufan","district":"員林市","name":"員林大同路爌肉飯","phone":"04-832-1111","address":"彰化縣員林市大同路二段10號","google":4.1,"feature":"在地人氣早場","dish":"爌肉飯 ($45)","time":"06:00-12:00","price":"$40-70"},
-  {"category":"kongroufan","district":"員林市","name":"員林惠來街爌肉飯","phone":"04-832-2222","address":"彰化縣員林市惠來街20號","google":4.2,"feature":"惠來街市場名店","dish":"爌肉飯 ($50)","time":"10:00-18:00","price":"$40-80"},
-  {"category":"kongroufan","district":"員林市","name":"員林中山路爌肉飯","phone":"04-832-3333","address":"彰化縣員林市中山路10號","google":4.0,"feature":"員林市場旁老店","dish":"爌肉飯 ($55)","time":"07:00-15:00","price":"$50-90"},
+// 員林市 - 9 筆 (新增阿成梅干扣肉)
+  {"category":"kongroufan","district":"員林市","name":"謝米糕 (爌肉飯)","phone":"04-832-5678","address":"彰化縣員林市和平街10號","google":4.1,"feature":"員林最強，搭配米糕湯品","dish":"爌肉飯 ($75)","time":"10:00-18:00","price":"$60-120"},
+  {"category":"kongroufan","district":"員林市","name":"阿政爌肉燒肉飯","phone":"04-832-1234","address":"彰化縣員林市中山路二段200號","google":4.2,"feature":"可以選擇爌肉或燒肉雙拼","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
+  {"category":"kongroufan","district":"員林市","name":"阿華爌肉飯切仔麵","phone":"04-832-4567","address":"彰化縣員林市員林路150號","google":4.0,"feature":"搭配切仔麵的傳統組合","dish":"爌肉飯 ($50)","time":"07:00-14:00","price":"$40-80"},
+  {"category":"kongroufan","district":"員林市","name":"肉滿堂控肉飯","phone":"","address":"彰化縣員林市新生路250號","google":4.0,"feature":"員林在地新店，傳承古早味，搭配傳統燉湯","dish":"控肉飯+燉湯 ($60)","time":"10:30-20:00","price":"$50-90"},
+  {"category":"kongroufan","district":"員林市","name":"魯肉張豬腳飯爌肉飯","phone":"04-8344257","address":"彰化縣員林市中山南路70號","google":4.0,"feature":"在地老店，早上五點開賣，免費蘿蔔湯無限續，口味偏鹹，主打爌肉與豬腳","dish":"爌肉飯 ($55)","time":"05:00-17:00","price":"$50-90"},
+  {"category":"kongroufan","district":"員林市","name":"員林大同路爌肉飯","phone":"04-832-1111","address":"彰化縣員林市大同路二段10號","google":4.1,"feature":"在地人氣早場","dish":"爌肉飯 ($45)","time":"06:00-12:00","price":"$40-70"},
+  {"category":"kongroufan","district":"員林市","name":"員林惠來街爌肉飯","phone":"04-832-2222","address":"彰化縣員林市惠來街20號","google":4.2,"feature":"惠來街市場名店","dish":"爌肉飯 ($50)","time":"10:00-18:00","price":"$40-80"},
+  {"category":"kongroufan","district":"員林市","name":"員林中山路爌肉飯","phone":"04-832-3333","address":"彰化縣員林市中山路10號","google":4.0,"feature":"員林市場旁老店","dish":"爌肉飯 ($55)","time":"07:00-15:00","price":"$50-90"},
+  {"category":"kongroufan","district":"員林市","name":"阿成梅干扣肉","phone":"04-836-7126","address":"彰化縣員林市中正路252號","google":4.1,"feature":"手工醃製梅干菜和文火慢燉五花肉，口感軟嫩醬汁濃郁","dish":"梅干扣肉飯 ($45)","time":"07:00-00:30 (週日休)","price":"$40-80"},
   
   // 其他地區
   {"category":"kongroufan","district":"鹿港鎮","name":"鹿港灶腳爌肉飯","phone":"04-777-1234","address":"彰化縣鹿港鎮中山路一段100號","google":4.0,"feature":"炭烤與滷煮結合的風味","dish":"爌肉飯 ($50)","time":"11:00-21:00","price":"$40-80"},
@@ -157,6 +158,7 @@ const data = [
   {"category":"rouyuan","district":"永靖鄉","name":"永靖市場肉圓","phone":"04-838-2222","address":"彰化縣永靖鄉永靖路10號","google":4.0,"feature":"永靖市場傳統口味，蒸肉圓","dish":"肉圓 ($35)","time":"06:00-12:00","price":"$30-50"},
   {"category":"rouyuan","district":"福興鄉","name":"福興肉圓","phone":"04-777-1111","address":"彰化縣福興鄉福興路1號","google":4.0,"feature":"福興在地老店，搭配肉羹","dish":"肉圓 ($40)","time":"10:00-18:00","price":"$30-60"}
 ];
+
 
 
 
