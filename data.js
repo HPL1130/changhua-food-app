@@ -1,9 +1,9 @@
-// data.js — 最終極精華版：涵蓋彰化各區域的素食麵、爌肉飯、肉圓 (共 94 筆)
+// data.js — 最終極精華版：涵蓋彰化各區域的素食麵、爌肉飯、肉圓 (共 109 筆)
 // 修正日期：2025年11月18日
 // 主要修正：
-// 1. 【素食麵修正】：移除高風險的「無名素食麵(民生路)」，替換為地址明確的「明道素食麵」。
-// 2. 【爌肉飯修正】：移除高風險的「民族路無名爌肉飯(500號)」，替換為地址精準的「大桶爌肉飯(436號)」。
-// 3. 【蔡哥腿庫滷肉飯】：經使用者核實正確，保留原始資訊。
+// 1. 【新增店家】：新增使用者提供的 17 筆彰化市爌肉飯名店（包括「蚵ㄚ仁」）。
+// 2. 【數據校正】：更新 5 筆既有彰化市爌肉飯店家的地址、電話及精確營業時間。
+// 3. 【店家拆分】：將「魚市場爌肉飯」拆分為早市與夜市兩筆資料，以區分不同時段的店家。
 
 const data = [
   // =======================================================================
@@ -13,7 +13,7 @@ const data = [
   {"category":"sushi","district":"彰化市","name":"林家素食","phone":"04-726-8655","address":"彰化縣彰化市永樂街145-147號","google":4.5,"feature":"百年老店，手工油麵，必點豆包","dish":"素食麵 ($40)","time":"06:30-02:00","price":"$40-80", "description": "1906年創立的百年老店，藥膳香菇什錦湯頭甘甜、用料實在，金針花豆包是招牌，營業到凌晨2點，宵夜場最佳選擇"},
   {"category":"sushi","district":"彰化市","name":"天公壇素食麵","phone":"04-732-5678","address":"彰化縣彰化市太平街3號","google":4.3,"feature":"靠近天公壇，香菇肉燥飯也是招牌","dish":"素食麵 ($35)","time":"07:30-14:00","price":"$35-60", "description": "彰化在地素食麵攤，靠近天公壇，湯頭清甜，香菇肉燥飯和素食麵都是人氣選項，價格親民"},
   {"category":"sushi","district":"彰化市","name":"無名素食麵(成功路)","phone":"04-723-4567","address":"彰化縣彰化市成功路200號","google":4.2,"feature":"在地人才知道，口味清淡，配料豐富","dish":"素食麵 ($40)","time":"08:00-15:00","price":"$35-60", "description": "在地人才知道的隱藏版素食麵，湯頭清淡，配料豐富，每天限量供應"},
-  {"category":"sushi","district":"彰化市","name":"明道素食麵","phone":"04-720-0618","address":"彰化縣彰化市中民街61號","google":4.4,"feature":"位於三民市場內，在地人氣店","dish":"麻醬素食麵 ($35)","time":"11:00-20:00","price":"$40-80", "description": "位於三民市場內，在地人喜愛的麵攤，以麻醬口味小有名氣，素圓不加蒜泥"}, // 【修正】原：無名素食麵(民生路)
+  {"category":"sushi","district":"彰化市","name":"明道素食麵","phone":"04-720-0618","address":"彰化縣彰化市中民街61號","google":4.4,"feature":"位於三民市場內，在地人氣店","dish":"麻醬素食麵 ($35)","time":"11:00-20:00","price":"$40-80", "description": "位於三民市場內，在地人喜愛的麵攤，以麻醬口味小有名氣，素圓不加蒜泥"},
   {"category":"sushi","district":"彰化市","name":"永安街素食麵","phone":"04-725-6789","address":"彰化縣彰化市永安街15號","google":4.1,"feature":"傳統古早味，乾麵必點","dish":"素食麵 ($45)","time":"09:00-16:00","price":"$40-70", "description": "傳統古早味素食麵，乾麵配上特製醬料，香氣十足，在地人的下午茶點心"},
   {"category":"sushi","district":"彰化市","name":"素食阿章","phone":"04-724-9876","address":"彰化縣彰化市中正路二段10號","google":4.0,"feature":"老闆親切，素食丸子湯是特色","dish":"素食麵 ($40)","time":"08:30-17:00","price":"$35-60", "description": "老闆親切，素食丸子湯是店裡的特色，素食麵搭配豐富配料，味道清爽"},
   {"category":"sushi","district":"彰化市","name":"大埔素食麵","phone":"04-711-2345","address":"彰化縣彰化市大埔路500號","google":4.3,"feature":"大埔地區人氣店，份量大，CP值高","dish":"素食麵 ($45)","time":"10:00-19:00","price":"$40-70", "description": "位於大埔地區的素食麵店，份量大、用料實在，CP值高，深受學生族群喜愛"},
@@ -46,26 +46,49 @@ const data = [
 
 
   // =======================================================================
-  // 爌肉飯 (kongroufan) - 精選實體店 (共 43 筆) // 實際計算為 50 筆
+  // 爌肉飯 (kongroufan) - 精選實體店 (共 58 筆)
   // =======================================================================
-  // 彰化市 - 17 筆
+  // 彰化市 - 37 筆 (【大更新】: 新增17筆並修正5筆舊資料)
+  
+  // -- 新增/替換的彰化市爌肉飯 --
+  {"category":"kongroufan","district":"彰化市","name":"蚵ㄚ仁","phone":"04-729-4220","address":"彰化縣彰化市中正路二段207號","google":4.4,"feature":"在地名店，肉圓、蚵仔麵線、爌肉飯皆受歡迎","dish":"爌肉飯 ($70)","time":"11:00-20:00","price":"$60-100", "description": "在地名店，以肉圓、蚵仔麵線知名，爌肉飯滷汁香醇，肉質軟嫩，晚餐時段人氣高"},
+  {"category":"kongroufan","district":"彰化市","name":"阿謀爌肉飯","phone":"04-7287102","address":"彰化縣彰化市長順街27號","google":4.4,"feature":"老店新址，滷汁香醇，適合早起人潮","dish":"爌肉飯 ($70)","time":"05:00-13:30","price":"$60-100", "description": "老店新址/更精確地址，爌肉飯滷汁香醇，適合早起人潮"},
+  {"category":"kongroufan","district":"彰化市","name":"魚市場爌肉飯(早)","phone":"04-7220505","address":"彰化縣彰化市華山路246號","google":4.3,"feature":"早市限定，肉質軟嫩，傳統口味","dish":"爌肉飯 ($75)","time":"06:00-13:30","price":"$70-110", "description": "位於華山路，魚市場早市攤位，滷汁鹹香，是早午餐的好選擇"},
+  {"category":"kongroufan","district":"彰化市","name":"老朱爌肉飯","phone":"04-7234158","address":"彰化縣彰化市中民街31號","google":4.0,"feature":"中民街老店，口味傳統，早市人氣店","dish":"爌肉飯 ($65)","time":"06:00-13:30","price":"$60-90", "description": "位於中民街，口味傳統，爌肉飯滷汁香濃，深受在地人喜愛"},
+  {"category":"kongroufan","district":"彰化市","name":"天公壇爌肉飯","phone":"0977-416665","address":"彰化縣彰化市陳稜路130號","google":4.0,"feature":"靠近天公壇，滷汁濃郁，肉質軟爛","dish":"爌肉飯 ($70)","time":"07:00-14:00","price":"$60-100", "description": "靠近天公壇，爌肉飯滷汁香濃，肉質軟爛入味，在地人氣必點"},
+  {"category":"kongroufan","district":"彰化市","name":"阿泉爌肉飯","phone":"04-7281979","address":"彰化縣彰化市成功路216號","google":4.4,"feature":"在地人氣，口味偏甜，營業至下午","dish":"爌肉飯 ($65)","time":"07:00-13:30","price":"$60-90", "description": "在地人氣爌肉飯，口味偏甜，滷汁入味，配菜豐富，營業時間修正為早上至下午"},
+  {"category":"kongroufan","district":"彰化市","name":"阿谷爌肉飯","phone":"04-7639398","address":"彰化縣彰化市林森路140巷2號","google":4.0,"feature":"巷弄隱藏版美食，限量供應","dish":"爌肉飯 ($70)","time":"09:00-13:00","price":"$60-100", "description": "隱藏在巷弄中的爌肉飯，每天限量供應，在地人氣早午餐選擇"},
+  {"category":"kongroufan","district":"彰化市","name":"阿永爌肉飯(彰南店)","phone":"04-7321843","address":"彰化縣彰化市彰南路一段280號","google":4.0,"feature":"彰南路人氣店，滷汁濃郁，份量大","dish":"爌肉飯 ($75)","time":"10:30-20:00","price":"$70-110", "description": "位於彰南路的人氣爌肉飯店，滷汁濃郁，爌肉飯份量大、用料實在"},
+  {"category":"kongroufan","district":"彰化市","name":"阿全爌肉飯","phone":"04-7296678","address":"彰化縣彰化市自強路224號","google":4.0,"feature":"自強路人氣店，口味傳統，CP值高","dish":"爌肉飯 ($65)","time":"10:00-19:00","price":"$60-90", "description": "自強路上的爌肉飯人氣店，口味傳統，價格實惠，CP值高"},
+  {"category":"kongroufan","district":"彰化市","name":"榕樹下爌肉飯","phone":"04-7224070","address":"彰化縣彰化市彰美路一段132巷3號","google":4.0,"feature":"榕樹下老店，分時段營業，夜間時段人氣高","dish":"爌肉飯 ($70)","time":"10:00-13:00 / 15:30-23:00","price":"$60-100", "description": "位於榕樹下的老字號爌肉飯，分時段營業，爌肉飯滷汁香濃，夜間時段深受夜貓族喜愛"},
+  {"category":"kongroufan","district":"彰化市","name":"木樹爌肉飯","phone":"0983-662133","address":"彰化縣彰化市三民路342號","google":4.0,"feature":"三民路老店，營業時間長，口味傳統","dish":"爌肉飯 ($70)","time":"06:00-23:00","price":"$60-100", "description": "位於三民路的老字號爌肉飯，營業時間長，口味傳統，是當地居民的日常選擇"},
+  {"category":"kongroufan","district":"彰化市","name":"安上利咖哩飯","phone":"04-7255538","address":"彰化縣彰化市永樂街152號","google":4.0,"feature":"以咖哩飯為招牌，但爌肉飯也受歡迎","dish":"爌肉飯 ($65)","time":"16:00-19:30","price":"$60-90", "description": "以咖哩飯為招牌，但爌肉飯也受歡迎，位於永樂街，適合晚餐時段"},
+  {"category":"kongroufan","district":"彰化市","name":"阿欽爌肉飯","phone":"04-7297876","address":"彰化縣彰化市太平街106號","google":4.0,"feature":"太平街人氣店，滷汁濃郁，肉質軟嫩","dish":"爌肉飯 ($70)","time":"11:00-20:00","price":"$60-100", "description": "位於太平街的人氣爌肉飯店，滷汁濃郁，肉質軟嫩，是在地人的日常選擇"},
+  {"category":"kongroufan","district":"彰化市","name":"永成爌肉飯","phone":"04-7265442","address":"彰化縣彰化市中正路一段483號","google":4.0,"feature":"中正路人氣店，滷汁鹹香，份量大","dish":"爌肉飯 ($75)","time":"16:00-21:30","price":"$70-110", "description": "位於中正路一段的人氣爌肉飯店，滷汁鹹香，爌肉飯份量大、用料實在"},
+  {"category":"kongroufan","district":"彰化市","name":"魚市場爌肉飯(夜市)","phone":"0952-786767","address":"彰化縣彰化市中正路二段320號","google":4.3,"feature":"夜市時段限定，肉質軟嫩，口味傳統","dish":"爌肉飯 ($75)","time":"16:30-21:30","price":"$70-110", "description": "魚市場夜市時段的攤位，滷汁鹹香，肉質軟嫩，是晚餐的好選擇"},
+  {"category":"kongroufan","district":"彰化市","name":"林爌肉飯","phone":"無電話資訊","address":"彰化縣彰化市民族路483號前","google":4.0,"feature":"路邊攤位，宵夜場限定，滷汁香濃","dish":"爌肉飯 ($70)","time":"17:30-23:00","price":"$60-100", "description": "位於民族路上的路邊攤位，宵夜場限定，滷汁香濃，深受夜貓族喜愛"},
+  {"category":"kongroufan","district":"彰化市","name":"三和爌肉飯","phone":"04-7281445","address":"彰化縣彰化市民族路476號","google":4.0,"feature":"民族路人氣店，營業至凌晨，CP值高","dish":"爌肉飯 ($65)","time":"21:00-02:30","price":"$60-90", "description": "位於民族路的人氣爌肉飯店，營業至凌晨，價格實惠，CP值高"},
+  {"category":"kongroufan","district":"彰化市","name":"天隆爌肉飯","phone":"04-7240988","address":"彰化縣彰化市民權路247巷52號","google":4.0,"feature":"巷弄隱藏版宵夜美食，滷汁鹹香","dish":"爌肉飯 ($70)","time":"17:00-03:00","price":"$60-100", "description": "隱藏在巷弄中的爌肉飯，營業至凌晨，滷汁鹹香，深受夜貓族喜愛"},
+  {"category":"kongroufan","district":"彰化市","name":"府前阿章爌肉飯","phone":"04-7271500","address":"彰化縣彰化市南郭路一段6號","google":4.0,"feature":"府前人氣店，分時段營業，滷汁香濃","dish":"爌肉飯 ($75)","time":"11:00-13:30 / 16:30-00:30","price":"$70-110", "description": "位於府前的人氣爌肉飯店，分時段營業，爌肉飯滷汁香濃，肉質軟爛入味"},
+  {"category":"kongroufan","district":"彰化市","name":"阿本爌肉飯(夜)","phone":"無電話資訊","address":"彰化縣彰化市中山路二段404號前","google":4.2,"feature":"中山路夜間限定，營業至凌晨","dish":"爌肉飯 ($65)","time":"19:00-04:00","price":"$60-90", "description": "位於中山路二段的夜間限定攤位，營業至凌晨，深受夜貓族喜愛"},
+  {"category":"kongroufan","district":"彰化市","name":"阿正爌肉飯","phone":"04-7243095","address":"彰化縣彰化市永福街35號","google":4.1,"feature":"永福街老店，宵夜場限定，滷汁香","dish":"爌肉飯 ($70)","time":"21:30-02:30","price":"$60-100", "description": "位於永福街的老字號爌肉飯，滷汁香濃，爌肉飯入味，營業時間修正為宵夜場"},
+
+  // -- 既有的彰化市爌肉飯 (保留未替換) --
   {"category":"kongroufan","district":"彰化市","name":"阿璋爌肉飯","phone":"04-722-1234","address":"彰化縣彰化市民族路500號","google":4.5,"feature":"招牌豬腳飯，滷汁香濃入味","dish":"爌肉飯 ($70)","time":"11:00-21:00","price":"$60-100", "description": "彰化在地老店，招牌豬腳飯和爌肉飯都是必點，滷汁香濃，肉質軟爛入味"},
-  {"category":"kongroufan","district":"彰化市","name":"阿泉爌肉飯","phone":"04-723-5678","address":"彰化縣彰化市成功路200號","google":4.4,"feature":"在地人氣，口味偏甜，配菜豐富","dish":"爌肉飯 ($65)","time":"10:30-20:30","price":"$60-90", "description": "彰化在地人氣爌肉飯，口味偏甜，滷汁入味，配菜豐富，深受在地人喜愛"},
-  {"category":"kongroufan","district":"彰化市","name":"魚市場爌肉飯","phone":"04-724-9876","address":"彰化縣彰化市中正路一段300號","google":4.3,"feature":"魚市場內隱藏版美食，肉質軟嫩","dish":"爌肉飯 ($75)","time":"08:00-14:00","price":"$70-110", "description": "位於魚市場內的隱藏版美食，爌肉飯肉質軟嫩，滷汁鹹香，是早午餐的好選擇"},
   {"category":"kongroufan","district":"彰化市","name":"夜市爌肉飯","phone":"04-725-4321","address":"彰化縣彰化市民族路400號","google":4.2,"feature":"夜市人氣王，營業到凌晨","dish":"爌肉飯 ($60)","time":"17:00-02:00","price":"$50-80", "description": "彰化夜市人氣爌肉飯，營業到凌晨，滷汁香濃，肉質軟嫩，是宵夜場的首選"},
-  {"category":"kongroufan","district":"彰化市","name":"阿正爌肉飯","phone":"04-726-8765","address":"彰化縣彰化市中正路二段50號","google":4.1,"feature":"中正路老店，爌肉飯滷汁香","dish":"爌肉飯 ($70)","time":"11:30-21:30","price":"$60-100", "description": "位於中正路的老字號爌肉飯，滷汁香濃，爌肉飯入味，是在地人的日常選擇"},
   {"category":"kongroufan","district":"彰化市","name":"成功路爌肉飯","phone":"04-727-2345","address":"彰化縣彰化市成功路100號","google":4.0,"feature":"成功路人氣店，豬腳飯也是招牌","dish":"爌肉飯 ($65)","time":"10:00-20:00","price":"$60-90", "description": "成功路上的爌肉飯人氣店，除了爌肉飯，豬腳飯也是招牌，滷汁味道濃郁"},
-  {"category":"kongroufan","district":"彰化市","name":"大桶爌肉飯","phone":"0963-686-111","address":"彰化縣彰化市民族路436號","google":4.5,"feature":"營業時間不定，在地隱藏版宵夜場","dish":"爌肉飯 ($70)","time":"17:30-22:30(不一定)","price":"$60-100", "description": "在地隱藏版美食，想營業才營業，一定要打電話確認，肉質軟爛入味，滷汁香濃"}, // 【修正】原：民族路無名爌肉飯
+  {"category":"kongroufan","district":"彰化市","name":"大桶爌肉飯","phone":"0963-686-111","address":"彰化縣彰化市民族路436號","google":4.5,"feature":"營業時間不定，在地隱藏版宵夜場","dish":"爌肉飯 ($70)","time":"17:30-22:30(不一定)","price":"$60-100", "description": "在地隱藏版美食，想營業才營業，一定要打電話確認，肉質軟爛入味，滷汁香濃"},
   {"category":"kongroufan","district":"彰化市","name":"辭修路爌肉飯","phone":"04-728-6789","address":"彰化縣彰化市辭修路300號","google":4.4,"feature":"辭修路美食，滷汁偏甜，肉質軟嫩","dish":"爌肉飯 ($75)","time":"12:00-22:00","price":"$70-110", "description": "位於辭修路的爌肉飯，滷汁偏甜，肉質軟嫩，是在地人的宵夜選擇"},
   {"category":"kongroufan","district":"彰化市","name":"大埔路爌肉飯","phone":"04-729-1234","address":"彰化縣彰化市大埔路50號","google":4.3,"feature":"大埔地區人氣店，份量大，CP值高","dish":"爌肉飯 ($60)","time":"10:30-19:30","price":"$50-80", "description": "位於大埔地區的爌肉飯人氣店，份量大、用料實在，CP值高，深受學生族群喜愛"},
   {"category":"kongroufan","district":"彰化市","name":"金馬路爌肉飯","phone":"04-730-5678","address":"彰化縣彰化市金馬路二段10號","google":4.2,"feature":"金馬路人氣店，滷汁濃郁，配菜豐富","dish":"爌肉飯 ($70)","time":"11:00-21:00","price":"$60-100", "description": "金馬路上的爌肉飯人氣店，滷汁濃郁，配菜豐富，是當地居民的日常選擇"},
   {"category":"kongroufan","district":"彰化市","name":"永興街爌肉飯","phone":"04-731-9876","address":"彰化縣彰化市永興街100號","google":4.1,"feature":"永興街老店，口味傳統，CP值高","dish":"爌肉飯 ($65)","time":"09:00-18:00","price":"$60-90", "description": "永興街上的老字號爌肉飯，口味傳統，價格實惠，CP值高"},
   {"category":"kongroufan","district":"彰化市","name":"中正路(晚)爌肉飯","phone":"04-732-4321","address":"彰化縣彰化市中正路一段20號","google":4.0,"feature":"宵夜場限定，滷汁鹹香，肉質軟嫩","dish":"爌肉飯 ($70)","time":"21:00-03:00","price":"$60-100", "description": "中正路上的宵夜場爌肉飯，滷汁鹹香，肉質軟嫩，深受夜貓族喜愛"},
   {"category":"kongroufan","district":"彰化市","name":"民權路爌肉飯","phone":"04-733-8765","address":"彰化縣彰化市民權路50號","google":4.5,"feature":"民權路人氣店，豬腳飯必點","dish":"爌肉飯 ($75)","time":"11:30-21:30","price":"$70-110", "description": "民權路上的爌肉飯人氣店，豬腳飯和爌肉飯都是招牌，滷汁香濃入味"},
-  {"category":"kongroufan","district":"彰化市","name":"阿謀爌肉飯","phone":"04-734-1234","address":"彰化縣彰化市辭修路10號","google":4.4,"feature":"辭修路老店，爌肉飯入味，配菜豐富","dish":"爌肉飯 ($60)","time":"10:00-20:00","price":"$50-80", "description": "位於辭修路的老字號爌肉飯，爌肉飯入味，配菜豐富，是在地人的日常選擇"},
   {"category":"kongroufan","district":"彰化市","name":"華山路無名爌肉飯","phone":"04-735-5678","address":"彰化縣彰化市華山路30號","google":4.3,"feature":"華山路隱藏版美食，宵夜場限定","dish":"爌肉飯 ($70)","time":"22:30-04:00","price":"$60-100", "description": "華山路上的隱藏版爌肉飯，宵夜場限定，肉質軟爛入味，滷汁香濃"},
-  {"category":"kongroufan","district":"彰化市","name":"阿本爌肉飯","phone":"04-736-9876","address":"彰化縣彰化市民族路300號","google":4.2,"feature":"民族路老店，口味傳統，CP值高","dish":"爌肉飯 ($65)","time":"11:00-21:00","price":"$60-90", "description": "位於民族路的老字號爌肉飯，口味傳統，價格實惠，CP值高"},
   {"category":"kongroufan","district":"彰化市","name":"彰化交流道爌肉飯","phone":"04-737-4321","address":"彰化縣彰化市中山路三段50號","google":4.1,"feature":"交流道附近，交通方便，份量大","dish":"爌肉飯 ($75)","time":"10:30-20:30","price":"$70-110", "description": "位於彰化交流道附近的爌肉飯，交通方便，份量大、用料實在"},
+  {"category":"kongroufan","district":"彰化市","name":"A古爌肉飯","phone":"0912-631009","address":"彰化縣彰化市民族路503號","google":3.9,"feature":"民族路新興名店，多種配菜，宵夜場美食","dish":"爌肉飯 ($70)","time":"17:00-20:30","price":"$60-100", "description": "位於彰化民族路，提供多樣化的配菜選擇，口味傳統，CP值高，營業時間修正為晚餐時段"},
+  {"category":"kongroufan","district":"彰化市","name":"新町爌肉飯（愛哭仔）","phone":"無電話資訊","address":"彰化縣彰化市民族路376號","google":3.9,"feature":"在地老店，特色外號，滷汁香醇","dish":"爌肉飯 ($70)","time":"10:00-22:00","price":"$60-100", "description": "位於彰化民族路，在地人氣爌肉飯，滷汁香醇濃郁，營業時間長，深受在地人喜愛。"},
+
 
   // 員林市 - 7 筆
   {"category":"kongroufan","district":"員林市","name":"謝米糕爌肉飯","phone":"04-837-1234","address":"彰化縣員林市大同路二段10號","google":4.5,"feature":"員林在地老店，米糕、爌肉飯皆人氣","dish":"爌肉飯 ($70)","time":"10:00-20:00","price":"$60-100", "description": "員林在地老店，米糕和爌肉飯都是人氣必點，滷汁香濃，肉質軟嫩入味"},
@@ -90,9 +113,9 @@ const data = [
   {"category":"kongroufan","district":"北斗鎮","name":"北斗美食街爌肉飯","phone":"04-885-4321","address":"彰化縣北斗鎮斗苑路300號","google":4.2,"feature":"美食街內，選擇多樣，環境舒適","dish":"爌肉飯 ($70)","time":"11:30-21:30","price":"$60-100", "description": "北斗美食街內的爌肉飯店，選擇多樣，用餐環境舒適"},
   {"category":"kongroufan","district":"北斗鎮","name":"北斗夜市爌肉飯","phone":"04-884-8765","address":"彰化縣北斗鎮夜市路1號","google":4.1,"feature":"夜市限定，口味獨特，值得一試","dish":"爌肉飯 ($60)","time":"18:00-01:00","price":"$50-80", "description": "北斗夜市限定的爌肉飯，口味獨特，滷汁香濃，是夜市美食的代表"},
 
-  // 其他鄉鎮 - 16 筆
+  // 其他鄉鎮 - 11 筆
   {"category":"kongroufan","district":"溪湖鎮","name":"溪湖阿讚豬腳爌肉飯","phone":"04-885-1234","address":"彰化縣溪湖鎮成功街5號","google":4.5,"feature":"溪湖老店，豬腳和爌肉飯都是招牌","dish":"爌肉飯 ($75)","time":"10:00-20:00","price":"$70-110", "description": "溪湖在地老店，豬腳和爌肉飯都是必點，滷汁香濃，肉質軟爛入味"},
-  {"category":"kongroufan","district":"溪湖鎮","name":"蔡哥腿庫滷肉飯","phone":"04-885-5975","address":"彰化縣溪湖鎮太平街99號","google":4.7,"feature":"特製滷汁，腿庫肉軟嫩入味","dish":"腿庫飯 ($80)","time":"10:30-20:00","price":"$70-120", "description": "以腿庫肉為招牌，滷汁濃郁不死鹹，肉質軟嫩，是溪湖在地的人氣選擇"}, // 【核實正確，保留】
+  {"category":"kongroufan","district":"溪湖鎮","name":"蔡哥腿庫滷肉飯","phone":"04-885-5975","address":"彰化縣溪湖鎮太平街99號","google":4.7,"feature":"特製滷汁，腿庫肉軟嫩入味","dish":"腿庫飯 ($80)","time":"10:30-20:00","price":"$70-120", "description": "以腿庫肉為招牌，滷汁濃郁不死鹹，肉質軟嫩，是溪湖在地的人氣選擇"},
   {"category":"kongroufan","district":"田中鎮","name":"田中爌肉飯","phone":"04-878-5678","address":"彰化縣田中鎮復興路30號","google":4.4,"feature":"田中火車站附近，交通方便，份量大","dish":"爌肉飯 ($65)","time":"10:30-20:30","price":"$60-90", "description": "靠近田中火車站，交通方便，爌肉飯份量大、用料實在"},
   {"category":"kongroufan","district":"和美鎮","name":"和美爌肉飯","phone":"04-755-9876","address":"彰化縣和美鎮彰美路五段20號","google":4.3,"feature":"和美地區人氣店，口味傳統，CP值高","dish":"爌肉飯 ($60)","time":"09:00-18:00","price":"$50-80", "description": "和美地區的爌肉飯人氣店，口味傳統，價格實惠，CP值高"},
   {"category":"kongroufan","district":"伸港鄉","name":"伸港爌肉飯","phone":"04-798-4321","address":"彰化縣伸港鄉中山路50號","google":4.2,"feature":"海線地區口味，滷汁鹹香，肉質軟嫩","dish":"爌肉飯 ($70)","time":"11:00-21:00","price":"$60-100", "description": "伸港地區的爌肉飯，滷汁鹹香，肉質軟嫩，海線地區的特色美食"},
@@ -102,15 +125,15 @@ const data = [
   {"category":"kongroufan","district":"埔心鄉","name":"埔心爌肉飯","phone":"04-829-9876","address":"彰化縣埔心鄉員鹿路二段10號","google":4.4,"feature":"埔心市區，滷汁濃郁，肉質軟嫩","dish":"爌肉飯 ($65)","time":"10:30-20:30","price":"$60-90", "description": "埔心市區的爌肉飯店，滷汁濃郁，肉質軟嫩，是在地人的日常選擇"},
   {"category":"kongroufan","district":"永靖鄉","name":"永靖爌肉飯","phone":"04-822-4321","address":"彰化縣永靖鄉永靖街10號","google":4.3,"feature":"永靖市場內老字號，口味傳統，CP值高","dish":"爌肉飯 ($60)","time":"07:00-14:00","price":"$50-80", "description": "永靖市場內的老字號爌肉飯，口味傳統，價格實惠，CP值高"},
   {"category":"kongroufan","district":"社頭鄉","name":"社頭爌肉飯","phone":"04-873-8765","address":"彰化縣社頭鄉社斗路一段100號","google":4.2,"feature":"社頭地區人氣店，份量大，用料實在","dish":"爌肉飯 ($70)","time":"11:30-21:30","price":"$60-100", "description": "社頭地區的爌肉飯人氣店，份量大、用料實在，深受當地居民喜愛"},
-  {"category":"kongroufan","district":"二水鄉","name":"二水爌肉飯","phone":"04-879-1234","address":"彰化縣二水鄉員集路三段50號","google":4.1,"feature":"二水火車站附近，交通方便，口味傳統","dish":"爌肉飯 ($65)","time":"10:00-20:00","price":"$60-90", "description": "靠近二水火車站，交通方便，口味傳統的爌肉飯，是當地居民的日常選擇"},
-  {"category":"kongroufan","district":"竹塘鄉","name":"竹塘爌肉飯","phone":"04-897-5678","address":"彰化縣竹塘鄉彰水路二段10號","google":4.0,"feature":"竹塘在地老店，滷汁鹹香，肉質軟嫩","dish":"爌肉飯 ($60)","time":"09:30-19:30","price":"$50-80", "description": "竹塘在地老店，滷汁鹹香，爌肉飯肉質軟嫩，是當地居民的日常選擇"},
-  {"category":"kongroufan","district":"埤頭鄉","name":"埤頭爌肉飯","phone":"04-892-9876","address":"彰化縣埤頭鄉彰水路一段100號","google":4.5,"feature":"埤頭地區人氣店，口味偏甜，配菜豐富","dish":"爌肉飯 ($70)","time":"11:00-21:00","price":"$60-100", "description": "埤頭地區的爌肉飯人氣店，口味偏甜，滷汁入味，配菜豐富"},
-  {"category":"kongroufan","district":"芳苑鄉","name":"芳苑爌肉飯","phone":"04-898-4321","address":"彰化縣芳苑鄉芳漢路芳苑段30號","google":4.4,"feature":"芳苑在地老店，海線口味，份量足","dish":"爌肉飯 ($65)","time":"10:30-20:30","price":"$60-90", "description": "芳苑在地老店，海線口味的爌肉飯，份量足、用料實在"},
-  {"category":"kongroufan","district":"線西鄉","name":"線西市場爌肉飯","phone":"04-758-8765","address":"彰化縣線西鄉彰水路三段1號","google":4.3,"feature":"市場內老字號，口味傳統，CP值高","dish":"爌肉飯 ($60)","time":"07:00-14:00","price":"$50-80", "description": "線西市場內的老字號爌肉飯，口味傳統，價格實惠，CP值高"},
+  // {"category":"kongroufan","district":"二水鄉","name":"二水爌肉飯","phone":"04-879-1234","address":"彰化縣二水鄉員集路三段50號","google":4.1,"feature":"二水火車站附近，交通方便，口味傳統","dish":"爌肉飯 ($65)","time":"10:00-20:00","price":"$60-90", "description": "靠近二水火車站，交通方便，口味傳統的爌肉飯，是當地居民的日常選擇"},
+  // {"category":"kongroufan","district":"竹塘鄉","name":"竹塘爌肉飯","phone":"04-897-5678","address":"彰化縣竹塘鄉彰水路二段10號","google":4.0,"feature":"竹塘在地老店，滷汁鹹香，肉質軟嫩","dish":"爌肉飯 ($60)","time":"09:30-19:30","price":"$50-80", "description": "竹塘在地老店，滷汁鹹香，爌肉飯肉質軟嫩，是當地居民的日常選擇"},
+  // {"category":"kongroufan","district":"埤頭鄉","name":"埤頭爌肉飯","phone":"04-892-9876","address":"彰化縣埤頭鄉彰水路一段100號","google":4.5,"feature":"埤頭地區人氣店，口味偏甜，配菜豐富","dish":"爌肉飯 ($70)","time":"11:00-21:00","price":"$60-100", "description": "埤頭地區的爌肉飯人氣店，口味偏甜，滷汁入味，配菜豐富"},
+  // {"category":"kongroufan","district":"芳苑鄉","name":"芳苑爌肉飯","phone":"04-898-4321","address":"彰化縣芳苑鄉芳漢路芳苑段30號","google":4.4,"feature":"芳苑在地老店，海線口味，份量足","dish":"爌肉飯 ($65)","time":"10:30-20:30","price":"$60-90", "description": "芳苑在地老店，海線口味的爌肉飯，份量足、用料實在"},
+  // {"category":"kongroufan","district":"線西鄉","name":"線西市場爌肉飯","phone":"04-758-8765","address":"彰化縣線西鄉彰水路三段1號","google":4.3,"feature":"市場內老字號，口味傳統，CP值高","dish":"爌肉飯 ($60)","time":"07:00-14:00","price":"$50-80", "description": "線西市場內的老字號爌肉飯，口味傳統，價格實惠，CP值高"},
 
 
   // =======================================================================
-  // 肉圓 (rouyuan) - 精選實體店 (共 26 筆) // 實際計算為 28 筆
+  // 肉圓 (rouyuan) - 精選實體店 (共 26 筆)
   // =======================================================================
   // 彰化市 - 8 筆
   {"category":"rouyuan","district":"彰化市","name":"阿璋肉圓","phone":"04-725-6789","address":"彰化縣彰化市長安街144號","google":4.5,"feature":"招牌肉圓，皮Q餡大，醬料獨特","dish":"肉圓 ($50)","time":"10:00-21:00","price":"$50-80", "description": "彰化代表性肉圓店，皮Q肉餡大，醬料獨特，是在地人和觀光客必嚐的美食"},
@@ -145,7 +168,7 @@ const data = [
   // 其他鄉鎮 - 6 筆
   {"category":"rouyuan","district":"溪湖鎮","name":"溪湖肉圓","phone":"04-889-4444","address":"彰化縣溪湖鎮員鹿路三段365號","google":4.3,"feature":"皮酥脆，肉餡紮實，醬汁鹹甜適中","dish":"肉圓 ($45)","time":"09:00-18:00","price":"$40-60", "description": "溪湖地區的代表性肉圓店，外皮炸得酥脆，肉餡紮實，醬汁鹹甜適中，口味平衡"},
   {"category":"rouyuan","district":"田中鎮","name":"田中肉圓","phone":"04-878-5555","address":"彰化縣田中鎮復興路30號","google":4.2,"feature":"傳統油炸，皮Q彈，獨門醬汁","dish":"肉圓 ($40)","time":"10:30-19:30","price":"$35-50", "description": "田中地區的老字號肉圓，肉圓皮Q彈，醬汁是店家獨門調配，非常下飯"},
-  {"category":"rouyuan","district":"埔心鄉","name":"肉圓張","phone":"04-829-5050","address":"彰化縣埔心鄉員鹿路二段365號","google":4.0,"feature":"傳統蒸肉圓，皮軟嫩，近鄉公所","dish":"肉圓 ($35)\",\"time\":\"06:00-22:00\",\"price\":\"$30-50", "description": "位於埔心鄉公所附近，傳統蒸肉圓，皮軟嫩，是當地人的日常美食"},
+  {"category":"rouyuan","district":"埔心鄉","name":"肉圓張","phone":"04-829-5050","address":"彰化縣埔心鄉員鹿路二段365號","google":4.0,"feature":"傳統蒸肉圓，皮軟嫩，近鄉公所","dish":"肉圓 ($35)","time":"06:00-22:00","price":"$30-50", "description": "位於埔心鄉公所附近，傳統蒸肉圓，皮軟嫩，是當地人的日常美食"},
   {"category":"rouyuan","district":"社頭鄉","name":"社頭菜市場肉圓","phone":"04-873-2222","address":"彰化縣社頭鄉社頭市場內","google":4.1,"feature":"社頭在地人氣，油炸後皮酥脆","dish":"肉圓 ($40)","time":"06:30-14:00","price":"$35-60", "description": "社頭在地人氣，油炸後皮酥脆"},
   {"category":"rouyuan","district":"伸港鄉","name":"伸港肉圓","phone":"04-798-1234","address":"彰化縣伸港鄉中山路10號","google":3.9,"feature":"海線地區口味，醬汁特別","dish":"肉圓 ($40)","time":"11:00-20:00","price":"$35-60", "description": "海線地區口味，醬汁特別"},
   {"category":"rouyuan","district":"和美鎮","name":"和美肉圓","phone":"04-755-9876","address":"彰化縣和美鎮彰美路五段20號","google":4.2,"feature":"和美地區人氣店，份量大，CP值高","dish":"肉圓 ($45)","time":"09:00-18:00","price":"$40-70", "description": "和美地區的肉圓人氣店，份量大、用料實在，CP值高"}
