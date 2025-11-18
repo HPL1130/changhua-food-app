@@ -13,11 +13,26 @@ const data = [
   {"category":"sushi","district":"彰化市","name":"東華麵茶素食麵","phone":"04-733-6789","address":"彰化縣彰化市東華路100號","google":4.1,"feature":"在地老店，可搭配麵茶","dish":"素食麵 ($40)","time":"10:00-18:00","price":"$30-60"},
   {"category":"sushi","district":"彰化市","name":"民族路素食麵","phone":"04-722-1111","address":"彰化縣彰化市民族路15號","google":4.2,"feature":"市場內老店，湯頭清甜","dish":"素食麵 ($40)","time":"06:00-13:00","price":"$30-60"},
   
-  // 員林市 - 4 筆
-  {"category":"sushi","district":"員林市","name":"黃記素食","phone":"04-832-5678","address":"彰化縣員林市媽祖廟前","google":4.4,"feature":"員林廟前人氣店，什錦湯料多","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
-  {"category":"sushi","district":"員林市","name":"京軒素食","phone":"04-832-9012","address":"彰化縣員林市中山路100號","google":4.3,"feature":"員林特色麵攤，推冬粉","dish":"素食麵 ($45)","time":"09:00-18:00","price":"$40-80"},
-  {"category":"sushi","district":"員林市","name":"獸囍蔬食","phone":"04-832-5678","address":"彰化縣員林市獸囍路150號","google":4.4,"feature":"員林創意蔬食簡餐","dish":"素食麵 ($60)","time":"11:00-14:00","price":"$50-100"},
+  // 員林市 - 19 筆 
+  {"category":"sushi","district":"員林市","name":"得來素 (惠來店)","phone":"04-726-0086","address":"彰化縣員林市惠來街103號","google":4.5,"feature":"連鎖素食早午餐，提供黃麵","dish":"素黃麵 ($50)","time":"06:00–13:00","price":"$50-100"},
+  {"category":"sushi","district":"員林市","name":"世恩素食","phone":"04-832-3429","address":"彰化縣員林市民生路132號","google":4.5,"feature":"招牌胡蘿蔔麵，素食自助餐","dish":"胡蘿蔔麵 ($60)","time":"11:00-14:00, 16:00-19:00 (週日休)","price":"$50-100"},
+  {"category":"sushi","district":"員林市","name":"天得素食","phone":"04-832-8888","address":"彰化縣員林市博愛路200號","google":4.5,"feature":"湯麵清甜，小菜多樣","dish":"素食麵 ($50)","time":"10:00-19:00 (週二休)","price":"$40-80"},
+  {"category":"sushi","district":"員林市","name":"育英路素食麵","phone":"04-839-5050","address":"彰化縣員林市育英路50號","google":4.5,"feature":"市場內隱藏版，麻醬麵香濃","dish":"麻醬素麵 ($45)","time":"06:30-13:00","price":"$40-70"},
+  {"category":"sushi","district":"員林市","name":"員林媽祖廟前素食麵 (黃記)","phone":"04-832-5678","address":"彰化縣員林市福寧宮周邊","google":4.4,"feature":"員林廟前人氣店，在地老店","dish":"素食麵 ($40)","time":"10:00-20:00","price":"$30-60"},
+  {"category":"sushi","district":"員林市","name":"獸囍蔬食","phone":"(04)839-9293","address":"彰化縣員林市萬年路二段123號","google":4.4,"feature":"創意蔬食簡餐，竹炭麵、奶香黑醬麵","dish":"素食麵 ($60)","time":"11:00–20:00 (週一休)","price":"$50-100"},
+  {"category":"sushi","district":"員林市","name":"蓮鋐中西式素食簡餐店","phone":"04-832-7777","address":"彰化縣員林市員東路300號","google":4.4,"feature":"簡餐多樣，麵食清爽","dish":"什錦素食麵 ($80)","time":"11:00-21:00","price":"$80-150"},
+  {"category":"sushi","district":"員林市","name":"善德素食麵館","phone":"04-839-6000","address":"彰化縣員林市莒光路150號","google":4.4,"feature":"招牌川辣烏龍麵，平價實惠","dish":"川辣烏龍麵 ($45)","time":"10:30-19:30 (週四休)","price":"$30-70"},
+  {"category":"sushi","district":"員林市","name":"中華路素食麵","phone":"04-832-5555","address":"彰化縣員林市中華路300號","google":4.4,"feature":"傳統米苔目，湯頭清淡","dish":"素食米苔目 ($40)","time":"07:00-14:00","price":"$30-60"},
+  {"category":"sushi","district":"員林市","name":"員林大道素食","phone":"04-839-1111","address":"彰化縣員林市員林大道二段5號","google":4.4,"feature":"新式裝潢，多口味炒麵","dish":"鐵板炒麵 ($90)","time":"11:00-20:00","price":"$80-150"},
+  {"category":"sushi","district":"員林市","name":"大慈利素食麵","phone":"04-839-5888","address":"彰化縣員林市新生路2號","google":4.3,"feature":"火車站旁早場名店，必點招牌菜包","dish":"素食麵+菜包 ($50)","time":"06:00-13:00","price":"$40-80"},
+  {"category":"sushi","district":"員林市","name":"十五食館 (養生素食館)","phone":"04-834-4550","address":"彰化縣員林市中山路一段571號","google":4.3,"feature":"佛心價招牌炒麵15元，內用可免費續湯","dish":"素食炒麵 ($15)","time":"05:30-19:00 (週一休)","price":"$15-50"},
+  {"category":"sushi","district":"員林市","name":"員林第一素食","phone":"0982-006-278","address":"彰化縣員林市民生路95號","google":4.3,"feature":"深夜素食宵夜場，只開晚上，乾麵夠味","dish":"乾麵 ($55)","time":"17:00-24:00","price":"$40-80"},
+  {"category":"sushi","district":"員林市","name":"釀善三津制麵","phone":"04-832-1234","address":"彰化縣員林市中正路526號","google":4.3,"feature":"拌麵首選，必吃茄汁紅燒拌麵","dish":"茄汁紅燒拌麵 ($80)","time":"11:00-14:00, 16:00-20:00","price":"$80-150"},
+  {"category":"sushi","district":"員林市","name":"五義素食麵","phone":"04-832-1500","address":"彰化縣員林市靜修路120號","google":4.3,"feature":"靜修路老店，傳統麵食","dish":"素食麵 ($45)","time":"08:00-16:00","price":"$40-70"},
+  {"category":"sushi","district":"員林市","name":"大仁街素食麵","phone":"04-839-2020","address":"彰化縣員林市大仁街10號","google":4.3,"feature":"乾麵加特製辣椒醬一絕","dish":"素食乾麵 ($45)","time":"10:00-19:00","price":"$40-70"},
+  {"category":"sushi","district":"員林市","name":"無名藥膳素食麵","phone":"無","address":"彰化縣員林市山腳路二段(近大慶商工)","google":4.2,"feature":"隱藏版鐵皮屋老店，獨特藥膳麻醬麵","dish":"藥膳麻醬麵 ($40)","time":"06:30-12:00","price":"$30-60"},
   {"category":"sushi","district":"員林市","name":"員林大同路素食","phone":"04-832-1212","address":"彰化縣員林市大同路二段100號","google":4.2,"feature":"大同路市場旁，素肉圓必點","dish":"素食麵 ($40)","time":"07:00-13:00","price":"$30-60"},
+  {"category":"sushi","district":"員林市","name":"紅燒素食麵-員林","phone":"04-833-9583","address":"彰化縣員林市新生路154號","google":4.1,"feature":"多樣化素食餐點，紅燒麵、素蚵仔煎","dish":"紅燒素食麵 ($60)","time":"11:00-20:00 (週日休)","price":"$50-100"}, 
   
   // 鹿港鎮 - 2 筆 (已修正林明堂資訊)
   {"category":"sushi","district":"鹿港鎮","name":"林明堂素食麵","phone":"04-778-5571","address":"505彰化縣鹿港鎮介壽路三段66號","google":4.6,"feature":"鹿港本店，素食麵和豆包，高分老店","dish":"素食麵 ($50)","time":"10:30-20:00","price":"$40-80"},
@@ -142,5 +157,6 @@ const data = [
   {"category":"rouyuan","district":"永靖鄉","name":"永靖市場肉圓","phone":"04-838-2222","address":"彰化縣永靖鄉永靖路10號","google":4.0,"feature":"永靖市場傳統口味，蒸肉圓","dish":"肉圓 ($35)","time":"06:00-12:00","price":"$30-50"},
   {"category":"rouyuan","district":"福興鄉","name":"福興肉圓","phone":"04-777-1111","address":"彰化縣福興鄉福興路1號","google":4.0,"feature":"福興在地老店，搭配肉羹","dish":"肉圓 ($40)","time":"10:00-18:00","price":"$30-60"}
 ];
+
 
 
