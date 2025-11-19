@@ -1,10 +1,12 @@
-/* Cute theme v1.3 */
+/* Cute theme v1.4 (B-style) */
 :root{ --brand:#16a34a; --pink:#f472b6; --yellow:#eab308; --sky:#0ea5e9; --text:#334155; }
 *{box-sizing:border-box}
 body{margin:0;font-family:"Noto Sans TC",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; color:var(--text); background:linear-gradient(180deg,#fff 0%, #f0fdfa 100%);} 
-.site-header{background:var(--brand);color:#fff;text-align:center;padding:0.5rem 1rem;}
-.site-header .hero{max-width:680px;width:100%;height:auto;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.15);margin:0.5rem auto;display:block}
-.site-header .brand{font-size:1.4rem;font-weight:700;margin:.5rem auto}
+.site-header{background:var(--brand);color:#fff;text-align:center;padding:.25rem 1rem;}
+.hero-wrap{position:relative;max-width:680px;margin:.25rem auto}
+.site-header .hero{width:100%;max-height:240px;object-fit:contain;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.hero-toggle{position:absolute;right:8px;top:8px;border:0;border-radius:8px;background:#0ea5e9;color:#fff;padding:.35rem .6rem;cursor:pointer}
+.site-header .brand{font-size:1.3rem;font-weight:700;margin:.25rem auto}
 .container{max-width:1100px;margin:0 auto;padding:1rem}
 .category-buttons{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem}
 .category-buttons button{display:flex;align-items:center;gap:.5rem;background:#fff;border:0;border-radius:9999px;padding:.5rem .9rem;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:pointer}

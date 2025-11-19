@@ -5,8 +5,8 @@ let currentPage = 1;
 const itemsPerPage = 24; // 每頁固定 24
 let currentKeyword = '';
 let currentDistrict = 'all';
-let hideSuspect = false;
-let onlyValidated = false;
+let hideSuspect = true;   // 預設隱藏疑似不實（含無評分）
+let onlyValidated = true; // 預設只看通過驗證
 
 const DATA_SOURCES = [
   'data/index_sanbao_reset.json',
@@ -15,8 +15,8 @@ const DATA_SOURCES = [
 
 function mapCategory(cat){
   const c = (cat || '').toLowerCase();
-  if (c === 'sushi') return 'vegetarian-noodle';
-  if (c === 'kongroufan') return 'kuangroufan';
+  if (c === 'sushi') return 'vegetarian-noodle'; // 素麵
+  if (c === 'kongroufan') return 'kuangroufan';   // 爌肉飯
   return c || 'others';
 }
 function normalizeItem(item){
@@ -25,16 +25,14 @@ function normalizeItem(item){
   o.hours = o.hours || o.time || '';
   return o;
 }
-
 function quickValidate(item){
   const addrOk = (item.address || '').includes('彰化') && /[路街號段]/.test(item.address||'');
   const phoneOk = (()=>{const p = item.phone||''; if (!p || p.includes('無電話') || p.trim()==='--') return false; const d = (p.match(/\d/g)||[]).length; return d>=6 && d<=12;})();
-  const ratingOk = !isNaN(parseFloat(item.google)) && parseFloat(item.google)>=3.0 && parseFloat(item.google)<=5.0;
+  const ratingOk = typeof item.google === 'number' && item.google >= 3.0 && item.google <= 5.0; // 無評分直接視為不實
   const timeOk = /:\d{2}/.test(item.hours||'') && /-/.test(item.hours||'');
   const ok = addrOk && phoneOk && ratingOk && timeOk;
   return { ok, addrOk, phoneOk, ratingOk, timeOk };
 }
-
 function renderStars(rating){
   const r = parseFloat(rating); if (isNaN(r)) return '';
   const rounded = Math.round(r*2)/2; const full = Math.floor(rounded);
@@ -83,7 +81,7 @@ function renderList(){
   items = items.filter(i=>{
     const v = quickValidate(i);
     if (onlyValidated && !v.ok) return false;
-    if (hideSuspect){ if (!v.phoneOk || !v.addrOk) return false; }
+    if (hideSuspect){ if (!v.ratingOk || !v.phoneOk || !v.addrOk) return false; }
     return true;
   });
 
@@ -130,7 +128,6 @@ function renderList(){
 }
 
 function makeToggleDesc(desc){ const limit=120; if (!desc) return ''; const full=String(desc); if (full.length<=limit) return `<p class="item-desc">${full}</p>`; const short = full.slice(0,limit)+'…'; const id='d_'+Math.random().toString(36).slice(2,8); return `<p id="${id}" class="item-desc">${short}</p><button class="desc-toggle" type="button" data-target="${id}" data-full="${full.replace(/"/g,'&quot;')}">展開</button>`; }
-
 function copyPhone(phone){ if (!phone) return alert('此店家未提供電話'); navigator.clipboard.writeText(phone).then(()=> alert('已複製電話：'+phone)).catch(()=> alert('複製失敗')); }
 
 function bindEvents(){
@@ -143,7 +140,18 @@ function bindEvents(){
   document.getElementById('nextBtn').addEventListener('click', ()=>{ currentPage++; renderList(); });
   document.getElementById('hideSuspect').addEventListener('change', e=>{ hideSuspect = e.target.checked; currentPage=1; renderList(); });
   document.getElementById('onlyValidated').addEventListener('change', e=>{ onlyValidated = e.target.checked; currentPage=1; renderList(); });
-  document.getElementById('foodList').addEventListener('click', e=>{ const btn = e.target.closest('.desc-toggle'); if (!btn) return; const id = btn.getAttribute('data-target'); const full = btn.getAttribute('data-full'); const p = document.getElementById(id); if (!p) return; const isExpanded = btn.textContent==='收合'; if (isExpanded){ p.textContent = full.slice(0,120)+'…'; btn.textContent='展開'; } else { p.textContent = full; btn.textContent='收合'; } });
+  // Hero collapse
+  const heroWrap = document.querySelector('.hero-wrap');
+  const hero = document.querySelector('.hero');
+  const toggleHeroBtn = document.getElementById('toggleHero');
+  const saved = localStorage.getItem('hero');
+  if (saved === 'collapsed'){ hero.style.display = 'none'; toggleHeroBtn.textContent = '展開'; }
+  toggleHeroBtn.addEventListener('click', ()=>{
+    const collapsed = hero.style.display === 'none';
+    hero.style.display = collapsed ? 'block' : 'none';
+    toggleHeroBtn.textContent = collapsed ? '收合' : '展開';
+    localStorage.setItem('hero', collapsed ? 'expanded' : 'collapsed');
+  });
 }
 
 (async function init(){ await loadData(); renderDistrictOptions(); bindEvents(); renderList(); })();

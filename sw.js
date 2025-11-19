@@ -1,8 +1,8 @@
-const CACHE_NAME = 'changhua-food-pwa-v1.3';
+const CACHE_NAME = 'changhua-food-pwa-v1.4';
 const CORE_ASSETS = [
   'index.html','styles.css','app.js','manifest.json',
-  'images/icons/appicon-192.png','images/icons/appicon-48.png','images/icons/appicon-32.png',
-  'images/hero/hero-buddha-meat.png',
+  'images/icons/appicon-512.png','images/icons/appicon-192.png','images/icons/appicon-48.png','images/icons/appicon-32.png',
+  'images/hero/hero-b.png',
   'images/category/all.png','images/category/kuangroufan.png','images/category/rouyuan.png','images/category/vegetarian-noodle.png',
   'data/index_sanbao_reset.json'
 ];
