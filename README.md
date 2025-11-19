@@ -1,2 +1,11 @@
-# changhua-food-app
-changhua-food-app
+
+# 彰化三寶美食指南 V5.4-AI
+
+**AI 風縮圖**：每個食物類別使用不同的明亮配色（素食麵淡綠；肉圓柔黃；爌肉飯淡粉），並加入八卦山大佛元素。縮圖右下角覆蓋「區名」浮水印。
+
+- 每頁固定 24 筆；district 下拉。
+- 導航（Google Maps 路線）、電話撥打（tel:）、複製電話。
+- PWA：`manifest.json` + `sw.js`。
+
+## 更換配色或樣式
+替換 `assets/ai_*.png` 即可（可提供你想要的 SVG/PNG）。

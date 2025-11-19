@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#FFF3E0"/>
+  <g transform="translate(120, 180)"><ellipse rx="60" ry="40" fill="#FFE082" stroke="#FFCA28" stroke-width="4"/><circle cx="0" cy="0" r="16" fill="#D84315"/><text x="0" y="70" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#5D4037">肉圓</text></g>
+  <g transform="translate(320, 180)"><ellipse rx="68" ry="18" cy="40" fill="#CFD8DC"/><circle cx="0" cy="0" r="55" fill="#FFF" stroke="#B0BEC5" stroke-width="4"/><rect x="-30" y="-10" width="60" height="30" rx="8" fill="#8D6E63"/><text x="0" y="70" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#5D4037">爌肉飯</text></g>
+  <g transform="translate(520, 180)"><ellipse rx="68" ry="18" cy="40" fill="#CFD8DC"/><circle cx="0" cy="0" r="55" fill="#FFF" stroke="#B0BEC5" stroke-width="4"/><path d="M-30 -5 C -10 10, 10 -10, 30 5" stroke="#FBC02D" stroke-width="5" fill="none"/>
+    <path d="M-25 10 C -5 25, 5 -5, 25 15" stroke="#FBC02D" stroke-width="5" fill="none"/>
+    <text x="0" y="70" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#5D4037">素食麵</text></g>
+  <text x="320" y="24" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#6D4C41">彰化三寶（Q版）</text>
+</svg>

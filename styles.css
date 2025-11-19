@@ -1,0 +1,33 @@
+/* V5.4-AI — 明亮配色縮圖（AI風格），每頁24，district下拉，導航/電話/複製 */
+:root{--bg:#f7f8fa;--text:#263238;--muted:#607d8b;--primary:#1565c0;--card:#fff;--line:#e0e0e0;--accent:#ff7043}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif}
+header{display:grid;grid-template-columns:160px 1fr 160px;gap:12px;align-items:center;padding:16px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10}
+header .logo img{width:100%;height:auto;border-radius:10px}
+header h1{margin:0;font-size:1.3rem}
+.small{font-size:.9rem;color:var(--muted)}
+.container{max-width:1080px;margin:0 auto;padding:18px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+input[type=search]{flex:1;padding:12px;border:1px solid var(--line);border-radius:10px}
+select{padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:#e3f2fd;color:#0a7cff;border:1px solid #90caf9;padding:4px 10px;border-radius:999px;font-size:.85rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.thumb-wrap{position:relative}
+.thumb{width:100%;height:180px;background:#eee;object-fit:cover;display:block}
+.wm{position:absolute;right:10px;bottom:10px;padding:4px 8px;border-radius:8px;background:rgba(255,255,255,.55);backdrop-filter:saturate(1.8) blur(2px);color:#37474f;font-weight:600}
+.card .content{padding:12px}
+.title{font-weight:700}
+.meta{color:var(--muted);font-size:.92rem;margin-top:6px}
+.tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:#f5f5f5;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:#78909c;font-size:.8rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{padding:8px 12px;border:none;border-radius:8px;cursor:pointer}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:#fff;border:1px solid var(--line)}
+.btn-call{background:#e3f2fd;color:#0a7cff}
+.pagination{display:flex;gap:8px;align-items:center;justify-content:center;margin:16px 0}
+.pagination button{padding:8px 12px;border:1px solid var(--line);background:#fff;border-radius:8px}
+.footer{padding:30px 0;color:#78909c;text-align:center}
+@media (max-width:640px){header{grid-template-columns:110px 1fr 110px}}

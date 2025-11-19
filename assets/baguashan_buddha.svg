@@ -1,1 +1,13 @@
-
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#e1f5fe"/>
+  <ellipse cx="320" cy="300" rx="310" ry="80" fill="#8BC34A"/>
+  <circle cx="320" cy="150" r="68" fill="#FFE0B2" stroke="#D7CCC8" stroke-width="3"/>
+  <circle cx="295" cy="145" r="9" fill="#5D4037"/>
+  <circle cx="345" cy="145" r="9" fill="#5D4037"/>
+  <path d="M280 170 Q320 190 360 170" fill="none" stroke="#6D4C41" stroke-width="5" stroke-linecap="round"/>
+  <path d="M240 210 Q320 240 400 210 L400 290 Q320 320 240 290 Z" fill="#BDBDBD" stroke="#9E9E9E" stroke-width="3"/>
+  <g transform="translate(320, 285)"><circle r="55" fill="#F5F5F5" stroke="#9E9E9E" stroke-width="3"/>
+    <g stroke="#9E9E9E" stroke-width="3"><line x1="-55" y1="0" x2="55" y2="0"/><line x1="0" y1="-55" x2="0" y2="55"/><line x1="-39" y1="-39" x2="39" y2="39"/><line x1="-39" y1="39" x2="39" y2="-39"/></g>
+  </g>
+  <text x="320" y="340" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#455A64">八卦山大佛（Q版）</text>
+</svg>
