@@ -16,7 +16,9 @@ data = [
         "dish": "爌肉飯",
         "time": "05:00-13:30 (週日休)",
         "price": "$70-150",
-        "description": "皮Q肉嫩，醬汁鹹甜適中，在地人早餐首選。"
+        "description": "皮Q肉嫩，醬汁鹹甜適中，在地人早餐首選。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -29,7 +31,9 @@ data = [
         "dish": "爌肉飯",
         "time": "22:30-04:00 (週日休)",
         "price": "$65-120",
-        "description": "營業時間極晚，適合夜貓子，肉塊較大塊且紮實。"
+        "description": "營業時間極晚，適合夜貓子，肉塊較大塊且紮實。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -42,7 +46,9 @@ data = [
         "dish": "爌肉飯",
         "time": "17:00-01:00",
         "price": "$70-130",
-        "description": "肉塊滷得油亮，搭配免費筍絲湯，CP值高。"
+        "description": "肉塊滷得油亮，搭配免費筍絲湯，CP值高。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -55,7 +61,9 @@ data = [
         "dish": "爌肉飯 (腿庫、中段)",
         "time": "17:30-02:00",
         "price": "$60-150",
-        "description": "提供多樣化的豬腳部位選擇，醬汁濃郁。"
+        "description": "提供多樣化的豬腳部位選擇，醬汁濃郁。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -68,7 +76,9 @@ data = [
         "dish": "爌肉飯",
         "time": "05:30-13:30",
         "price": "$70-140",
-        "description": "傳統的古早味，每天早上排隊人潮眾多。"
+        "description": "傳統的古早味，每天早上排隊人潮眾多。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -81,7 +91,9 @@ data = [
         "dish": "焢肉飯",
         "time": "10:30-18:00 (週日休)",
         "price": "$65-130",
-        "description": "焢肉肥瘦適中，味道不死鹹，便當CP值高。"
+        "description": "焢肉肥瘦適中，味道不死鹹，便當CP值高。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -94,7 +106,9 @@ data = [
         "dish": "爌肉飯",
         "time": "10:00-19:30",
         "price": "$60-120",
-        "description": "口味中規中矩，但環境較舒適，適合家庭用餐。"
+        "description": "口味中規中矩，但環境較舒適，適合家庭用餐。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -107,7 +121,9 @@ data = [
         "dish": "腿庫飯/豬腳飯",
         "time": "10:30-19:30",
         "price": "$70-160",
-        "description": "專營豬腳，腿庫飯肥而不膩。"
+        "description": "專營豬腳，腿庫飯肥而不膩。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -120,7 +136,9 @@ data = [
         "dish": "爌肉飯",
         "time": "20:00-04:00",
         "price": "$65-120",
-        "description": "宵夜場選擇，肉塊滷製入味，滷蛋必點。"
+        "description": "宵夜場選擇，肉塊滷製入味，滷蛋必點。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -133,7 +151,9 @@ data = [
         "dish": "爌肉飯",
         "time": "09:00-19:00",
         "price": "$60-100",
-        "description": "多角化經營，爌肉飯口味清爽。"
+        "description": "多角化經營，爌肉飯口味清爽。",
+        "lat": null,
+        "lng": null
     },
     # 員林市 (Yuanlin City)
     {
@@ -147,7 +167,9 @@ data = [
         "dish": "爌肉飯",
         "time": "16:30-00:30",
         "price": "$65-130",
-        "description": "米飯粒粒分明，滷汁香氣十足，在地人強力推薦。"
+        "description": "米飯粒粒分明，滷汁香氣十足，在地人強力推薦。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -160,7 +182,9 @@ data = [
         "dish": "腿庫飯",
         "time": "10:30-20:00 (不定休)",
         "price": "$70-150",
-        "description": "以Q彈的腿庫肉聞名，搭配酸菜更對味。"
+        "description": "以Q彈的腿庫肉聞名，搭配酸菜更對味。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -173,7 +197,9 @@ data = [
         "dish": "爌肉飯",
         "time": "10:00-21:00",
         "price": "$60-120",
-        "description": "相較傳統老店，環境更整潔，醬汁偏南部口味。"
+        "description": "相較傳統老店，環境更整潔，醬汁偏南部口味。",
+        "lat": null,
+        "lng": null
     },
     # 鹿港鎮 (Lukang Township)
     {
@@ -187,7 +213,9 @@ data = [
         "dish": "爌肉飯",
         "time": "10:30-19:00",
         "price": "$65-110",
-        "description": "旅遊途中可快速品嚐的在地美味。"
+        "description": "旅遊途中可快速品嚐的在地美味。",
+        "lat": null,
+        "lng": null
     },
     # 溪湖鎮 (Sihu Township)
     {
@@ -201,7 +229,9 @@ data = [
         "dish": "爌肉飯",
         "time": "10:30-20:00",
         "price": "$60-120",
-        "description": "滷製工法特殊，肉質軟嫩且帶有炭火香氣。"
+        "description": "滷製工法特殊，肉質軟嫩且帶有炭火香氣。",
+        "lat": null,
+        "lng": null
     },
     # 北斗鎮 (Beidou Township)
     {
@@ -215,7 +245,9 @@ data = [
         "dish": "控肉飯/便當",
         "time": "11:00-19:30 (週日休)",
         "price": "$80-150",
-        "description": "便當形式，主打多樣配菜及大塊控肉。"
+        "description": "便當形式，主打多樣配菜及大塊控肉。",
+        "lat": null,
+        "lng": null
     },
     # 田中鎮 (Tianzhong Township)
     {
@@ -229,7 +261,9 @@ data = [
         "dish": "控肉飯",
         "time": "10:30-19:00",
         "price": "$60-110",
-        "description": "適合在搭火車前後來一碗的在地小吃。"
+        "description": "適合在搭火車前後來一碗的在地小吃。",
+        "lat": null,
+        "lng": null
     },
     # 和美鎮 (Hemei Township)
     {
@@ -243,7 +277,9 @@ data = [
         "dish": "控肉飯",
         "time": "11:00-20:00",
         "price": "$60-100",
-        "description": "平價且份量足夠，是當地人的日常選擇。"
+        "description": "平價且份量足夠，是當地人的日常選擇。",
+        "lat": null,
+        "lng": null
     },
     # 更多爌肉飯 (Additional Kongroufan entries to hit 45+)
     {
@@ -257,7 +293,9 @@ data = [
         "dish": "爌肉飯套餐",
         "time": "11:00-14:00, 17:00-20:00",
         "price": "$80-200",
-        "description": "裝潢新穎，將傳統爌肉飯精緻化。"
+        "description": "裝潢新穎，將傳統爌肉飯精緻化。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -270,7 +308,9 @@ data = [
         "dish": "爌肉飯",
         "time": "06:00-13:00",
         "price": "$65-110",
-        "description": "傳統口味，早晨營業，在地人早午餐。"
+        "description": "傳統口味，早晨營業，在地人早午餐。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -283,7 +323,9 @@ data = [
         "dish": "爌肉飯",
         "time": "10:00-19:00",
         "price": "$70-120",
-        "description": "滷汁濃郁，適合重口味者。"
+        "description": "滷汁濃郁，適合重口味者。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -296,7 +338,9 @@ data = [
         "dish": "爌肉飯",
         "time": "16:00-23:00",
         "price": "$65-120",
-        "description": "晚間營業，是員林晚飯或宵夜的好去處。"
+        "description": "晚間營業，是員林晚飯或宵夜的好去處。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -309,7 +353,9 @@ data = [
         "dish": "爌肉飯",
         "time": "11:00-19:00",
         "price": "$60-110",
-        "description": "學生與上班族午餐選擇，物美價廉。"
+        "description": "學生與上班族午餐選擇，物美價廉。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -322,7 +368,9 @@ data = [
         "dish": "爌肉飯",
         "time": "10:00-18:00",
         "price": "$60-100",
-        "description": "滷汁偏甜，肉質軟爛。"
+        "description": "滷汁偏甜，肉質軟爛。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -335,7 +383,9 @@ data = [
         "dish": "控肉飯",
         "time": "08:00-14:00",
         "price": "$55-90",
-        "description": "主打早餐、午餐時段的控肉飯。"
+        "description": "主打早餐、午餐時段的控肉飯。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "kongroufan",
@@ -348,7 +398,9 @@ data = [
         "dish": "爌肉飯",
         "time": "11:00-19:00",
         "price": "$65-110",
-        "description": "份量大，口味重，適合體力勞動者。"
+        "description": "份量大，口味重，適合體力勞動者。",
+        "lat": null,
+        "lng": null
     },
     # ... (Adding 30 more simplified, verifiable entries across districts to hit 45+)
     *[
@@ -363,7 +415,9 @@ data = [
             "dish": "爌肉飯",
             "time": "10:30-19:30",
             "price": "$60-110",
-            "description": f"滷肉入味，口味經典的{d['district']}代表作。"
+            "description": f"滷肉入味，口味經典的{d['district']}代表作。",
+            "lat": null,
+            "lng": null
         }
         for d in [
             {"district": "鹿港鎮", "rating": 3.7}, {"district": "福興鄉", "rating": 3.5}, {"district": "秀水鄉", "rating": 3.6},
@@ -395,7 +449,9 @@ data = [
         "dish": "肉圓",
         "time": "10:00-20:00",
         "price": "$50/粒",
-        "description": "招牌香菇肉圓，皮Q餡香，湯汁可免費續湯。"
+        "description": "招牌香菇肉圓，皮Q餡香，湯汁可免費續湯。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "rouyuan",
@@ -408,7 +464,9 @@ data = [
         "dish": "肉圓",
         "time": "11:00-18:00 (週一休)",
         "price": "$50-60/粒 (大)",
-        "description": "酥炸後的脆皮口感是最大特色，內餡包有干貝或香菇。"
+        "description": "酥炸後的脆皮口感是最大特色，內餡包有干貝或香菇。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "rouyuan",
@@ -421,7 +479,9 @@ data = [
         "dish": "肉圓",
         "time": "10:30-19:00",
         "price": "$40-90/粒",
-        "description": "以高溫油炸出酥脆外皮，內餡有蛋、肉塊、香菇。"
+        "description": "以高溫油炸出酥脆外皮，內餡有蛋、肉塊、香菇。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "rouyuan",
@@ -434,7 +494,9 @@ data = [
         "dish": "肉圓",
         "time": "09:00-20:00",
         "price": "$40/粒",
-        "description": "口感軟Q，醬汁偏甜，是彰化肉圓的經典代表。"
+        "description": "口感軟Q，醬汁偏甜，是彰化肉圓的經典代表。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "rouyuan",
@@ -447,7 +509,9 @@ data = [
         "dish": "涼圓",
         "time": "10:00-19:00 (週四休)",
         "price": "$45/粒",
-        "description": "外皮晶瑩剔透，內餡冰涼，獨特的夏季肉圓吃法。"
+        "description": "外皮晶瑩剔透，內餡冰涼，獨特的夏季肉圓吃法。",
+        "lat": null,
+        "lng": null
     },
     # 北斗鎮 (Beidou Township)
     {
@@ -461,7 +525,9 @@ data = [
         "dish": "肉圓",
         "time": "09:00-20:00",
         "price": "$25/粒",
-        "description": "北斗肉圓以蒸煮為主，皮薄餡多，醬汁獨特。"
+        "description": "北斗肉圓以蒸煮為主，皮薄餡多，醬汁獨特。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "rouyuan",
@@ -474,7 +540,9 @@ data = [
         "dish": "肉圓",
         "time": "09:00-19:30",
         "price": "$25/粒",
-        "description": "內餡以竹筍、肉塊為主，是清蒸肉圓的代表。"
+        "description": "內餡以竹筍、肉塊為主，是清蒸肉圓的代表。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "rouyuan",
@@ -487,7 +555,9 @@ data = [
         "dish": "肉圓",
         "time": "10:00-18:00",
         "price": "$30/粒",
-        "description": "肉圓口味經典，搭配豆腐湯是絕配。"
+        "description": "肉圓口味經典，搭配豆腐湯是絕配。",
+        "lat": null,
+        "lng": null
     },
     # 員林市 (Yuanlin City)
     {
@@ -501,7 +571,9 @@ data = [
         "dish": "肉圓",
         "time": "10:00-19:00",
         "price": "$40/粒",
-        "description": "皮薄內餡紮實，搭配清湯享用。"
+        "description": "皮薄內餡紮實，搭配清湯享用。",
+        "lat": null,
+        "lng": null
     },
     # 鹿港鎮 (Lugang Township)
     {
@@ -515,7 +587,9 @@ data = [
         "dish": "肉圓",
         "time": "10:30-18:30",
         "price": "$40/粒",
-        "description": "口感Q彈，是觀光客必嚐的鹿港小吃。"
+        "description": "口感Q彈，是觀光客必嚐的鹿港小吃。",
+        "lat": null,
+        "lng": null
     },
     # ... (Adding 25 more simplified, verifiable entries across districts to hit 35+)
     *[
@@ -530,7 +604,9 @@ data = [
             "dish": "肉圓",
             "time": "09:00-17:00",
             "price": "$35-45/粒",
-            "description": f"傳統手工肉圓，保留了最經典的{d['district']}風味。"
+            "description": f"傳統手工肉圓，保留了最經典的{d['district']}風味。",
+            "lat": null,
+            "lng": null
         }
         for d in [
             {"district": "鹿港鎮", "rating": 3.6}, {"district": "福興鄉", "rating": 3.5}, {"district": "秀水鄉", "rating": 3.4},
@@ -559,7 +635,9 @@ data = [
         "dish": "素食乾麵/湯麵",
         "time": "08:30-19:30 (週三休)",
         "price": "$40-90",
-        "description": "麻醬麵香氣濃郁，必點豆包和招牌滷味。"
+        "description": "麻醬麵香氣濃郁，必點豆包和招牌滷味。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "sushi",
@@ -572,7 +650,9 @@ data = [
         "dish": "素食麵/什錦麵",
         "time": "10:00-21:00",
         "price": "$40-80",
-        "description": "無菜單，桌上蕃姜醬是特色，口味清爽。"
+        "description": "無菜單，桌上蕃姜醬是特色，口味清爽。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "sushi",
@@ -585,7 +665,9 @@ data = [
         "dish": "素食乾麵/湯麵",
         "time": "07:00-19:30",
         "price": "$40-90",
-        "description": "在地人從小吃到大的老店，品項多樣。"
+        "description": "在地人從小吃到大的老店，品項多樣。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "sushi",
@@ -598,7 +680,9 @@ data = [
         "dish": "素食麵",
         "time": "10:30-20:00",
         "price": "$50-100",
-        "description": "口味較現代化，適合年輕族群。"
+        "description": "口味較現代化，適合年輕族群。",
+        "lat": null,
+        "lng": null
     },
     # 員林市 (Yuanlin City)
     {
@@ -612,7 +696,9 @@ data = [
         "dish": "素食麵",
         "time": "06:00-13:00 (週三休)",
         "price": "$40-80",
-        "description": "素食早餐首選，菜包(豆包)是招牌小菜。"
+        "description": "素食早餐首選，菜包(豆包)是招牌小菜。",
+        "lat": null,
+        "lng": null
     },
     {
         "category": "sushi",
@@ -625,7 +711,9 @@ data = [
         "dish": "素食麵",
         "time": "07:00-14:00",
         "price": "$35-70",
-        "description": "市場人情味，清淡養生的湯頭。"
+        "description": "市場人情味，清淡養生的湯頭。",
+        "lat": null,
+        "lng": null
     },
     # 和美鎮 (Hemei Township)
     {
@@ -639,7 +727,9 @@ data = [
         "dish": "素食麵",
         "time": "09:00-19:00",
         "price": "$40-80",
-        "description": "和美在地素食代表，口味較為清淡。"
+        "description": "和美在地素食代表，口味較為清淡。",
+        "lat": null,
+        "lng": null
     },
     # 花壇鄉 (Huatan Township)
     {
@@ -653,7 +743,9 @@ data = [
         "dish": "素食乾麵",
         "time": "06:30-13:00",
         "price": "$40-70",
-        "description": "沒有招牌，以黑芝麻醬的獨特香氣聞名。"
+        "description": "沒有招牌，以黑芝麻醬的獨特香氣聞名。",
+        "lat": null,
+        "lng": null
     },
     # 北斗鎮 (Beidou Township)
     {
@@ -667,7 +759,9 @@ data = [
         "dish": "素食鐵板麵",
         "time": "11:00-20:00 (週一休)",
         "price": "$80-150",
-        "description": "提供素食鐵板麵，口味豐富，顛覆傳統素食小吃。"
+        "description": "提供素食鐵板麵，口味豐富，顛覆傳統素食小吃。",
+        "lat": null,
+        "lng": null
     },
     # 更多素食麵 (Additional Sushi entries to hit 30+)
     *[
@@ -682,7 +776,9 @@ data = [
             "dish": "素食麵/米糕",
             "time": "08:00-15:00",
             "price": "$30-70",
-            "description": f"提供傳統的素食麵及相關小吃，是{d['district']}的素食聚點。"
+            "description": f"提供傳統的素食麵及相關小吃，是{d['district']}的素食聚點。",
+            "lat": null,
+            "lng": null
         }
         for d in [
             {"district": "鹿港鎮", "rating": 3.5}, {"district": "福興鄉", "rating": 3.3}, {"district": "秀水鄉", "rating": 3.4},
