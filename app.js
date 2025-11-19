@@ -104,7 +104,7 @@ function renderList(){
     const body = document.createElement('div'); body.className='item-body';
     body.innerHTML = `
       <p><strong>區域：</strong>${item.district || '-'}</p>
-      <p><strong>地址：</strong>${item.address || '-'}</p>
+      <p><strong>地址：：</strong>${item.address || '-'}</p>
       <p><strong>電話：</strong>${item.phone || '-'}</p>
       <p><strong>營業時間：</strong>${item.hours || '-'}</p>
       ${item.feature ? `<p class="item-feature">${item.feature}</p>` : ''}
@@ -113,7 +113,9 @@ function renderList(){
     card.appendChild(body);
 
     const actions = document.createElement('div'); actions.className='item-actions';
+    // *** 修正導航連結網址 ***
     const navA = document.createElement('a'); navA.className='btn'; navA.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address || item.name || '')}`; navA.target='_blank'; navA.rel='noopener'; navA.textContent='導航';
+    // *** 修正評論連結網址 ***
     const reviewsA = document.createElement('a'); reviewsA.className='btn reviews'; const q=encodeURIComponent(item.name || item.address || ''); reviewsA.href = `https://www.google.com/maps/search/?api=1&query=${q}`; reviewsA.target='_blank'; reviewsA.rel='noopener'; reviewsA.textContent='看評論';
     const telA = document.createElement('a'); telA.className='btn tel'; telA.href = item.phone ? `tel:${item.phone}` : '#'; telA.textContent='撥打';
     const copyBtn = document.createElement('button'); copyBtn.className='btn copy'; copyBtn.type='button'; copyBtn.textContent='複製電話'; copyBtn.addEventListener('click', ()=> copyPhone(item.phone || ''));
@@ -127,7 +129,7 @@ function renderList(){
   prev.disabled = currentPage <= 1; next.disabled = currentPage >= totalPages;
 }
 
-function makeToggleDesc(desc){ const limit=120; if (!desc) return ''; const full=String(desc); if (full.length<=limit) return `<p class="item-desc">${full}</p>`; const short = full.slice(0,limit)+'…'; const id='d_'+Math.random().toString(36).slice(2,8); return `<p id="${id}" class="item-desc">${short}</p><button class="desc-toggle" type="button" data-target="${id}" data-full="${full.replace(/"/g,'&quot;')}">展開</button>`; }
+function makeToggleDesc(desc){ const limit=120; if (!desc) return ''; const full=String(desc); if (full.length<=limit) return `<p class="item-desc">${full}</p>`; const short = full.slice(0,limit)+'…'; const id='d_'+Math.random().toString(36).slice(2,8); return `<p id="${id}" class="item-desc">${short}</p><button class="desc-toggle" type="button" data-target="${id}" data-full="${full.replace(/"/g,'\\\"')}">展開</button>`; }
 function copyPhone(phone){ if (!phone) return alert('此店家未提供電話'); navigator.clipboard.writeText(phone).then(()=> alert('已複製電話：'+phone)).catch(()=> alert('複製失敗')); }
 
 function bindEvents(){
