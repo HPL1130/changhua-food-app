@@ -1,33 +1,92 @@
-/* V5.4-AI — 明亮配色縮圖（AI風格），每頁24，district下拉，導航/電話/複製 */
-:root{--bg:#f7f8fa;--text:#263238;--muted:#607d8b;--primary:#1565c0;--card:#fff;--line:#e0e0e0;--accent:#ff7043}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif}
-header{display:grid;grid-template-columns:160px 1fr 160px;gap:12px;align-items:center;padding:16px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10}
-header .logo img{width:100%;height:auto;border-radius:10px}
-header h1{margin:0;font-size:1.3rem}
-.small{font-size:.9rem;color:var(--muted)}
-.container{max-width:1080px;margin:0 auto;padding:18px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-input[type=search]{flex:1;padding:12px;border:1px solid var(--line);border-radius:10px}
-select{padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{background:#e3f2fd;color:#0a7cff;border:1px solid #90caf9;padding:4px 10px;border-radius:999px;font-size:.85rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.thumb-wrap{position:relative}
-.thumb{width:100%;height:180px;background:#eee;object-fit:cover;display:block}
-.wm{position:absolute;right:10px;bottom:10px;padding:4px 8px;border-radius:8px;background:rgba(255,255,255,.55);backdrop-filter:saturate(1.8) blur(2px);color:#37474f;font-weight:600}
-.card .content{padding:12px}
-.title{font-weight:700}
-.meta{color:var(--muted);font-size:.92rem;margin-top:6px}
-.tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
-.tag{background:#f5f5f5;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:#78909c;font-size:.8rem}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.btn{padding:8px 12px;border:none;border-radius:8px;cursor:pointer}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-outline{background:#fff;border:1px solid var(--line)}
-.btn-call{background:#e3f2fd;color:#0a7cff}
-.pagination{display:flex;gap:8px;align-items:center;justify-content:center;margin:16px 0}
-.pagination button{padding:8px 12px;border:1px solid var(--line);background:#fff;border-radius:8px}
-.footer{padding:30px 0;color:#78909c;text-align:center}
-@media (max-width:640px){header{grid-template-columns:110px 1fr 110px}}
+/* 基礎設定 */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,"Microsoft JhengHei",sans-serif;
+  background:#f5f5f5;
+  color:#333;
+  line-height:1.6;
+}
+.container{max-width:1000px;margin:0 auto;padding:1rem}
+
+/* 導航列 */
+nav{background:#16a34a;padding:0.8rem 0;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+nav .container{display:flex;justify-content:space-between;align-items:center}
+nav h1{font-size:1.4rem;color:#fff;margin:0;}
+nav a{color:#fff;text-decoration:none;padding:0.5rem 1rem;border-radius:6px;transition:background 0.3s;}
+nav a:hover{background:rgba(255,255,255,0.2);}
+
+/* 控制區 */
+.controls{background:#fff;padding:1rem;margin:1rem 0;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,0.1)}
+.controls-top{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;align-items:center;}
+
+/* Q版分類按鈕 */
+.category-buttons.cute{display:flex;flex-wrap:wrap;gap:8px;}
+.category-buttons.cute button{
+  display:flex;align-items:center;gap:8px;
+  padding:0.6rem 1rem;
+  border:none;border-radius:24px;
+  background:#fff;border:1px solid #e6f4ea;
+  color:#333;font-size:1rem;cursor:pointer;
+  transition:background 0.3s, transform 0.1s;
+}
+.category-buttons.cute button .icon{width:24px;height:24px}
+.category-buttons.cute button:hover{background:#f0fdf4}
+.category-buttons.cute button.active{
+  background:#16a34a;color:#fff;border-color:#16a34a;
+  box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+.category-buttons.cute button:active{transform:scale(0.98);}
+
+/* 搜尋與篩選 */
+.search-input{padding:0.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;flex-grow:1;min-width:150px;}
+.district-filter{padding:0.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;background:#fff;}
+
+/* 美食卡片 */
+.food-list{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:1rem;}
+.food-item{
+  background:#fff;padding:1.2rem;border-radius:12px;
+  box-shadow:0 1px 5px rgba(0,0,0,0.1);
+  display:flex;flex-direction:column;
+  transition:transform 0.2s;position:relative;
+}
+.food-item:hover{transform:translateY(-3px);box-shadow:0 4px 10px rgba(0,0,0,0.15);}
+.item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;}
+.item-header h2{font-size:1.3rem;color:#16a34a;margin:0;}
+.google-rating{background:#f59e0b;color:#fff;padding:0.3rem 0.6rem;border-radius:4px;font-weight:bold;font-size:0.9rem;}
+.badge.active,.badge.needs_review{
+  position:absolute;left:12px;top:12px;padding:2px 8px;border-radius:12px;font-size:12px;
+}
+.badge.active{background:#22c55e;color:#fff}
+.badge.needs_review{background:#ef4444;color:#fff}
+.item-body p{margin:0.4rem 0;}
+.item-body strong{color:#16a34a;margin-right:0.3rem;}
+.item-feature{font-style:italic;color:#666;font-size:0.9rem;margin-top:0.4rem;padding-top:0.4rem;border-top:1px dashed #eee;}
+
+/* 卡片底部按鈕 */
+.item-actions{display:flex;gap:8px;margin-top:10px}
+.item-actions .btn{
+  flex:0 0 auto;padding:0.5rem 0.9rem;border-radius:8px;
+  border:none;background:#16a34a;color:#fff;text-decoration:none;
+  font-size:0.9rem;cursor:pointer;
+}
+.item-actions .btn.tel{background:#ef4444}
+.item-actions .btn.copy{background:#64748b}
+.item-actions .btn:hover{opacity:0.9}
+
+/* 分頁 */
+.pagination{display:flex;justify-content:center;align-items:center;gap:15px;margin:1.5rem 0;}
+.pagination button{padding:0.8rem 1.5rem;border:none;border-radius:6px;background:#16a34a;color:#fff;font-size:1rem;cursor:pointer;transition:background 0.3s;}
+.pagination button:disabled{background:#ccc;cursor:not-allowed;}
+.pagination button:hover:not(:disabled){background:#15803d;}
+.page-info{font-size:1rem;color:#666;}
+
+/* 響應式 */
+@media (max-width: 768px){
+  .container{padding:0.5rem;}
+  nav .container{flex-direction:column;text-align:center;}
+  nav h1{margin-bottom:0.5rem;}
+  .controls-top{flex-direction:column;align-items:stretch;}
+  .category-buttons{justify-content:center;}
+  .search-input, .district-filter{width:100%;}
+  .food-item{padding:1rem;}
+}

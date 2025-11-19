@@ -1,36 +1,61 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>彰化三寶美食指南 V5.4-AI（縮圖：明亮配色＋大佛元素＋區名浮水印）</title>
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="stylesheet" href="./styles.css" />
-  <meta name="theme-color" content="#1565c0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>彰化美食地圖 TOP - 爌肉飯、肉圓、素食麵</title>
+
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="logo"><img src="./assets/baguashan_buddha.svg" alt="八卦山大佛 Q 版"/></div>
-    <div>
-      <h1>彰化三寶美食指南 <span class="small">V5.4-AI</span></h1>
-      <div class="small">卡片式精緻 UI＋AI 風縮圖｜取消地圖→一鍵導航｜district 下拉｜電話撥打 & 複製</div>
-      <div class="toolbar">
-        <input id="search" type="search" placeholder="搜尋店名、地址、特色、價格…" aria-label="搜尋" />
-        <select id="district" aria-label="選擇地區"></select>
+
+<nav id="top-nav">
+  <div class="container">
+    <h1>彰化美食地圖 TOP</h1>
+    <a href="https://github.com/HPL1130/changhua-food-app" target="_blank">GitHub 專案</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="controls">
+    <div class="controls-top">
+      <div class="category-buttons cute">
+        <button data-cat="all" class="active">
+          <img src="icons/all.svg" alt="全部" class="icon"> 全部
+        </button>
+        <button data-cat="kongroufan">
+          <img src="icons/kongroufan.svg" alt="爌肉飯" class="icon"> 爌肉飯
+        </button>
+        <button data-cat="rouyuan">
+          <img src="icons/rouyuan.svg" alt="肉圓" class="icon"> 肉圓
+        </button>
+        <button data-cat="sushi">
+          <img src="icons/sushi.svg" alt="素食麵" class="icon"> 素食麵
+        </button>
       </div>
-      <div class="chips"><span class="chip">肉圓</span><span class="chip">爌肉飯</span><span class="chip">素食麵</span></div>
     </div>
-    <div class="logo"><img src="./assets/three_treasures.svg" alt="彰化三寶 Q 版"/></div>
-  </header>
+    
+    <div class="controls-bottom" style="display:flex; gap:10px;">
+      <input type="text" id="keywordInput" class="search-input" placeholder="搜尋店家名稱、地址、特色...">
+      <select id="districtFilter" class="district-filter">
+        <option value="all">所有區域</option>
+      </select>
+    </div>
+  </div>
 
-  <main class="container">
-    <div id="list" aria-live="polite"></div>
-    <div id="pager"></div>
-    <p class="small">提示：縮圖採用 AI 風格（類別明亮配色＋大佛元素），並以區名作為浮水印；每頁固定 24 筆。</p>
-  </main>
+  <div id="foodList" class="food-list"></div>
 
-  <footer class="footer">八卦山大佛 & 三寶美食 Q 版插畫 © 2025 | 本頁支援 PWA 離線瀏覽</footer>
-  <script src="./config.js"></script>
-  <script src="./app.js"></script>
+  <div class="pagination">
+    <button id="prevBtn" disabled>上一頁</button>
+    <span id="pageInfo" class="page-info"></span>
+    <button id="nextBtn" disabled>下一頁</button>
+  </div>
+</div>
+
+<footer class="container" style="text-align:center; padding-top:0;">
+  <p>© 2025 彰化美食地圖. 資料來源：在地精選。圖示版權：自製 Q 版食物 ICON。</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
