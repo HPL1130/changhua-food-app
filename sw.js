@@ -1,18 +1,1 @@
-
-const CACHE_NAME = 'changhua3-v4';
-const ASSETS = [
-  './index.html','./style.css','./data.js','./data.json','./logo.svg','./header-art.svg',
-  './icon-192.png','./icon-512.png','./manifest.json',
-  './icon_rouyuan.svg','./icon_kongroufan.svg','./icon_sushi.svg',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-  'https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js',
-  'https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css',
-  'https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css'
-];
-self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)));
-});
-self.addEventListener('fetch',e=>{
-  e.respondWith(caches.match(e.request).then(r=> r||fetch(e.request)));
-});
+const CACHE_NAME='changhua3-v5';const ASSETS=['./index.html','./style.css','./data.js','./data.json','./logo.svg','./header-art.svg','./icon-192.png','./icon-512.png','./maskable-192.png','./maskable-512.png','./apple-touch-icon.png','./manifest.json','./icon_rouyuan.svg','./icon_kongroufan.svg','./icon_sushi.svg','https://unpkg.com/leaflet@1.9.4/dist/leaflet.css','https://unpkg.com/leaflet@1.9.4/dist/leaflet.js','https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js','https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css','https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)));});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});
