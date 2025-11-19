@@ -1,4 +1,4 @@
-const CACHE_NAME = 'changhua-food-pwa-v1.7';
+const CACHE_NAME = 'changhua-food-pwa-v1.8';
 const CORE_ASSETS = [
   'index.html','styles.css','app.js','manifest.json',
   'images/icons/appicon-512.png','images/icons/appicon-192.png','images/icons/appicon-48.png','images/icons/appicon-32.png',
