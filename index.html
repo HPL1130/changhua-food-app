@@ -9,23 +9,23 @@
 </head>
 <body>
   <header class="site-header">
-    <img src="images/hero/hero-cute.png" class="hero" alt="八卦山大佛與三寶 Q 版插圖"/>
+    <img src="images/hero/hero-buddha-meat.png" class="hero" alt="八卦山大佛與爌肉 Q 版插圖"/>
     <div class="brand">彰化美食地圖 TOP</div>
   </header>
 
   <main class="container">
     <div class="category-buttons">
-      <button data-cat="all" class="active"><img src="images/category/all.svg" alt="全部"> 全部</button>
-      <button data-cat="kuangroufan"><img src="images/category/kuangroufan.svg" alt="爌肉飯"> 爌肉飯</button>
-      <button data-cat="rouyuan"><img src="images/category/rouyuan.svg" alt="肉圓"> 肉圓</button>
-      <button data-cat="vegetarian-noodle"><img src="images/category/vegetarian-noodle.svg" alt="素食麵"> 素食麵</button>
+      <button data-cat="all" class="active"><img src="images/category/all.png" alt="全部"> 全部</button>
+      <button data-cat="kuangroufan"><img src="images/category/kuangroufan.png" alt="爌肉飯"> 爌肉飯</button>
+      <button data-cat="rouyuan"><img src="images/category/rouyuan.png" alt="肉圓"> 肉圓</button>
+      <button data-cat="vegetarian-noodle"><img src="images/category/vegetarian-noodle.png" alt="素食麵"> 素食麵</button>
     </div>
 
     <div class="filters">
       <input id="keywordInput" type="text" placeholder="搜尋店名、地址、特色..."/>
-      <select id="districtFilter">
-        <option value="all">所有區域</option>
-      </select>
+      <select id="districtFilter"><option value="all">所有區域</option></select>
+      <label class="toggle"><input type="checkbox" id="hideSuspect"> 隱藏疑似假資料</label>
+      <label class="toggle"><input type="checkbox" id="onlyValidated"> 只看通過驗證</label>
     </div>
 
     <div id="foodList" class="food-list"></div>
@@ -37,13 +37,11 @@
     </div>
   </main>
 
-  <footer class="site-footer">© 2025 彰化美食地圖 · Q 版插圖 · 卡片式可愛 UI</footer>
+  <footer class="site-footer">© 2025 彰化美食地圖 · Q 版插圖 · 資料品質檢核</footer>
 
   <script src="app.js"></script>
   <script>
-    if ('serviceWorker' in navigator){
-      navigator.serviceWorker.register('sw.js');
-    }
+    if ('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
   </script>
 </body>
 </html>
