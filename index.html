@@ -1,303 +1,160 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>彰化美食地圖 TOP - 爌肉飯、肉圓、素食麵</title>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00804b">
-
-<style>
-/* 基礎設定 */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;background:#f5f5f5;color:#333;line-height:1.6}
-.container{max-width:1000px;margin:0 auto;padding:1rem}
-
-/* 導航列樣式 */
-nav{background:#00804b;padding:0.8rem 0;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
-nav .container{display:flex;justify-content:space-between;align-items:center;padding-top:0;padding-bottom:0;}
-nav h1{font-size:1.4rem;color:#fff;margin:0;}
-nav a{color:#fff;text-decoration:none;padding:0.5rem 1rem;border-radius:6px;transition:background 0.3s;}
-nav a:hover{background:rgba(255,255,255,0.2);}
-
-/* 控制區樣式 */
-.controls{background:#fff;padding:1rem;margin:1rem 0;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,0.1)}
-.controls-top{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;align-items:center;}
-
-/* 篩選按鈕樣式 */
-.category-buttons{display:flex;flex-wrap:wrap;gap:8px;}
-.category-buttons button{padding:0.6rem 1.2rem;border:none;border-radius:20px;background:#ddd;color:#333;font-size:1rem;cursor:pointer;transition:background 0.3s, transform 0.1s;}
-.category-buttons button:hover{background:#ccc;}
-.category-buttons button.active{background:#00804b;color:#fff;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
-.category-buttons button:active{transform:scale(0.98);}
-
-/* 搜尋與篩選 */
-.search-input{padding:0.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;flex-grow:1;min-width:150px;}
-.district-filter{padding:0.6rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;background:#fff;}
-
-/* 美食卡片列表 */
-.food-list{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:1rem;}
-.food-item{background:#fff;padding:1.2rem;border-radius:8px;box-shadow:0 1px 5px rgba(0,0,0,0.1);display:flex;flex-direction:column;transition:transform 0.2s;position:relative;}
-.food-item:hover{transform:translateY(-3px);box-shadow:0 4px 10px rgba(0,0,0,0.15);}
-.item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;}
-.item-header h2{font-size:1.3rem;color:#00804b;margin:0;}
-.google-rating{background:#ff9800;color:#fff;padding:0.3rem 0.6rem;border-radius:4px;font-weight:bold;font-size:0.9rem;}
-.item-body p{margin:0.4rem 0;}
-.item-body strong{color:#00804b;margin-right:0.3rem;}
-.item-feature{font-style:italic;color:#666;font-size:0.9rem;margin-top:0.4rem;padding-top:0.4rem;border-top:1px dashed #eee;}
-
-/* 地圖按鈕 */
-.map-link{display:inline-block;margin-top:0.8rem;padding:0.6rem 1.5rem;background:#00804b;color:#fff;text-decoration:none;border-radius:4px;text-align:center;font-weight:bold;transition:background 0.3s;}
-.map-link:hover{background:#005c35;}
-
-/* 分頁控制區 */
-.pagination{display:flex;justify-content:center;align-items:center;gap:15px;margin:1.5rem 0;}
-.pagination button{padding:0.8rem 1.5rem;border:none;border-radius:6px;background:#00804b;color:#fff;font-size:1rem;cursor:pointer;transition:background 0.3s;}
-.pagination button:disabled{background:#ccc;cursor:not-allowed;}
-.pagination button:hover:not(:disabled){background:#005c35;}
-.page-info{font-size:1rem;color:#666;}
-
-/* 響應式調整 */
-@media (max-width: 768px){
-    .container{padding:0.5rem;}
-    nav .container{flex-direction:column;text-align:center;}
-    nav h1{margin-bottom:0.5rem;}
-    .controls-top{flex-direction:column;align-items:stretch;}
-    .category-buttons{justify-content:center;}
-    .search-input, .district-filter{width:100%;}
-    .food-item{padding:1rem;}
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>彰化三寶美食地圖｜肉圓・爌肉飯・素食麵</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
 </head>
 <body>
-
-<nav id="top-nav">
-    <div class="container">
-        <h1>彰化美食地圖 TOP</h1>
-        <a href="https://github.com/YourUsername/YourRepo" target="_blank">GitHub 專案</a>
+  <header class="hero">
+    <img class="art" src="header-art.svg" alt="可愛插畫背景" />
+    <img class="logo" src="logo.svg" alt="Changhua 3 Treasures" />
+    <h1>彰化三寶美食地圖</h1>
+    <p class="subtitle">肉圓・爌肉飯・素食麵｜可愛又平易近人的吃貨指南</p>
+    <div class="actions">
+      <div class="chips" id="chips"></div>
+      <div class="toolbar">
+        <button id="btnGeocode" class="chip">🗺️ 一次補齊座標</button>
+        <button id="btnExport" class="chip">💾 匯出座標 JSON</button>
+        <span id="progress" class="progress"></span>
+      </div>
     </div>
-</nav>
+  </header>
 
-<div class="container">
-    <div class="controls">
-        <div class="controls-top">
-            <div class="category-buttons">
-                <button data-cat="all" class="active">全部</button>
-                <button data-cat="kongroufan">爌肉飯</button>
-                <button data-cat="rouyuan">肉圓</button>
-                <button data-cat="sushi">素食麵</button>
-            </div>
-        </div>
-        
-        <div class="controls-bottom" style="display:flex; gap:10px;">
-             <input type="text" id="keywordInput" class="search-input" placeholder="搜尋店家名稱、地址、特色...">
-             <select id="districtFilter" class="district-filter">
-                <option value="all">所有區域</option>
-                </select>
-        </div>
-    </div>
+  <main class="layout">
+    <section id="cards" class="cards"></section>
+    <aside class="map-wrap">
+      <div id="map" class="map"></div>
+    </aside>
+  </main>
 
-    <div id="foodList" class="food-list">
-        </div>
+  <footer>
+    <small>提示：本頁支援 PWA 可離線；如仍有店家缺座標，按「一次補齊座標」將以每秒一筆查詢 Nominatim（OpenStreetMap）。</small>
+  </footer>
 
-    <div class="pagination">
-        <button id="prevBtn" disabled>上一頁</button>
-        <span id="pageInfo" class="page-info"></span>
-        <button id="nextBtn" disabled>下一頁</button>
-    </div>
-</div>
-
-<footer class="container" style="text-align:center; padding-top:0;">
-    <p>© 2025 彰化美食地圖. 資料來源：在地精選。圖示版權：Google Maps & Font Awesome。</p>
-</footer>
-
-
-<script src="data-08(新增蚵ㄚ仁與更新彰化爌肉飯).js"></script> <script>
-// =======================================================================
-// 全域變數設定
-// =======================================================================
-const itemsPerPage = 12; // 每頁顯示 12 筆
-let currentPage = 1;
-let currentCategory = 'all';
-let currentData = [];
-
-// 元素選取
-const foodList = document.getElementById('foodList');
-const keywordInput = document.getElementById('keywordInput');
-const districtFilter = document.getElementById('districtFilter');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const pageInfo = document.getElementById('pageInfo');
-
-
-// =======================================================================
-// 工具函數
-// =======================================================================
-
-// Debounce 函數，用於優化搜尋輸入
-function debounce(func, delay) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), delay);
-    };
-}
-
-// =======================================================================
-// 數據載入與初始化
-// =======================================================================
-
-// 載入區域篩選器選項
-function loadDistrictFilter() {
-    const districts = new Set();
-    data.forEach(item => districts.add(item.district));
-    
-    // 將 Set 轉換為 Array，並排序
-    const sortedDistricts = Array.from(districts).sort((a, b) => a.localeCompare(b, 'zh-TW'));
-
-    sortedDistricts.forEach(district => {
-        const option = document.createElement('option');
-        option.value = district;
-        option.textContent = district;
-        districtFilter.appendChild(option);
-    });
-}
-
-// =======================================================================
-// 主要渲染函數
-// =======================================================================
-
-function render() {
-    // 1. 過濾數據
-    const selectedCategory = currentCategory;
-    const selectedDistrict = districtFilter.value;
-    const keyword = keywordInput.value.toLowerCase();
-
-    currentData = data.filter(item => {
-        const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
-        const districtMatch = selectedDistrict === 'all' || item.district === selectedDistrict;
-        
-        // 關鍵字搜尋 (名稱、地址、特色、簡介)
-        const keywordMatch = keyword === '' || 
-                             item.name.toLowerCase().includes(keyword) || 
-                             item.address.toLowerCase().includes(keyword) || 
-                             item.feature.toLowerCase().includes(keyword) ||
-                             (item.description && item.description.toLowerCase().includes(keyword));
-
-        return categoryMatch && districtMatch && keywordMatch;
-    });
-
-    // 2. 計算分頁資訊
-    const totalItems = currentData.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    
-    // 確保當前的頁碼不會超過總頁數 (如果過濾後頁數減少)
-    if (currentPage > totalPages && totalPages > 0) {
-        currentPage = totalPages;
-    } else if (totalPages === 0) {
-        currentPage = 1;
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script src="data.js"></script>
+  <script>
+    if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+    const categories = [
+      {key:'rouyuan', name:'肉圓', icon:'icon_rouyuan.svg'},
+      {key:'kongroufan', name:'爌肉飯', icon:'icon_kongroufan.svg'},
+      {key:'sushi', name:'素食麵', icon:'icon_sushi.svg'}
+    ];
+    let active = 'rouyuan';
+    const chipsBox = document.getElementById('chips');
+    function renderChips(){
+      chipsBox.innerHTML = '';
+      categories.forEach(c=>{
+        const b = document.createElement('button');
+        b.className = 'chip' + (c.key===active?' active':'');
+        b.innerHTML = `<img src="${c.icon}" class="chip-icon" alt=""/> ${c.name}`;
+        b.onclick = ()=>{ active=c.key; renderCards(); updateMarkers(); };
+        chipsBox.appendChild(b);
+      });
     }
-
-    // 3. 取得當前頁面的數據
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const pageItems = currentData.slice(start, end);
-
-    // 4. 渲染列表
-    foodList.innerHTML = '';
-    if (pageItems.length === 0) {
-        foodList.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; padding: 2rem; color: #666;">找不到符合條件的店家 T_T</p>';
-    } else {
-        pageItems.forEach(item => {
-            const mapUrl = `http://google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.address)}`;
-            
-            const card = document.createElement('div');
-            card.className = 'food-item';
-            card.innerHTML = `
-                <div class="item-header">
-                    <h2>${item.name}</h2>
-                    <span class="google-rating">★ ${item.google}</span>
-                </div>
-                <div class="item-body">
-                    <p><strong>區域:</strong> ${item.district}</p>
-                    <p><strong>地址:</strong> ${item.address}</p>
-                    <p><strong>營業時間:</strong> ${item.time}</p>
-                    <p><strong>均價:</strong> ${item.price}</p>
-                    <p><strong>招牌菜:</strong> ${item.dish}</p>
-                    <p class="item-feature">${item.feature} / ${item.description || '無詳細簡介'}</p>
-                </div>
-                <a href="${mapUrl}" target="_blank" class="map-link">Google 地圖導航</a>
-            `;
-            foodList.appendChild(card);
-        });
+    function ratingClass(score){
+      const s = Number(score||0);
+      if(s>=4.5) return 'rating rating--gold';
+      if(s>=4.0) return 'rating rating--green';
+      return 'rating rating--gray';
     }
-
-    // 5. 更新分頁控制項
-    updatePaginationControls(totalPages, totalItems);
-}
-
-// 更新分頁按鈕狀態與頁碼資訊
-function updatePaginationControls(totalPages, totalItems) {
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages || totalPages === 0;
-  pageInfo.textContent = `第 ${currentPage} 頁 / 共 ${totalPages} 頁 (共 ${totalItems} 筆)`;
-}
-
-
-// =======================================================================
-// 事件監聽器與初始化
-// =======================================================================
-
-// 事件監聽器：切換篩選條件時，重設頁碼為 1
-document.querySelectorAll(".category-buttons button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".category-buttons button").forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentCategory = btn.dataset.cat;
-    currentPage = 1; // 重設頁碼
-    render();
-  });
-});
-
-districtFilter.addEventListener("change", () => {
-    currentPage = 1; // 重設頁碼
-    render();
-});
-
-// 應用 Debounce 到搜尋框輸入事件，並重設頁碼
-keywordInput.addEventListener("input", debounce(() => {
-    currentPage = 1; // 重設頁碼
-    render();
-}, 300));
-
-
-// 上一頁/下一頁按鈕事件
-document.addEventListener("DOMContentLoaded", () => {
-    // 初始化區域篩選器
-    loadDistrictFilter();
-    
-    // 初始化渲染
-    render();
-
-    // 綁定分頁按鈕事件
-    document.getElementById("prevBtn").addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            render();
-            // 捲動到頂部 (導航列下方)
-            document.getElementById('top-nav').scrollIntoView({ behavior: 'smooth' });
+    function starHTML(score){
+      const s = Number(score||0);
+      const full = Math.round(s);
+      return '⭐'.repeat(full) + (s?` <span class="score">${s.toFixed(1)}</span>`:'');
+    }
+    function badgeHTML(row){
+      const badges = [];
+      const t = String(row.time||'');
+      if(/(21:|22:|23:|00:|01:|02:|03:)/.test(t)) badges.push('深夜場');
+      if((row.description||'').includes('百年')||(row.feature||'').includes('百年')) badges.push('老店');
+      if(Number(row.google)>=4.5) badges.push('人氣王');
+      return badges.map(b=>`<span class="badge">${b}</span>`).join('');
+    }
+    const map = L.map('map').setView([24.08, 120.54], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+    const cluster = L.markerClusterGroup();
+    const nameToMarker = new Map();
+    function updateMarkers(){
+      cluster.clearLayers();
+      nameToMarker.clear();
+      const rows = data.filter(r=>r.category===active && r.lat && r.lng);
+      rows.forEach(r=>{
+        const m = L.marker([r.lat, r.lng]);
+        m.bindPopup(`<strong>${r.name}</strong><br>${r.address||''}<br/>評分：${r.google||''}`);
+        cluster.addLayer(m);
+        nameToMarker.set(r.name, m);
+      });
+      map.addLayer(cluster);
+    }
+    function renderCards(){
+      const box = document.getElementById('cards');
+      box.innerHTML = '';
+      const rows = data.filter(r=>r.category===active);
+      rows.forEach(r=>{
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-top">
+            <h3>${r.name}</h3>
+            <div class="badges">${badgeHTML(r)}</div>
+          </div>
+          <p class="addr">${r.address||''}</p>
+          <p class="feat">${r.feature||''}</p>
+          <p class="dish">🍽️ ${r.dish||''}</p>
+          <p class="time">🕒 ${r.time||''}</p>
+          <p class="phone">📞 ${r.phone||''}</p>
+          <div class="${ratingClass(r.google)}">${starHTML(r.google)}</div>
+        `;
+        card.onclick = ()=>{
+          const mk = nameToMarker.get(r.name);
+          if(mk){ mk.openPopup(); map.flyTo(mk.getLatLng(), 16, {duration:0.7}); }
+        };
+        box.appendChild(card);
+      })
+    }
+    // Geocoding & export (保留以補少數漏網店家)
+    const progress = document.getElementById('progress');
+    function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+    async function geocodeAll(){
+      const baseUrl = 'https://nominatim.openstreetmap.org/search?format=json&q=';
+      const pending = data.filter(r=>!(r.lat && r.lng));
+      let done = 0;
+      for(const row of pending){
+        const key = 'geo:' + (row.address||'');
+        const cached = localStorage.getItem(key);
+        if(cached){
+          try{ const {lat,lng} = JSON.parse(cached); row.lat=lat; row.lng=lng; done++; progress.textContent = `已載入快取：${done}/${pending.length}`; continue; }catch{}
         }
-    });
-
-    document.getElementById("nextBtn").addEventListener("click", () => {
-        // 由於 render 函數會自動檢查邊界，這裡只需遞增
-        currentPage++;
-        render();
-        // 捲動到頂部 (導航列下方)
-        document.getElementById('top-nav').scrollIntoView({ behavior: 'smooth' });
-    });
-});
-</script>
+        progress.textContent = `查詢中：${done+1}/${pending.length} - ${row.name}`;
+        try{
+          const resp = await fetch(baseUrl + encodeURIComponent(row.address||''), { headers:{'Accept':'application/json'} });
+          const arr = await resp.json();
+          if(Array.isArray(arr) && arr.length){
+            const lat = parseFloat(arr[0].lat), lng = parseFloat(arr[0].lon);
+            row.lat = lat; row.lng = lng; localStorage.setItem(key, JSON.stringify({lat,lng}));
+          }
+        }catch(err){ console.warn('geocode error', err); }
+        await sleep(1100); done++;
+      }
+      progress.textContent = '座標補齊完成';
+      renderCards(); updateMarkers();
+    }
+    document.getElementById('btnGeocode').onclick = geocodeAll;
+    document.getElementById('btnExport').onclick = ()=>{
+      const out = data.map(({name,address,lat,lng})=>({name,address,lat,lng}));
+      const blob = new Blob([JSON.stringify(out,null,2)], {type:'application/json'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'changhua_coords_merged.json'; a.click();
+    };
+    renderChips(); renderCards(); updateMarkers();
+  </script>
 </body>
 </html>

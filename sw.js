@@ -1,57 +1,18 @@
-// sw.js
 
-// 每次更新程式碼後，請**手動修改**此版本號，才能強制更新所有快取的檔案
-const CACHE_NAME = 'changhua-food-v20251118_15'; 
-
-// 列出所有需要被快取/離線儲存的檔案
-const urlsToCache = [
-  './', // 這是 index.html 的別名
-  'index.html',
-  'data.js',
-  'manifest.json',
-  // 如果未來新增 style.css，記得也要加在這裡
+const CACHE_NAME = 'changhua3-v4';
+const ASSETS = [
+  './index.html','./style.css','./data.js','./data.json','./logo.svg','./header-art.svg',
+  './icon-192.png','./icon-512.png','./manifest.json',
+  './icon_rouyuan.svg','./icon_kongroufan.svg','./icon_sushi.svg',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  'https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js',
+  'https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css',
+  'https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css'
 ];
-
-// 監聽 'install' 事件：安裝 Service Worker 時，將檔案放入快取
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
-  self.skipWaiting(); // 強制新的 Service Worker 立即啟用
+self.addEventListener('install',e=>{
+  e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)));
 });
-
-// 監聽 'fetch' 事件：攔截所有網路請求，優先從快取中回應
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // 快取中有資源，就直接回傳快取
-        if (response) {
-          return response;
-        }
-        // 快取中沒有，就去網路抓取
-        return fetch(event.request);
-      })
-  );
-});
-
-// 監聽 'activate' 事件：清理舊版本的快取
-self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          // 如果快取不在白名單中 (即舊版本)，就刪除它
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+self.addEventListener('fetch',e=>{
+  e.respondWith(caches.match(e.request).then(r=> r||fetch(e.request)));
 });

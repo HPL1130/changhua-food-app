@@ -1,0 +1,33 @@
+
+:root{--bg:#fff6ea; --primary:#ff8a3d; --accent:#8fd3a9; --text:#333; --gold:#f5b400; --green:#2dbf71; --gray:#999;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:"Noto Sans TC",system-ui,Segoe UI,Arial,sans-serif;color:var(--text)}
+.hero{padding:0 16px 20px;text-align:center;position:relative}
+.hero .art{display:block;width:100%;height:180px}
+.logo{width:80px;height:80px;margin-top:-40px}
+.hero h1{margin:6px 0 2px;font-size:26px;letter-spacing:1px}
+.subtitle{margin:2px 0 8px;color:#666}
+.actions{display:flex;flex-direction:column;gap:8px;align-items:center}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{border:none;border-radius:999px;padding:10px 14px;background:#fff;color:#444;box-shadow:0 2px 6px rgba(0,0,0,.08);cursor:pointer;display:flex;align-items:center;gap:6px}
+.chip.active{background:var(--primary);color:#fff}
+.chip-icon{width:20px;height:20px}
+.progress{color:#666;font-size:12px}
+.layout{display:grid;grid-template-columns:1fr 380px;gap:12px;padding:12px}
+@media (max-width:900px){ .layout{grid-template-columns:1fr} .map-wrap{order:-1} }
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:#fff;border-radius:16px;padding:12px;box-shadow:0 6px 16px rgba(0,0,0,.08);transition:transform .15s ease}
+.card:hover{transform:translateY(-2px)}
+.card-top{display:flex;align-items:center;justify-content:space-between}
+.card h3{margin:0 0 6px;font-size:18px}
+.addr,.feat,.dish,.time,.phone{margin:3px 0}
+.badge{display:inline-block;background:var(--accent);color:#053; padding:2px 8px;border-radius:999px;font-size:12px;margin-right:6px}
+.rating{margin-top:6px;font-size:16px}
+.rating--gold{color:var(--gold)}
+.rating--green{color:var(--green)}
+.rating--gray{color:var(--gray)}
+.score{color:#888;margin-left:4px}
+.map-wrap{background:#fff;border-radius:16px;box-shadow:0 6px 16px rgba(0,0,0,.08);overflow:hidden}
+.map{width:100%;height:420px}
+footer{padding:16px;text-align:center;color:#777}
