@@ -1,61 +1,49 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>彰化美食地圖 TOP - 爌肉飯、肉圓、素食麵</title>
-
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>彰化美食地圖 TOP</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+  <header class="site-header">
+    <img src="images/hero/hero-cute.png" class="hero" alt="八卦山大佛與三寶 Q 版插圖"/>
+    <div class="brand">彰化美食地圖 TOP</div>
+  </header>
 
-<nav id="top-nav">
-  <div class="container">
-    <h1>彰化美食地圖 TOP</h1>
-    <a href="https://github.com/HPL1130/changhua-food-app" target="_blank">GitHub 專案</a>
-  </div>
-</nav>
-
-<div class="container">
-  <div class="controls">
-    <div class="controls-top">
-      <div class="category-buttons cute">
-        <button data-cat="all" class="active">
-          <img src="icons/all.svg" alt="全部" class="icon"> 全部
-        </button>
-        <button data-cat="kongroufan">
-          <img src="icons/kongroufan.svg" alt="爌肉飯" class="icon"> 爌肉飯
-        </button>
-        <button data-cat="rouyuan">
-          <img src="icons/rouyuan.svg" alt="肉圓" class="icon"> 肉圓
-        </button>
-        <button data-cat="sushi">
-          <img src="icons/sushi.svg" alt="素食麵" class="icon"> 素食麵
-        </button>
-      </div>
+  <main class="container">
+    <div class="category-buttons">
+      <button data-cat="all" class="active"><img src="images/category/all.svg" alt="全部"> 全部</button>
+      <button data-cat="kuangroufan"><img src="images/category/kuangroufan.svg" alt="爌肉飯"> 爌肉飯</button>
+      <button data-cat="rouyuan"><img src="images/category/rouyuan.svg" alt="肉圓"> 肉圓</button>
+      <button data-cat="vegetarian-noodle"><img src="images/category/vegetarian-noodle.svg" alt="素食麵"> 素食麵</button>
     </div>
-    
-    <div class="controls-bottom" style="display:flex; gap:10px;">
-      <input type="text" id="keywordInput" class="search-input" placeholder="搜尋店家名稱、地址、特色...">
-      <select id="districtFilter" class="district-filter">
+
+    <div class="filters">
+      <input id="keywordInput" type="text" placeholder="搜尋店名、地址、特色..."/>
+      <select id="districtFilter">
         <option value="all">所有區域</option>
       </select>
     </div>
-  </div>
 
-  <div id="foodList" class="food-list"></div>
+    <div id="foodList" class="food-list"></div>
 
-  <div class="pagination">
-    <button id="prevBtn" disabled>上一頁</button>
-    <span id="pageInfo" class="page-info"></span>
-    <button id="nextBtn" disabled>下一頁</button>
-  </div>
-</div>
+    <div class="pager">
+      <button id="prevBtn" class="btn">上一頁</button>
+      <span id="pageInfo" class="page-info">1</span>
+      <button id="nextBtn" class="btn">下一頁</button>
+    </div>
+  </main>
 
-<footer class="container" style="text-align:center; padding-top:0;">
-  <p>© 2025 彰化美食地圖. 資料來源：在地精選。圖示版權：自製 Q 版食物 ICON。</p>
-</footer>
+  <footer class="site-footer">© 2025 彰化美食地圖 · Q 版插圖 · 卡片式可愛 UI</footer>
 
-<script src="app.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator){
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>
