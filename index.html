@@ -40,38 +40,46 @@
     </div>
   </main>
 
-  <footer class="site-footer">© 2025 彰化美食地圖 · Q 版插圖 · 資料品質檢核</footer>
+  <footer class="site-footer">
+    <p>
+      © 2025 彰化美食地圖 · Q 版插圖 · 資料品質檢核
+    </p>
+    <p style="font-size: 0.85rem; color: #ef4444; margin-top: 8px;">
+      營業時間為網路資訊不保證準確，詳細公休時間請致電店家詢問
+    </p>
+  </footer>
 
   <script src="app.js"></script>
   <script>
     // Service Worker 註冊
     if ('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 
-    // 處理橫幅收合邏輯 (覆寫或補充 app.js 的功能)
+    // --- 橫幅收合功能 (Banner Toggle) ---
     document.addEventListener('DOMContentLoaded', function() {
       const toggleBtn = document.getElementById('toggleHero');
       const header = document.querySelector('.site-header');
 
       if(toggleBtn && header){
-        // 移除可能存在的舊事件監聽器（防止重複觸發），這裡直接綁定新的點擊事件
+        // 綁定點擊事件
         toggleBtn.onclick = function(e) {
-          e.preventDefault();
+          e.preventDefault(); // 防止預設行為
           
-          // 切換 class="collapsed"
+          // 1. 切換 class，CSS 會自動處理背景隱藏/顯示
           header.classList.toggle('collapsed');
           
-          // 判斷狀態來改變按鈕文字與樣式
+          // 2. 判斷目前狀態，更新按鈕文字與顏色
           const isCollapsed = header.classList.contains('collapsed');
+          
           if (isCollapsed) {
+            // 狀態：已收合
             toggleBtn.textContent = '展開';
-            // 收合時背景變綠，按鈕改白色以突顯
-            toggleBtn.style.background = '#fff';
-            toggleBtn.style.color = '#16a34a'; 
+            toggleBtn.style.background = '#fff';   // 按鈕變白
+            toggleBtn.style.color = '#16a34a';     // 字變綠
           } else {
+            // 狀態：已展開 (預設)
             toggleBtn.textContent = '收合';
-            // 展開時恢復原本藍色
-            toggleBtn.style.background = ''; 
-            toggleBtn.style.color = '';
+            toggleBtn.style.background = '';       // 恢復 CSS 設定的藍色
+            toggleBtn.style.color = '';            // 恢復 CSS 設定的白色
           }
         };
       }
