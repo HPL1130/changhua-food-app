@@ -9,10 +9,10 @@
 </head>
 <body>
   <header class="site-header">
-<div class="hero-wrap">
-  <img src="images/hero/hero-b.png" class="hero" alt="八卦山佛像與三寶 Q 版插圖"/>
-  <button id="toggleHero" class="hero-toggle">收合</button>
-</div>
+    <div class="hero-wrap">
+      <img src="images/hero/hero-b.png" class="hero" alt="八卦山佛像與三寶 Q 版插圖"/>
+      <button id="toggleHero" class="hero-toggle">收合</button>
+    </div>
     <div class="brand">彰化美食地圖 TOP</div>
   </header>
 
@@ -44,7 +44,38 @@
 
   <script src="app.js"></script>
   <script>
+    // Service Worker 註冊
     if ('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+
+    // 處理橫幅收合邏輯 (覆寫或補充 app.js 的功能)
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('toggleHero');
+      const header = document.querySelector('.site-header');
+
+      if(toggleBtn && header){
+        // 移除可能存在的舊事件監聽器（防止重複觸發），這裡直接綁定新的點擊事件
+        toggleBtn.onclick = function(e) {
+          e.preventDefault();
+          
+          // 切換 class="collapsed"
+          header.classList.toggle('collapsed');
+          
+          // 判斷狀態來改變按鈕文字與樣式
+          const isCollapsed = header.classList.contains('collapsed');
+          if (isCollapsed) {
+            toggleBtn.textContent = '展開';
+            // 收合時背景變綠，按鈕改白色以突顯
+            toggleBtn.style.background = '#fff';
+            toggleBtn.style.color = '#16a34a'; 
+          } else {
+            toggleBtn.textContent = '收合';
+            // 展開時恢復原本藍色
+            toggleBtn.style.background = ''; 
+            toggleBtn.style.color = '';
+          }
+        };
+      }
+    });
   </script>
 </body>
 </html>
