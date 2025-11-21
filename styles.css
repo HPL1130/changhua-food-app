@@ -1,100 +1,122 @@
-/* Cute theme v1.4 (B-style) */
+/* Cute theme v1.6 (Auto-Fit Background) */
 :root{ --brand:#16a34a; --pink:#f472b6; --yellow:#eab308; --sky:#0ea5e9; --text:#334155; }
 *{box-sizing:border-box}
 body{margin:0;font-family:"Noto Sans TC",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; color:var(--text); background:linear-gradient(180deg,#fff 0%, #f0fdfa 100%);} 
-/* --- styles.css 修改部分 --- */
 
-/* Header 基礎設定 (展開狀態)：使用風景圖作為背景 */
+/* --- Header 核心設定 (修正圖片過大問題) --- */
+
+/* 1. 手機版預設 (小螢幕優先) */
 .site-header {
   position: relative;
-  /* 設定背景圖：路徑對應 images/hero/hero-cute.png */
-  background: url('images/hero/hero-cute.png') no-repeat center bottom; 
-  background-size: cover; /* 讓圖片填滿整個區塊 */
+  /* 設定背景圖：請確認圖片位於 images/hero/hero-cute.png */
+  background-image: url('images/hero/hero-cute.png');
+  background-repeat: no-repeat;
+  
+  /* 手機上使用 cover，確保填滿直向背景 */
+  background-size: cover;
+  /* 對齊上方，確保佛祖的頭不會被切掉 */
+  background-position: center top;
+  
   text-align: center;
   padding: .25rem 1rem;
-  transition: all 0.3s ease; /* 加入過渡動畫，讓收合時平滑一點 */
+  transition: all 0.3s ease;
+  min-height: 160px; /* 手機版基本高度 */
 }
 
-/* 修正 hero-wrap：讓它只負責裝佛祖圖與按鈕 */
-.hero-wrap {
-  position: relative;
-  max-width: 680px;
-  margin: .25rem auto;
-  transition: opacity 0.3s ease;
+/* 2. 電腦/平板版優化 (螢幕寬度大於 768px 時觸發) */
+@media (min-width: 768px) {
+  .site-header {
+    /* 【關鍵修正】寬度 100% (填滿橫向)，高度 auto (依比例縮放) */
+    /* 這樣圖片就會顯示全景，不會變成巨大的特寫 */
+    background-size: 100% auto;
+    
+    /* 稍微調整對齊位置 */
+    background-position: center 20%;
+    
+    /* 增加高度以展示風景，因為圖片變正常了，需要空間 */
+    min-height: 280px; 
+  }
 }
 
-/* 圖片設定 */
-.site-header .hero {
-  width: 100%;
-  max-height: 240px;
-  object-fit: contain;
-  /* 移除原本的圓角與陰影，讓它更自然地融入背景，或保留視您喜好而定 */
-  /* 這裡保留一點陰影讓前景突出 */
-  border-radius: 12px; 
-  box-shadow: 0 6px 20px rgba(0,0,0,.15); 
+/* 3. 超寬螢幕修正 (大於 1920px) */
+@media (min-width: 1921px) {
+  .site-header {
+    /* 限制背景最大尺寸，避免在超寬螢幕上模糊 */
+    background-size: 1920px auto;
+  }
 }
 
-/* 展開時的標題顏色：因為天空是亮的，字改深色才清楚 */
-.site-header .brand {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin: .5rem auto;
-  color: #1f2937; /* 深灰色，確保在風景圖上可讀 */
-  text-shadow: 0 1px 3px rgba(255,255,255,0.8); /* 加一點白光暈，避免被背景線條干擾 */
+/* 容器設定 */
+.hero-wrap{
+  position:relative;
+  max-width:680px;
+  margin:.25rem auto;
+  transition: all 0.3s ease;
+}
+
+/* 中間的佛祖插圖 (前景) */
+.site-header .hero{
+  width:100%;
+  max-height:240px;
+  object-fit:contain;
+  border-radius:12px;
+  /* 加深一點陰影，讓它從背景浮出來 */
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+/* 收合按鈕 */
+.hero-toggle{
+  position:absolute;
+  right:8px;
+  top:8px;
+  border:0;
+  border-radius:8px;
+  background: rgba(14, 165, 233, 0.9);
+  color:#fff;
+  padding:.35rem .6rem;
+  cursor:pointer;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 標題文字 */
+.site-header .brand{
+  font-size:1.3rem;
+  font-weight:700;
+  margin:.5rem auto;
+  color: #1f2937; /* 深灰色，確保在風景上清楚 */
+  /*加上白色描邊，避免背景線條干擾閱讀*/
+  text-shadow: 0 2px 0 #fff, 0 0 4px #fff;
   transition: color 0.3s ease;
 }
 
-/* 按鈕樣式 */
-.hero-toggle {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--sky);
-  color: #fff;
-  padding: .35rem .6rem;
-  cursor: pointer;
-  z-index: 10;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
 /* --- 收合狀態 (Collapsed) --- */
-/* 當 Header 被加上 collapsed class 時的變化 */
-
+/* 當 header 加上 collapsed class 後的樣式 */
 .site-header.collapsed {
-  /* 背景變回原本的綠色，移除風景圖，節省空間 */
-  background: var(--brand);
-  padding-bottom: 0.5rem; /*稍微調整間距*/
+  background: var(--brand) !important; /* 強制變回綠色 */
+  background-image: none !important; /* 移除背景圖 */
+  min-height: auto !important; /* 高度自動縮小 */
+  padding-bottom: 0.5rem;
 }
 
 .site-header.collapsed .hero-wrap {
-  /* 收合時，隱藏整個佛祖圖片區塊 (包含原本佔用的高度) */
-  display: none; 
-}
-
-/* 特例：因為按鈕在 hero-wrap 裡面，如果 display:none 
-   按鈕也會不見，導致無法「展開」。
-   解法：我們透過 JS 將按鈕移出，或者用 CSS 技巧。
-   *最佳解法* 是不動 HTML 結構，改用以下方式隱藏圖片，但保留按鈕空間：
-*/
-
-/* 修正收合邏輯：只隱藏圖片，不隱藏 wrap，但把高度縮小 */
-.site-header.collapsed .hero-wrap {
-  display: block; 
-  height: 40px; /* 留一點高度給按鈕 */
-  margin: 0 auto;
+  height: 40px; /* 僅保留按鈕高度 */
+  margin-bottom: 0;
 }
 
 .site-header.collapsed .hero {
-  display: none; /* 真的隱藏佛祖圖 */
+  display: none; /* 隱藏佛祖圖 */
 }
 
 .site-header.collapsed .brand {
-  color: #fff; /* 背景變綠色了，字改回白色 */
+  color: #fff; /* 背景變綠，字變白 */
   text-shadow: none;
-  margin-top: -35px; /* 稍微往上拉，因為上面留了空間給按鈕 */
+  margin-top: -35px; /* 將標題往上拉 */
 }
+/* --- Header 設定結束 --- */
+
+
+/* 其他原本的樣式保持不變 */
 .container{max-width:1100px;margin:0 auto;padding:1rem}
 .category-buttons{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem}
 .category-buttons button{display:flex;align-items:center;gap:.5rem;background:#fff;border:0;border-radius:9999px;padding:.5rem .9rem;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:pointer}
